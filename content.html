@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content | The HuD Group Global</title>
+  <meta name="description" content="Explore reports, blogs, articles, training resources, and media from The HuD Group Global.">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple:#423b7d; --purple-dark:#2d2860; --purple-mid:#5B317B; --purple-light:#7a6fb0; --purple-pale:#f0eef8;
+      --peach:#FFB384; --peach-dark:#e89060; --peach-pale:#fff5ee; --orange:#F4A623;
+      --white:#ffffff; --off-white:#faf9f7; --light-grey:#f2f0ed; --mid-grey:#eaeaea;
+      --text:#1a1a2e; --text-light:#5a5a7a;
+      --font-h:'Raleway',sans-serif; --font-body:'Lato',sans-serif; --font-accent:'Montserrat',sans-serif;
+      --nav-h:80px; --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+      --shadow-sm:0 2px 12px rgba(66,59,125,0.08); --shadow-md:0 8px 32px rgba(66,59,125,0.14); --shadow-lg:0 20px 60px rgba(66,59,125,0.20);
+      --radius:12px; --radius-lg:20px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:16px;overflow-x:hidden}
+    body{font-family:var(--font-body);color:var(--text);background:var(--off-white);line-height:1.65;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block} a{color:inherit;text-decoration:none}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.07);display:flex;align-items:center;padding:0 48px;box-shadow:var(--shadow-sm)}
+    .nav-logo img{height:42px;width:auto}
+    .nav-links{margin-left:auto;display:flex;align-items:center;gap:2px;list-style:none}
+    .nav-links a{font-family:var(--font-h);font-size:12.5px;font-weight:600;letter-spacing:0.04em;color:#555;padding:8px 13px;border-radius:6px;transition:var(--transition)}
+    .nav-links a:hover,.nav-links a.active{color:var(--purple);background:var(--purple-pale)}
+    .nav-contribute a{background:var(--peach)!important;color:var(--purple-dark)!important;border-radius:40px!important;font-weight:700!important;padding:9px 20px!important}
+    .nav-contribute a:hover{background:var(--peach-dark)!important;transform:translateY(-1px)}
+
+    /* PAGE HERO */
+    .page-hero{background:var(--purple-dark);padding:120px 48px 80px;position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(90,62,158,0.5) 0%,transparent 70%)}
+    .page-hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+    .page-hero h1{font-family:var(--font-h);font-size:clamp(36px,5vw,64px);font-weight:900;color:var(--white);margin-bottom:14px;line-height:1.05;letter-spacing:-0.02em}
+    .page-hero h1 span{color:var(--peach)}
+    .page-hero p{font-size:18px;color:rgba(255,255,255,0.70);max-width:560px;line-height:1.7}
+    .overline-hero{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--peach);display:flex;align-items:center;gap:10px;margin-bottom:16px}
+    .overline-hero::before{content:'';display:block;width:24px;height:2px;background:var(--peach)}
+
+    /* STICKY TABS */
+    .content-tabs{background:var(--white);border-bottom:2px solid var(--mid-grey);position:sticky;top:var(--nav-h);z-index:100;display:flex;overflow-x:auto;padding:0 48px}
+    .content-tab{font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-light);padding:18px 20px;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;white-space:nowrap;transition:var(--transition);background:none;border-top:none;border-left:none;border-right:none;display:flex;align-items:center;gap:8px}
+    .content-tab:hover{color:var(--purple)}
+    .content-tab.active{color:var(--purple);border-bottom-color:var(--peach-dark)}
+    .tab-count{background:var(--purple-pale);color:var(--purple);font-size:10px;font-weight:700;padding:2px 7px;border-radius:40px;font-family:var(--font-accent)}
+    .content-tab.active .tab-count{background:var(--peach-pale);color:var(--peach-dark)}
+
+    /* LAYOUT */
+    .section{padding:72px 0} .container{max-width:1280px;margin:0 auto;padding:0 48px}
+    .content-panel{display:none} .content-panel.active{display:block}
+    .overline{display:flex;align-items:center;gap:10px;font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:14px}
+    .overline::before{content:'';display:block;width:24px;height:2px;background:var(--peach-dark);flex-shrink:0}
+    h2.section-title{font-family:var(--font-h);font-size:clamp(24px,3.5vw,44px);font-weight:900;line-height:1.1;letter-spacing:-0.02em;color:var(--purple-dark);margin-bottom:16px}
+
+    /* REPORT CARDS */
+    .reports-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+    .report-card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--mid-grey);transition:var(--transition)}
+    .report-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+    .report-cover{height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:24px;text-align:center}
+    .report-cover.purple{background:linear-gradient(135deg,var(--purple-dark),#1a1640)}
+    .report-cover.peach{background:linear-gradient(135deg,var(--peach-dark),#8B4000)}
+    .report-cover.dark{background:linear-gradient(135deg,#1a1a2e,#0d0d1a)}
+    .report-year{font-family:var(--font-h);font-size:56px;font-weight:900;color:rgba(255,255,255,0.1);position:absolute;bottom:8px;right:16px;line-height:1}
+    .report-type{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:8px}
+    .report-title-cover{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--white);line-height:1.3}
+    .report-body{padding:20px}
+    .report-meta{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;font-family:var(--font-accent)}
+    .report-desc{font-size:13px;color:var(--text-light);line-height:1.65;margin-bottom:16px}
+    .report-dl{font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple);display:flex;align-items:center;gap:6px}
+
+    /* BLOG */
+    .blog-featured-grid{display:grid;grid-template-columns:2fr 1fr;gap:32px;margin-top:40px}
+    .blog-featured{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--mid-grey);background:var(--white);transition:var(--transition);cursor:pointer}
+    .blog-featured:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+    .blog-featured-img{height:260px;background:linear-gradient(135deg,var(--purple-dark),#1a1640);display:flex;align-items:center;justify-content:center;font-size:48px}
+    .blog-featured-body{padding:28px}
+    .blog-tag{display:inline-block;background:var(--purple);color:var(--white);font-family:var(--font-accent);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:40px;margin-bottom:12px}
+    .blog-tag.peach{background:var(--peach-dark)}
+    .blog-title{font-family:var(--font-h);font-size:22px;font-weight:800;color:var(--text);margin-bottom:10px;line-height:1.3}
+    .blog-excerpt{font-size:14px;color:var(--text-light);line-height:1.7;margin-bottom:16px}
+    .blog-meta{font-size:12px;color:var(--text-light)}
+    .blog-list{display:flex;flex-direction:column;gap:0}
+    .blog-item{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--mid-grey);cursor:pointer;transition:var(--transition)}
+    .blog-item:hover{background:var(--off-white);padding-left:8px;border-radius:var(--radius)}
+    .blog-item:last-child{border-bottom:none}
+    .blog-item-thumb{width:72px;height:56px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .blog-item-thumb.purple{background:var(--purple-pale)}
+    .blog-item-thumb.peach{background:var(--peach-pale)}
+    .blog-item-title{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.4}
+    .blog-item-meta{font-size:11px;color:var(--text-light)}
+
+    /* TRAINING SECTION */
+    .training-section{background:var(--white)}
+    .training-intro{max-width:720px;margin-bottom:48px}
+    .training-intro p{font-size:16px;color:var(--text-light);line-height:1.8}
+
+    /* Category accordion */
+    .training-category{border:1px solid var(--mid-grey);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:12px;transition:var(--transition)}
+    .training-category.open{border-color:var(--peach-dark);box-shadow:var(--shadow-sm)}
+    .category-header{display:flex;align-items:center;gap:16px;padding:20px 24px;cursor:pointer;background:var(--white);transition:var(--transition);user-select:none}
+    .category-header:hover{background:var(--off-white)}
+    .training-category.open .category-header{background:var(--purple-dark)}
+    .category-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:var(--transition)}
+    .training-category.open .category-icon{background:rgba(255,179,132,0.2)}
+    .category-title{font-family:var(--font-h);font-size:16px;font-weight:800;color:var(--purple-dark);flex:1;transition:var(--transition)}
+    .training-category.open .category-title{color:var(--white)}
+    .category-desc{font-size:13px;color:var(--text-light);transition:var(--transition)}
+    .training-category.open .category-desc{color:rgba(255,255,255,0.6)}
+    .category-count{font-family:var(--font-accent);font-size:10px;font-weight:700;background:var(--purple-pale);color:var(--purple);padding:3px 10px;border-radius:40px;transition:var(--transition)}
+    .training-category.open .category-count{background:rgba(255,179,132,0.2);color:var(--peach)}
+    .category-chevron{font-size:12px;color:var(--text-light);transition:transform 0.3s ease;flex-shrink:0}
+    .training-category.open .category-chevron{transform:rotate(180deg);color:var(--peach)}
+    .category-body{display:none;background:var(--off-white);border-top:1px solid var(--mid-grey)}
+    .training-category.open .category-body{display:block}
+    .category-modules{padding:20px 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .module-card{background:var(--white);border:1px solid var(--mid-grey);border-radius:var(--radius);padding:16px;transition:var(--transition);cursor:pointer}
+    .module-card:hover{border-color:var(--peach-dark);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+    .module-icon{font-size:20px;margin-bottom:8px}
+    .module-title{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+    .module-meta{font-size:11px;color:var(--text-light)}
+    .module-card .module-lock{display:inline-block;background:var(--peach-pale);color:var(--peach-dark);font-size:9px;font-weight:700;padding:2px 8px;border-radius:40px;margin-top:8px;font-family:var(--font-accent);letter-spacing:0.06em;text-transform:uppercase}
+    .module-card .module-available{display:inline-block;background:#e8f5e9;color:#2e7d32;font-size:9px;font-weight:700;padding:2px 8px;border-radius:40px;margin-top:8px;font-family:var(--font-accent);letter-spacing:0.06em;text-transform:uppercase}
+    .category-note{padding:16px 24px;font-size:13px;color:var(--text-light);border-top:1px solid var(--mid-grey);background:var(--white)}
+
+    /* VIDEO */
+    .videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px}
+    .video-card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--mid-grey);transition:var(--transition);cursor:pointer}
+    .video-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+    .video-thumb{height:160px;background:var(--purple-dark);display:flex;align-items:center;justify-content:center;position:relative}
+    .video-play{width:52px;height:52px;background:var(--peach);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;transition:var(--transition)}
+    .video-card:hover .video-play{background:var(--peach-dark);transform:scale(1.1)}
+    .video-body{padding:16px}
+    .video-title{font-family:var(--font-h);font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.4}
+    .video-meta{font-size:12px;color:var(--text-light)}
+
+    /* PRESS */
+    .press-list{margin-top:40px}
+    .press-item{display:flex;align-items:center;gap:24px;padding:20px 0;border-bottom:1px solid var(--mid-grey)}
+    .press-item:last-child{border-bottom:none}
+    .press-date{font-family:var(--font-h);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--peach-dark);flex-shrink:0;width:80px}
+    .press-title{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--purple-dark);flex:1}
+    .press-link{font-size:12px;color:var(--text-light);margin-top:3px}
+
+    /* SOCIAL */
+    .social-section{background:var(--purple-dark);border-radius:var(--radius-lg);padding:48px;margin-top:0;text-align:center}
+    .social-section h3{font-family:var(--font-h);font-size:28px;font-weight:900;color:var(--white);margin-bottom:8px}
+    .social-section p{color:rgba(255,255,255,0.65);font-size:15px;margin-bottom:32px}
+    .social-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+    .social-link{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:40px;padding:11px 22px;font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:0.06em;color:var(--white);transition:var(--transition)}
+    .social-link:hover{background:var(--peach);color:var(--purple-dark);border-color:var(--peach)}
+    .social-icon{font-size:16px}
+
+    /* FOOTER */
+    .footer{background:#161616;color:var(--white);padding:72px 0 0}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;padding-bottom:52px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:28px}
+    .footer-logo-text{font-family:var(--font-h);font-size:22px;font-weight:900;margin-bottom:4px}
+    .footer-logo-text em{font-style:normal;color:var(--peach)}
+    .footer-tagline{font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--peach);margin-bottom:14px}
+    .footer-brand p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75;max-width:300px}
+    .footer-col h4{font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--peach);margin-bottom:14px}
+    .footer-col a{display:block;font-size:13px;color:rgba(255,255,255,0.55);padding:4px 0;transition:var(--transition)}
+    .footer-col a:hover{color:var(--white);padding-left:4px}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:22px 0;font-size:12px;color:rgba(255,255,255,0.3)}
+    .footer-cta{background:var(--peach);color:var(--purple-dark);font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:10px 24px;border-radius:40px;transition:var(--transition)}
+    .footer-cta:hover{background:var(--peach-dark)}
+
+    /* BTN */
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:40px;font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:0.06em;transition:var(--transition);cursor:pointer;border:none;text-decoration:none}
+    .btn-purple{background:var(--purple);color:var(--white)} .btn-purple:hover{background:var(--purple-dark);transform:translateY(-2px)}
+    .btn-outline{background:transparent;color:var(--purple);border:1.5px solid var(--purple)} .btn-outline:hover{background:var(--purple);color:var(--white);transform:translateY(-2px)}
+
+    @media(max-width:1100px){.container{padding:0 32px}.reports-grid{grid-template-columns:1fr 1fr}.blog-featured-grid{grid-template-columns:1fr}.videos-grid{grid-template-columns:1fr 1fr}.category-modules{grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr 1fr;gap:40px}}
+    @media(max-width:768px){.nav{padding:0 24px}.content-tabs{padding:0 24px}.reports-grid{grid-template-columns:1fr}.videos-grid{grid-template-columns:1fr}.category-modules{grid-template-columns:1fr}.press-item{flex-direction:column;align-items:flex-start;gap:8px}}
+    @media(max-width:520px){.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:12px;text-align:center}}
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-logo"><a href="index.html"><img src="images/the-hud-group-hi-res-logo.png" alt="The HuD Group"></a></div>
+    <ul class="nav-links">
+      <li><a href="charity.html">Charity</a></li>
+      <li><a href="corporate.html">Corporate</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="content.html" class="active">Content</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="nav-contribute"><a href="contribute.html">Contribute</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero" style="padding-top:152px;">
+    <div class="page-hero-inner">
+      <div class="overline-hero">Knowledge and Media</div>
+      <h1>Content <span>Hub</span></h1>
+      <p>Reports, training resources, blogs, articles, videos, and press releases from The HuD Group Global movement.</p>
+    </div>
+  </div>
+
+  <!-- STICKY TABS -->
+  <div class="content-tabs" id="contentTabs">
+    <button class="content-tab active" onclick="showTab('reports',this)">📄 Reports <span class="tab-count">3</span></button>
+    <button class="content-tab" onclick="showTab('blog',this)">✍️ Blog &amp; Articles</button>
+    <button class="content-tab" onclick="showTab('training',this)">🎓 Training Resources <span class="tab-count">18</span></button>
+    <button class="content-tab" onclick="showTab('videos',this)">▶ Videos</button>
+    <button class="content-tab" onclick="showTab('press',this)">📰 Press Releases</button>
+    <button class="content-tab" onclick="showTab('social',this)">📱 Social Media</button>
+  </div>
+
+  <!-- ============================================================
+       REPORTS
+       ============================================================ -->
+  <div class="content-panel active" id="panel-reports">
+    <section class="section" style="background:var(--off-white);">
+      <div class="container">
+        <div class="overline">Official Reports</div>
+        <h2 class="section-title">Annual and Programme Reports</h2>
+        <p style="font-size:16px;color:var(--text-light);max-width:600px;margin-bottom:0;">Download and read official reports covering our global operations, programmes, and events.</p>
+        <div class="reports-grid">
+          <div class="report-card">
+            <div class="report-cover purple">
+              <div class="report-year">2025</div>
+              <div class="report-type">Annual Report</div>
+              <div class="report-title-cover">HuD Group Global 2025</div>
+            </div>
+            <div class="report-body">
+              <div class="report-meta">December 2025, Global</div>
+              <p class="report-desc">The complete 2025 annual report covering The Shadrach Fellowship, CEOs Confab, Compass MOU, financial overview, and the 2026 to 2030 vision.</p>
+              <a href="#" class="report-dl">Download PDF</a>
+              <!-- DEVELOPER: Link to uploaded PDF -->
+            </div>
+          </div>
+          <div class="report-card">
+            <div class="report-cover peach">
+              <div class="report-year">TSF</div>
+              <div class="report-type">Programme Report</div>
+              <div class="report-title-cover">Shadrach Fellowship 2025</div>
+            </div>
+            <div class="report-body">
+              <div class="report-meta">December 2025, Programme</div>
+              <p class="report-desc">The full report of the inaugural Shadrach Fellowship cohort including the formation journey, Mid-Year Retreat, awards, graduation, and 2026 induction.</p>
+              <a href="#" class="report-dl">Download PDF</a>
+            </div>
+          </div>
+          <div class="report-card">
+            <div class="report-cover dark">
+              <div class="report-year">CEOs</div>
+              <div class="report-type">Event Report</div>
+              <div class="report-title-cover">CEOs Confab 2025</div>
+            </div>
+            <div class="report-body">
+              <div class="report-meta">November 2025, Global</div>
+              <p class="report-desc">Full three-day proceedings of the 2025 Global CEOs Confab covering strategic planning, the 9P framework, and the 2026 to 2030 movement vision.</p>
+              <a href="#" class="report-dl">Download PDF</a>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:24px;font-size:13px;color:var(--text-light);">Developer note: Upload PDF files to a /reports folder on the server and update the href links above. Add country-level reports as they are produced.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       BLOG AND ARTICLES
+       ============================================================ -->
+  <div class="content-panel" id="panel-blog">
+    <section class="section" style="background:var(--white);">
+      <div class="container">
+        <div class="overline">Blog and Articles</div>
+        <h2 class="section-title">Insights from the Movement</h2>
+        <div class="blog-featured-grid">
+          <div class="blog-featured">
+            <div class="blog-featured-img">📖</div>
+            <div class="blog-featured-body">
+              <span class="blog-tag">Leadership</span>
+              <div class="blog-title">What the Shadrach Fellows Taught Us About Formation in 2025</div>
+              <p class="blog-excerpt">Twelve months. Nine lives transformed. As we reflect on the inaugural Shadrach Fellowship cohort, here are the formation insights that will shape our programme for years to come.</p>
+              <div class="blog-meta">By Dr. Yaw Perbi, December 2025, 8 min read</div>
+            </div>
+          </div>
+          <div class="blog-list">
+            <div class="blog-item">
+              <div class="blog-item-thumb purple">📋</div>
+              <div><div class="blog-item-title">The 9P Framework: A Vision for 2026 to 2030</div><div class="blog-item-meta">Strategy, November 2025</div></div>
+            </div>
+            <div class="blog-item">
+              <div class="blog-item-thumb peach">🤝</div>
+              <div><div class="blog-item-title">Why We Partnered with Compass Financial Ministry</div><div class="blog-item-meta">Partnerships, December 2025</div></div>
+            </div>
+            <div class="blog-item">
+              <div class="blog-item-thumb purple">🌍</div>
+              <div><div class="blog-item-title">Raising Leaders in the Furnace: The Story Behind TSF</div><div class="blog-item-meta">Community, August 2025</div></div>
+            </div>
+            <div class="blog-item">
+              <div class="blog-item-thumb peach">⛺</div>
+              <div><div class="blog-item-title">From Mamfe to the Nations: The Mid-Year Retreat</div><div class="blog-item-meta">Fellowship, July 2025</div></div>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:32px;font-size:13px;color:var(--text-light);">Developer note: Connect this section to your WordPress blog posts using the REST API, or manually update each card when new articles are published.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       TRAINING RESOURCES
+       ============================================================ -->
+  <div class="content-panel" id="panel-training">
+    <section class="section training-section">
+      <div class="container">
+        <div class="overline">Training Resources</div>
+        <h2 class="section-title">The HuD Group Training Library</h2>
+        <div class="training-intro">
+          <p>The HuD Group has developed and curated a comprehensive library of training resources used across our leadership development programmes, including The Shadrach Fellowship, EQUIP, and the CEOs Confab. Click any category to explore its modules.</p>
+        </div>
+
+        <!-- DeepLEAD -->
+        <div class="training-category" id="cat-deeplead">
+          <div class="category-header" onclick="toggleCategory('cat-deeplead')">
+            <div class="category-icon" style="background:var(--purple-pale);">🧭</div>
+            <div style="flex:1;">
+              <div class="category-title">DeepLEAD</div>
+              <div class="category-desc">Authentic leadership development using Dr. Yaw Perbi's DeepLEAD framework. Used in the TSF Leadership Formation quarter.</div>
+            </div>
+            <span class="category-count">8 Modules</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">🎯</div><div class="module-title">DL 1: The Person</div><div class="module-meta">Self-awareness and authentic leadership</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">💬</div><div class="module-title">DL 2: The Story</div><div class="module-meta">Leading from your life narrative</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🌱</div><div class="module-title">DL 3: The Values</div><div class="module-meta">Character and values-based leadership</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🔭</div><div class="module-title">DL 4: The Vision</div><div class="module-meta">Casting and communicating vision</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🤝</div><div class="module-title">DL 5: The Team</div><div class="module-meta">Building and leading effective teams</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">📈</div><div class="module-title">DL 6: The Growth</div><div class="module-meta">Lifelong learning and development</div><span class="module-lock">Coming Soon</span></div>
+              <div class="module-card"><div class="module-icon">🌍</div><div class="module-title">DL 7: The Impact</div><div class="module-meta">Leading for lasting societal change</div><span class="module-lock">Coming Soon</span></div>
+              <div class="module-card"><div class="module-icon">🕊</div><div class="module-title">DL 8: The Legacy</div><div class="module-meta">Succession and generational impact</div><span class="module-lock">Coming Soon</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DISC -->
+        <div class="training-category" id="cat-disc">
+          <div class="category-header" onclick="toggleCategory('cat-disc')">
+            <div class="category-icon" style="background:#e8f5e9;">🧠</div>
+            <div style="flex:1;">
+              <div class="category-title">DISC Assessment</div>
+              <div class="category-desc">Self-awareness and behavioural assessment tool. Used in Q1 Spiritual Formation to help fellows understand how they are wired.</div>
+            </div>
+            <span class="category-count">2 Modules</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">🔍</div><div class="module-title">DISC 1: Introduction</div><div class="module-meta">Understanding the four DISC profiles</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">💡</div><div class="module-title">DISC 2: Application</div><div class="module-meta">Sharing and applying your profile in community</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emotional Intelligence / EHS -->
+        <div class="training-category" id="cat-ehs">
+          <div class="category-header" onclick="toggleCategory('cat-ehs')">
+            <div class="category-icon" style="background:#fce4ec;">❤️</div>
+            <div style="flex:1;">
+              <div class="category-title">Emotionally Healthy Spirituality (EHS)</div>
+              <div class="category-desc">Peter Scazzero's EHS framework integrated across all four quarters of the Fellowship. Covers emotional health, spiritual formation, and depth.</div>
+            </div>
+            <span class="category-count">8 Sessions</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">🌊</div><div class="module-title">EHS 1: The Problem</div><div class="module-meta">Shallow Christianity and the call to go deeper</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🪞</div><div class="module-title">EHS 2: Knowing Yourself</div><div class="module-meta">Self-awareness as a path to knowing God</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🔙</div><div class="module-title">EHS 3: Going Back</div><div class="module-meta">Breaking the power of the past</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🏔</div><div class="module-title">EHS 4 and 5: Retreat Sessions</div><div class="module-meta">Deeper formation at the P3 Mid-Year Retreat</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🕰</div><div class="module-title">EHS 6: Sabbath</div><div class="module-meta">Embracing rhythm, rest, and delight</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">✝️</div><div class="module-title">EHS 7 and 8: Completion</div><div class="module-meta">The Daily Office and Office of the Dead</div><span class="module-lock">Coming Soon</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Goal Setting -->
+        <div class="training-category" id="cat-goals">
+          <div class="category-header" onclick="toggleCategory('cat-goals')">
+            <div class="category-icon" style="background:var(--peach-pale);">🎯</div>
+            <div style="flex:1;">
+              <div class="category-title">Goal-Setting</div>
+              <div class="category-desc">Practical frameworks for setting and achieving God-aligned personal and professional goals. Integrated in Q1 of the Fellowship.</div>
+            </div>
+            <span class="category-count">2 Sessions</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">📌</div><div class="module-title">Goal-Setting Introduction</div><div class="module-meta">Frameworks for purposeful goal-setting</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🗓</div><div class="module-title">Goal Sharing</div><div class="module-meta">Accountability and community review of goals</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Maxwell / 21 Irrefutable Laws -->
+        <div class="training-category" id="cat-maxwell">
+          <div class="category-header" onclick="toggleCategory('cat-maxwell')">
+            <div class="category-icon" style="background:#e3f2fd;">📚</div>
+            <div style="flex:1;">
+              <div class="category-title">Maxwell Leadership (21 Irrefutable Laws)</div>
+              <div class="category-desc">John Maxwell's globally recognised leadership curriculum, delivered through the HuD Group's EQUIP partnership. Foundational leadership principles.</div>
+            </div>
+            <span class="category-count">Multiple Modules</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">👑</div><div class="module-title">The Law of the Lid</div><div class="module-meta">Leadership ability determines effectiveness</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🌀</div><div class="module-title">The Law of Influence</div><div class="module-meta">True leadership is influence, nothing more</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🌱</div><div class="module-title">The Law of Process</div><div class="module-meta">Leadership develops daily, not in a day</div><span class="module-available">Available</span></div>
+            </div>
+            <div class="category-note">Developer note: Add all 21 laws as module cards following the same pattern above.</div>
+          </div>
+        </div>
+
+        <!-- Million Leaders Mandate (MLM) -->
+        <div class="training-category" id="cat-mlm">
+          <div class="category-header" onclick="toggleCategory('cat-mlm')">
+            <div class="category-icon" style="background:#f3e5f5;">✊</div>
+            <div style="flex:1;">
+              <div class="category-title">Million Leaders Mandate (MLM)</div>
+              <div class="category-desc">A global leadership training initiative focused on raising transformational leaders. Used in Q3 Leadership Formation of the Fellowship.</div>
+            </div>
+            <span class="category-count">6 Sessions</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">🏛</div><div class="module-title">MLM 1: Integrity</div><div class="module-meta">The foundation of credible leadership</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🤲</div><div class="module-title">MLM 2: Servanthood</div><div class="module-meta">Leading through service to others</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">📣</div><div class="module-title">MLM 3: Generosity</div><div class="module-meta">Releasing resources for kingdom impact</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🌿</div><div class="module-title">MLM 4: Discipleship</div><div class="module-meta">Multiplying leaders through intentional discipleship</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🔥</div><div class="module-title">MLM 5: Passion</div><div class="module-meta">Sustaining fervency for God and mission</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🏆</div><div class="module-title">MLM 6: Excellence</div><div class="module-meta">Pursuing the highest standard for God</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HuD Orientation -->
+        <div class="training-category" id="cat-orientation">
+          <div class="category-header" onclick="toggleCategory('cat-orientation')">
+            <div class="category-icon" style="background:var(--purple-pale);">🏠</div>
+            <div style="flex:1;">
+              <div class="category-title">HuD Orientation</div>
+              <div class="category-desc">Foundational orientation training for new HuD Group members, country chapters, and leadership teams.</div>
+            </div>
+            <span class="category-count">4 Sessions</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">🌐</div><div class="module-title">HuD Vision and Mission</div><div class="module-meta">Understanding the HuD Group identity and calling</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🗺</div><div class="module-title">Our 9P Strategy</div><div class="module-meta">The 2026 to 2030 strategic framework</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🤝</div><div class="module-title">Culture and Values</div><div class="module-meta">How we work, relate, and serve together</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">📋</div><div class="module-title">Operations Overview</div><div class="module-meta">Structure, roles, and country chapter operations</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WWTD / WTTD -->
+        <div class="training-category" id="cat-wwtd">
+          <div class="category-header" onclick="toggleCategory('cat-wwtd')">
+            <div class="category-icon" style="background:#e8f5e9;">✝️</div>
+            <div style="flex:1;">
+              <div class="category-title">What Would the Trinity Do? (WTTD)</div>
+              <div class="category-desc">A unique framework helping leaders develop a Trinitarian lens for decision-making, relationships, and mission. Used in Q1 of the Fellowship.</div>
+            </div>
+            <span class="category-count">3 Sessions</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">👁</div><div class="module-title">WTTD 1: God-Awareness</div><div class="module-meta">Cultivating awareness of God in daily life</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🔁</div><div class="module-title">WTTD 2: Trinitarian Leadership</div><div class="module-meta">Leading in community, just as the Trinity is community</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🌍</div><div class="module-title">WTTD 3: Missional Living</div><div class="module-meta">The sent life: living as a missionary in your context</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Operation Purpose -->
+        <div class="training-category" id="cat-purpose">
+          <div class="category-header" onclick="toggleCategory('cat-purpose')">
+            <div class="category-icon" style="background:var(--peach-pale);">🧭</div>
+            <div style="flex:1;">
+              <div class="category-title">Operation Purpose</div>
+              <div class="category-desc">Purpose discovery training helping leaders articulate their God-given calling and compose personal vision and mission statements.</div>
+            </div>
+            <span class="category-count">3 Sessions</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">📝</div><div class="module-title">Purpose Statement 1</div><div class="module-meta">Discovering the threads of your calling</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">✍️</div><div class="module-title">Purpose Statement 2</div><div class="module-meta">Drafting your personal purpose statement</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🎤</div><div class="module-title">Purpose Statement 3</div><div class="module-meta">Presenting and refining your purpose with the community</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Africa to the Rest -->
+        <div class="training-category" id="cat-a2r">
+          <div class="category-header" onclick="toggleCategory('cat-a2r')">
+            <div class="category-icon" style="background:#e3f2fd;">🌍</div>
+            <div style="flex:1;">
+              <div class="category-title">Africa to the Rest (A2R)</div>
+              <div class="category-desc">Missiological training focused on Africa's role in global missions. Used in Q4 Communal Formation, covering church-planting and unreached people groups.</div>
+            </div>
+            <span class="category-count">7 Sessions</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">🌐</div><div class="module-title">A2R 1: The Mandate</div><div class="module-meta">Africa in the global mission of God</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">⛪</div><div class="module-title">A2R 2: The Church</div><div class="module-meta">The African church and its global calling</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">👥</div><div class="module-title">A2R 3: Unreached Peoples</div><div class="module-meta">Identifying and reaching unreached people groups</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">📖</div><div class="module-title">A2R 4: Discovery Bible</div><div class="module-meta">Community Bible study as a missional tool</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🏗</div><div class="module-title">A2R 5 to 7: Church Planting</div><div class="module-meta">Principles and practice of planting disciple-making movements</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- YOUTHPOWER -->
+        <div class="training-category" id="cat-youth">
+          <div class="category-header" onclick="toggleCategory('cat-youth')">
+            <div class="category-icon" style="background:#fff9c4;">⚡</div>
+            <div style="flex:1;">
+              <div class="category-title">YOUTHPOWER!</div>
+              <div class="category-desc">A dynamic youth leadership training programme equipping young people with the tools to lead, serve, and transform their communities.</div>
+            </div>
+            <span class="category-count">Multiple Modules</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">💥</div><div class="module-title">YP 1: Identity</div><div class="module-meta">Who you are in Christ as a young leader</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🚀</div><div class="module-title">YP 2: Purpose</div><div class="module-meta">Finding and fulfilling your God-given purpose</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🌟</div><div class="module-title">YP 3: Influence</div><div class="module-meta">Building influence for kingdom impact</div><span class="module-available">Available</span></div>
+            </div>
+            <div class="category-note">Developer note: Add remaining YOUTHPOWER! modules as they are developed.</div>
+          </div>
+        </div>
+
+        <!-- Life Long Learning -->
+        <div class="training-category" id="cat-lifelong">
+          <div class="category-header" onclick="toggleCategory('cat-lifelong')">
+            <div class="category-icon" style="background:var(--purple-pale);">📚</div>
+            <div style="flex:1;">
+              <div class="category-title">Life Long Learning</div>
+              <div class="category-desc">Resources and frameworks for cultivating a culture of continuous growth, reading, reflection, and development as a leader.</div>
+            </div>
+            <span class="category-count">3 Modules</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">📖</div><div class="module-title">Reading as a Leader</div><div class="module-meta">Building a sustainable reading life</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🔄</div><div class="module-title">Reflective Practice</div><div class="module-meta">Journalling, review, and intentional reflection</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🧩</div><div class="module-title">Personal Development Plan</div><div class="module-meta">Designing your own growth pathway</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preparing a Personal Vision -->
+        <div class="training-category" id="cat-vision">
+          <div class="category-header" onclick="toggleCategory('cat-vision')">
+            <div class="category-icon" style="background:var(--peach-pale);">🔭</div>
+            <div style="flex:1;">
+              <div class="category-title">Preparing a Personal Vision</div>
+              <div class="category-desc">Step-by-step training to help leaders discern, articulate, and pursue a compelling personal vision rooted in their God-given calling.</div>
+            </div>
+            <span class="category-count">2 Modules</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">🌄</div><div class="module-title">Discerning Your Vision</div><div class="module-meta">Listening to God about your preferred future</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🖊</div><div class="module-title">Writing Your Vision Statement</div><div class="module-meta">Crafting a clear, compelling personal vision</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Planning -->
+        <div class="training-category" id="cat-planning">
+          <div class="category-header" onclick="toggleCategory('cat-planning')">
+            <div class="category-icon" style="background:#e8f5e9;">📅</div>
+            <div style="flex:1;">
+              <div class="category-title">Weekly Planning and HuDdles</div>
+              <div class="category-desc">Practical systems for weekly planning, running effective HuDdle accountability meetings, and maintaining a healthy leadership rhythm.</div>
+            </div>
+            <span class="category-count">2 Modules</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">🗓</div><div class="module-title">Weekly Planning System</div><div class="module-meta">Structuring your week with purpose and intentionality</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🔁</div><div class="module-title">How to Run a HuDdle</div><div class="module-meta">Leading productive accountability check-ins</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Raising Friends and Partners -->
+        <div class="training-category" id="cat-partners">
+          <div class="category-header" onclick="toggleCategory('cat-partners')">
+            <div class="category-icon" style="background:#fce4ec;">💛</div>
+            <div style="flex:1;">
+              <div class="category-title">Raising Friends and Partners</div>
+              <div class="category-desc">Training on building a sustainable network of financial partners and ministry friends who support the vision God has given you.</div>
+            </div>
+            <span class="category-count">3 Modules</span>
+            <span class="category-chevron">▼</span>
+          </div>
+          <div class="category-body">
+            <div class="category-modules">
+              <div class="module-card"><div class="module-icon">💬</div><div class="module-title">Casting Vision to Partners</div><div class="module-meta">Communicating your mission compellingly</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">🤲</div><div class="module-title">Asking for Support</div><div class="module-meta">The theology and practice of asking</div><span class="module-available">Available</span></div>
+              <div class="module-card"><div class="module-icon">💌</div><div class="module-title">Stewarding Relationships</div><div class="module-meta">Long-term partner care and communication</div><span class="module-available">Available</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;background:var(--purple-pale);border-radius:var(--radius);padding:20px 24px;">
+          <p style="font-size:14px;color:var(--purple-dark);">More training resources are being added regularly. Contact <a href="mailto:engage@thehudgroupglobal.org" style="color:var(--purple);font-weight:700;">engage@thehudgroupglobal.org</a> to request access to specific training materials or to enquire about facilitating these trainings for your team.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       VIDEOS
+       ============================================================ -->
+  <div class="content-panel" id="panel-videos">
+    <section class="section" style="background:var(--purple-dark);">
+      <div class="container">
+        <div class="overline light" style="color:var(--peach);">Video Content</div>
+        <h2 class="section-title white">Watch and Learn</h2>
+        <p style="font-size:16px;color:rgba(255,255,255,0.65);margin-bottom:40px;">Recaps, teachings, testimonies, and event highlights from The HuD Group.</p>
+        <div class="videos-grid">
+          <div class="video-card"><div class="video-thumb"><div class="video-play">&#9654;</div></div><div class="video-body"><div class="video-title">TSF 2025 Graduation Ceremony Highlights</div><div class="video-meta">December 2025, YouTube</div></div></div>
+          <div class="video-card"><div class="video-thumb"><div class="video-play">&#9654;</div></div><div class="video-body"><div class="video-title">Global CEOs Confab 2025, Opening Session</div><div class="video-meta">November 2025, YouTube</div></div></div>
+          <div class="video-card"><div class="video-thumb"><div class="video-play">&#9654;</div></div><div class="video-body"><div class="video-title">Mid-Year Retreat Recap, Mamfe 2025</div><div class="video-meta">July 2025, YouTube</div></div></div>
+          <div class="video-card"><div class="video-thumb"><div class="video-play">&#9654;</div></div><div class="video-body"><div class="video-title">What is The Shadrach Fellowship?</div><div class="video-meta">January 2025, YouTube</div></div></div>
+          <div class="video-card"><div class="video-thumb"><div class="video-play">&#9654;</div></div><div class="video-body"><div class="video-title">Dr. Yaw Perbi: The HuD Vision for 2026 to 2030</div><div class="video-meta">December 2025, YouTube</div></div></div>
+          <div class="video-card"><div class="video-thumb"><div class="video-play">&#9654;</div></div><div class="video-body"><div class="video-title">TSF 2025 Induction Ceremony</div><div class="video-meta">December 2024, YouTube</div></div></div>
+        </div>
+        <div style="text-align:center;margin-top:40px;">
+          <a href="https://youtube.com/@thehudgroupglobal" target="_blank" class="btn btn-purple" style="background:var(--peach);color:var(--purple-dark);">View All on YouTube</a>
+        </div>
+        <p style="text-align:center;margin-top:16px;color:rgba(255,255,255,0.35);font-size:13px;">Developer note: Replace video thumb backgrounds with YouTube thumbnail images using https://img.youtube.com/vi/VIDEO_ID/hqdefault.jpg and link each card to the YouTube video.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       PRESS RELEASES
+       ============================================================ -->
+  <div class="content-panel" id="panel-press">
+    <section class="section" style="background:var(--white);">
+      <div class="container">
+        <div class="overline">Press and News</div>
+        <h2 class="section-title">Press Releases</h2>
+        <div class="press-list">
+          <div class="press-item"><div class="press-date">Dec 2025</div><div><div class="press-title">The HuD Group Graduates Inaugural Shadrach Fellowship Cohort</div><div class="press-link">Press Release, PDF</div></div><a href="#" class="btn btn-outline">Download</a></div>
+          <div class="press-item"><div class="press-date">Dec 2025</div><div><div class="press-title">MOU Signed: HuD Group Becomes Africa Affiliate of Compass Financial Ministry</div><div class="press-link">Press Release, PDF</div></div><a href="#" class="btn btn-outline">Download</a></div>
+          <div class="press-item"><div class="press-date">Nov 2025</div><div><div class="press-title">The HuD Group Unveils 2026 to 2030 Strategic Framework at Global CEOs Confab</div><div class="press-link">Press Release, PDF</div></div><a href="#" class="btn btn-outline">Download</a></div>
+          <div class="press-item"><div class="press-date">Dec 2024</div><div><div class="press-title">The HuD Group Launches The Shadrach Fellowship: A New Era of Missional Discipleship</div><div class="press-link">Press Release, PDF</div></div><a href="#" class="btn btn-outline">Download</a></div>
+        </div>
+        <p style="margin-top:32px;font-size:13px;color:var(--text-light);">Developer note: Upload press release PDFs and link the Download buttons. Add new releases as they are issued.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       SOCIAL MEDIA
+       ============================================================ -->
+  <div class="content-panel" id="panel-social">
+    <section class="section" style="background:var(--off-white);">
+      <div class="container">
+        <div class="overline">Follow the Movement</div>
+        <h2 class="section-title">Stay Connected</h2>
+        <p style="font-size:16px;color:var(--text-light);max-width:560px;margin-bottom:48px;">Follow The HuD Group across our social channels for updates, teachings, testimonies, and community highlights.</p>
+        <div class="social-section">
+          <h3>Find us everywhere</h3>
+          <p>Join thousands of leaders following the movement across our platforms.</p>
+          <div class="social-links">
+            <a href="https://youtube.com/@thehudgroupglobal" target="_blank" class="social-link"><span class="social-icon">▶</span> YouTube</a>
+            <a href="https://linkedin.com/company/thehudgroup" target="_blank" class="social-link"><span class="social-icon">in</span> LinkedIn</a>
+            <a href="https://instagram.com/thehudgroupglobal" target="_blank" class="social-link"><span class="social-icon">◎</span> Instagram</a>
+            <a href="https://facebook.com/thehudgroupglobal" target="_blank" class="social-link"><span class="social-icon">f</span> Facebook</a>
+            <a href="https://twitter.com/thehudgroupglobal" target="_blank" class="social-link"><span class="social-icon">𝕏</span> Twitter/X</a>
+          </div>
+        </div>
+        <p style="margin-top:24px;font-size:13px;color:var(--text-light);">Developer note: Update all social media handles with the correct URLs. Consider embedding a social feed widget here.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-text">The HuD <em>Group</em></div>
+          <div class="footer-tagline">Equipping Leaders. Transforming Nations.</div>
+          <p>A Christian international leadership development network operating across 30 countries, with offices in Montreal and Accra.</p>
+        </div>
+        <div class="footer-col"><h4>Organisation</h4><a href="charity.html">Charity</a><a href="corporate.html">Corporate</a><a href="countries.html">Countries</a><a href="contact.html">Leadership</a><a href="contact.html">Contact Us</a></div>
+        <div class="footer-col"><h4>Content</h4><a href="#" onclick="showTabByName('reports')">Reports</a><a href="#" onclick="showTabByName('blog')">Blog and Articles</a><a href="#" onclick="showTabByName('training')">Training Resources</a><a href="#" onclick="showTabByName('videos')">Videos</a><a href="#" onclick="showTabByName('press')">Press Releases</a></div>
+        <div class="footer-col"><h4>Connect</h4><a href="mailto:engage@thehudgroupglobal.org">engage@thehudgroupglobal.org</a><a href="https://thehudgroupglobal.org" target="_blank">thehudgroupglobal.org</a><a href="contribute.html">Partner With Us</a><a href="https://www.canadahelps.org/en/charities/the-hud-group-le-groupe-hud/" target="_blank">Give via CanadaHelps</a></div>
+      </div>
+      <div class="footer-bottom">
+        <span>Copyright 2025 The HuD Group Global. All rights reserved. Registered Charity, Canada</span>
+        <a href="contribute.html" class="footer-cta">Give Now</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function showTab(panelId, btn) {
+      document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.content-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + panelId).classList.add('active');
+      if (btn) btn.classList.add('active');
+      document.getElementById('contentTabs').scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+
+    function showTabByName(panelId) {
+      const tabs = document.querySelectorAll('.content-tab');
+      const panels = document.querySelectorAll('.content-panel');
+      panels.forEach(p => p.classList.remove('active'));
+      tabs.forEach(b => b.classList.remove('active'));
+      document.getElementById('panel-' + panelId).classList.add('active');
+    }
+
+    function toggleCategory(id) {
+      const cat = document.getElementById(id);
+      const wasOpen = cat.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.training-category').forEach(c => c.classList.remove('open'));
+      // Open clicked if it was closed
+      if (!wasOpen) cat.classList.add('open');
+    }
+
+    // Handle URL hash on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#','');
+      const validPanels = ['reports','blog','training','videos','press','social'];
+      if (validPanels.includes(hash)) {
+        const tabs = document.querySelectorAll('.content-tab');
+        const idx = validPanels.indexOf(hash);
+        if (tabs[idx]) showTab(hash, tabs[idx]);
+      }
+    });
+  </script>
+</body>
+</html>
