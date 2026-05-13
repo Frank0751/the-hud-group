@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Content | The HuD Group Global</title>
   <meta name="description" content="Explore reports, blogs, articles, training resources, and media from The HuD Group Global.">
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&family=Lato:wght@300;400;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap" rel="stylesheet">
   <style>
     :root {
       --purple:#423b7d; --purple-dark:#2d2860; --purple-mid:#5B317B; --purple-light:#7a6fb0; --purple-pale:#f0eef8;
       --peach:#FFB384; --peach-dark:#e89060; --peach-pale:#fff5ee; --orange:#F4A623;
       --white:#ffffff; --off-white:#faf9f7; --light-grey:#f2f0ed; --mid-grey:#eaeaea;
       --text:#1a1a2e; --text-light:#5a5a7a;
-      --font-h:'Raleway',sans-serif; --font-body:'Lato',sans-serif; --font-accent:'Montserrat',sans-serif;
+      --font-h:'Playfair Display',serif; --font-body:'Satoshi',sans-serif; --font-accent:'Satoshi',sans-serif;
       --nav-h:80px; --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
       --shadow-sm:0 2px 12px rgba(66,59,125,0.08); --shadow-md:0 8px 32px rgba(66,59,125,0.14); --shadow-lg:0 20px 60px rgba(66,59,125,0.20);
       --radius:12px; --radius-lg:20px;
@@ -32,14 +33,14 @@
     .nav-contribute a:hover{background:var(--peach-dark)!important;transform:translateY(-1px)}
 
     /* PAGE HERO */
-    .page-hero{background:var(--purple-dark);padding:120px 48px 80px;position:relative;overflow:hidden}
+    .page-hero{background:var(--purple-dark);min-height:100vh;padding:var(--nav-h) 48px 80px;position:relative;overflow:hidden;display:flex;align-items:center}
     .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(90,62,158,0.5) 0%,transparent 70%)}
-    .page-hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+    .page-hero-inner{max-width:1280px;width:100%;margin:0 auto;position:relative;z-index:1}
     .page-hero h1{font-family:var(--font-h);font-size:clamp(36px,5vw,64px);font-weight:900;color:var(--white);margin-bottom:14px;line-height:1.05;letter-spacing:-0.02em}
     .page-hero h1 span{color:var(--peach)}
     .page-hero p{font-size:18px;color:rgba(255,255,255,0.70);max-width:560px;line-height:1.7}
     .overline-hero{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--peach);display:flex;align-items:center;gap:10px;margin-bottom:16px}
-    .overline-hero::before{content:'';display:block;width:24px;height:2px;background:var(--peach)}
+    .overline-hero::before{display:none}
 
     /* STICKY TABS */
     .content-tabs{background:var(--white);border-bottom:2px solid var(--mid-grey);position:sticky;top:var(--nav-h);z-index:100;display:flex;overflow-x:auto;padding:0 48px}
@@ -53,7 +54,7 @@
     .section{padding:72px 0} .container{max-width:1280px;margin:0 auto;padding:0 48px}
     .content-panel{display:none} .content-panel.active{display:block}
     .overline{display:flex;align-items:center;gap:10px;font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:14px}
-    .overline::before{content:'';display:block;width:24px;height:2px;background:var(--peach-dark);flex-shrink:0}
+    .overline::before{display:none}
     h2.section-title{font-family:var(--font-h);font-size:clamp(24px,3.5vw,44px);font-weight:900;line-height:1.1;letter-spacing:-0.02em;color:var(--purple-dark);margin-bottom:16px}
 
     /* REPORT CARDS */
@@ -194,7 +195,7 @@
   </nav>
 
   <!-- PAGE HERO -->
-  <div class="page-hero" style="padding-top:152px;">
+  <div class="page-hero">
     <div class="page-hero-inner">
       <div class="overline-hero">Knowledge and Media</div>
       <h1>Content <span>Hub</span></h1>

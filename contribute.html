@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contribute | The HuD Group Global</title>
   <meta name="description" content="Partner with The HuD Group Global. Every gift fuels a movement raising Christ-centred leaders across 30 nations.">
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap" rel="stylesheet">
   <style>
   :root {
     --purple:       #423b7d;
@@ -24,9 +25,9 @@
     --mid-grey:     #eaeaea;
     --text:         #1a1a2e;
     --text-light:   #5a5a7a;
-    --font-h:       'Raleway', sans-serif;
-    --font-body:    'Lato', sans-serif;
-    --font-accent:  'Montserrat', sans-serif;
+    --font-h:       'Playfair Display', serif;
+    --font-body:    'Satoshi', sans-serif;
+    --font-accent:  'Satoshi', sans-serif;
     --nav-h:        80px;
     --transition:   all 0.32s cubic-bezier(0.4,0,0.2,1);
     --shadow-sm:    0 2px 12px rgba(66,59,125,0.08);
@@ -67,7 +68,7 @@
   .section-sm { padding: 64px 0; }
   .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
   .overline { display: flex; align-items: center; gap: 10px; font-family: var(--font-accent); font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--peach-dark); margin-bottom: 14px; }
-  .overline::before { content: ''; display: block; width: 24px; height: 2px; background: var(--peach-dark); flex-shrink: 0; }
+  .overline::before { display: none; }
   .overline.light { color: var(--peach); } .overline.light::before { background: var(--peach); }
   .overline.center { justify-content: center; }
   h2.section-title { font-family: var(--font-h); font-size: clamp(28px, 4vw, 50px); font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; color: var(--purple-dark); margin-bottom: 16px; }
@@ -77,15 +78,15 @@
   .section-lead.center { text-align: center; margin: 0 auto; }
 
   /* PAGE HERO (for inner pages) */
-  .page-hero { background: var(--purple-dark); padding: 152px 48px 80px; position: relative; overflow: hidden; }
+  .page-hero { background: var(--purple-dark); min-height: 100vh; padding: var(--nav-h) 48px 80px; position: relative; overflow: hidden; display: flex; align-items: center; }
   .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 30% 50%, rgba(90,62,158,0.6), transparent 70%); }
   .page-hero::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,179,132,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,179,132,0.04) 1px, transparent 1px); background-size: 48px 48px; }
-  .page-hero-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+  .page-hero-inner { max-width: 1280px; width: 100%; margin: 0 auto; position: relative; z-index: 1; }
   .page-hero h1 { font-family: var(--font-h); font-size: clamp(36px,5vw,68px); font-weight: 900; color: var(--white); margin-bottom: 16px; line-height: 1.05; letter-spacing: -0.025em; }
   .page-hero h1 em { font-style: normal; color: var(--peach); }
   .page-hero p { font-size: 18px; color: rgba(255,255,255,0.68); max-width: 560px; line-height: 1.75; }
   .ph-overline { font-family: var(--font-accent); font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--peach); display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-  .ph-overline::before { content: ''; display: block; width: 24px; height: 2px; background: var(--peach); }
+  .ph-overline::before { display: none; }
 
   /* CARD SYSTEM */
   .card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--mid-grey); overflow: hidden; transition: var(--transition); }
