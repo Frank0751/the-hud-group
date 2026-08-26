@@ -116,15 +116,20 @@ The exact original text must appear:
 - "Founded in 2003 by Dr. Yaw Perbi and 7 co-founders"
 - Four milestone cards: 2003 / 2010 / 2021 / 2025
 
-### 4. 6P STRATEGY (off-white background)
-The HuD Group logo (`images/the-hud-group-hi-res-logo.png`) as a watermark/background element
-Six cards using the local icon images from the images/ folder:
+### 4. 9P STRATEGY (off-white background)
+Updated from the original 6P Strategy to match the 2026-2030 "Dreaming and Visioning" strategic
+plan, which expanded the framework to nine pillars. The HuD Group logo
+(`images/the-hud-group-hi-res-logo.png`) is used as a watermark/background element.
+Nine cards using the local icon images from the images/ folder:
 - 01 PREVAILING — **Prayer** — icon: cartoon-hand-drawn-red-prayer image
 - 02 INSPIRATIONAL — **People** — icon: 001-voluntary image
 - 03 EMPOWERING — **Programs** — icon: 016-charity image
 - 04 PARADIGM-SHIFTING — **Products** — icon: 020-love image
 - 05 TRANSFORMATIONAL — **Places** — icon: 022-map-location image
 - 06 IMPACTFUL — **Projects** — icon: 021-charity image
+- 07 COLLABORATIVE — **Partnerships** — icon: partnerships-icon.svg
+- 08 FAITHFUL — **Pennies** — icon: pennies-icon.svg
+- 09 ACCOUNTABLE — **Policies** — icon: policies-icon.svg
 
 ### 5. DIVISIONS (white background)
 Two side-by-side cards: HuD Charity and HuD Consult
@@ -157,6 +162,8 @@ Three book cards: A2R, Disciple Ship, Other Publications
 
 - **Kwiverr Formation Konstant section background must be GREEN (#2d5a2d)**
 - The section reflects the Kwiverr brand which uses green (matching the K diagram)
+- The diagram itself is the original graphic `images/kwiverr-formation-konstant.png`
+  (© 2022 Yaw Perbi) displayed as-is, not a CSS recreation — keep it original
 - Applications badge: "2027 Applications Open in September" (NOT accepting now)
 - TSF 2026 has exactly 12 core fellows
 - TSF 2025 has exactly 9 graduates (Cohort 1)
