@@ -10,30 +10,30 @@
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap" rel="stylesheet">
   <style>
   :root {
-    --purple:       #423b7d;
-    --purple-dark:  #2d2860;
-    --purple-mid:   #5B317B;
-    --purple-light: #7a6fb0;
-    --purple-pale:  #f0eef8;
-    --peach:        #FFB384;
-    --peach-dark:   #e89060;
-    --peach-pale:   #fff5ee;
-    --orange:       #F4A623;
+    --purple:       #541854;
+    --purple-dark:  #320c32;
+    --purple-mid:   #7a297a;
+    --purple-light: #b668b6;
+    --purple-pale:  #fbf4fb;
+    --peach:        #ffb866;
+    --peach-dark:   #df6e0c;
+    --peach-pale:   #fff3e5;
+    --orange:       #fc9018;
     --green:        #2e7d32;
     --white:        #ffffff;
     --off-white:    #faf9f7;
     --light-grey:   #f2f0ed;
     --mid-grey:     #eaeaea;
-    --text:         #1a1a2e;
-    --text-light:   #5a5a7a;
+    --text:         #1a1420;
+    --text-light:   #6b5a68;
     --font-h:       'Playfair Display', serif;
     --font-body:    'Satoshi', sans-serif;
     --font-accent:  'Satoshi', sans-serif;
     --nav-h:        80px;
     --transition:   all 0.32s cubic-bezier(0.4,0,0.2,1);
-    --shadow-sm:    0 2px 12px rgba(66,59,125,0.08);
-    --shadow-md:    0 8px 32px rgba(66,59,125,0.14);
-    --shadow-lg:    0 20px 60px rgba(66,59,125,0.20);
+    --shadow-sm:    0 2px 12px rgba(84,24,84,0.08);
+    --shadow-md:    0 8px 32px rgba(84,24,84,0.14);
+    --shadow-lg:    0 20px 60px rgba(84,24,84,0.20);
     --radius:       12px;
     --radius-lg:    20px;
   }
@@ -51,13 +51,13 @@
   .nav-links a { font-family: var(--font-h); font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; color: #555; padding: 8px 13px; border-radius: 6px; transition: var(--transition); }
   .nav-links a:hover, .nav-links a.active { color: var(--purple); background: var(--purple-pale); }
   .nav-contribute a { background: var(--peach) !important; color: var(--purple-dark) !important; border-radius: 40px !important; font-weight: 700 !important; padding: 9px 20px !important; }
-  .nav-contribute a:hover { background: var(--peach-dark) !important; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,140,80,0.4) !important; }
+  .nav-contribute a:hover { background: var(--peach-dark) !important; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(252,144,24,0.4) !important; }
   .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
   .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: var(--transition); }
 
   /* BUTTONS */
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 40px; font-family: var(--font-h); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; transition: var(--transition); cursor: pointer; border: none; text-decoration: none; }
-  .btn-peach { background: var(--peach); color: var(--purple-dark); } .btn-peach:hover { background: var(--peach-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,140,80,0.4); }
+  .btn-peach { background: var(--peach); color: var(--purple-dark); } .btn-peach:hover { background: var(--peach-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(252,144,24,0.4); }
   .btn-purple { background: var(--purple); color: var(--white); } .btn-purple:hover { background: var(--purple-dark); transform: translateY(-2px); box-shadow: var(--shadow-md); }
   .btn-outline-white { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.5); } .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: var(--white); transform: translateY(-2px); }
   .btn-outline-purple { background: transparent; color: var(--purple); border: 1.5px solid var(--purple); } .btn-outline-purple:hover { background: var(--purple); color: var(--white); transform: translateY(-2px); }
@@ -81,7 +81,7 @@
   /* PAGE HERO (for inner pages) */
   .page-hero { background: var(--purple-dark); padding: 152px 48px 80px; position: relative; overflow: hidden; }
   .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 70% at 30% 50%, rgba(90,62,158,0.6), transparent 70%); }
-  .page-hero::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,179,132,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,179,132,0.04) 1px, transparent 1px); background-size: 48px 48px; }
+  .page-hero::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,184,102,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,184,102,0.04) 1px, transparent 1px); background-size: 48px 48px; }
   .page-hero-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
   .page-hero h1 { font-family: var(--font-h); font-size: clamp(36px,5vw,68px); font-weight: 900; color: var(--white); margin-bottom: 16px; line-height: 1.05; letter-spacing: -0.025em; }
   .page-hero h1 em { font-style: normal; color: var(--peach); }
@@ -91,7 +91,7 @@
 
   /* CARD SYSTEM */
   .card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--mid-grey); overflow: hidden; transition: var(--transition); }
-  .card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: rgba(66,59,125,0.15); }
+  .card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: rgba(84,24,84,0.15); }
   .card-purple { background: var(--purple-dark); border-color: transparent; }
 
   /* STATS ROW */
@@ -185,9 +185,9 @@
   position: absolute; inset: 0;
   background: linear-gradient(
     160deg,
-    rgba(45,40,96,0.96) 0%,
-    rgba(66,59,125,0.78) 50%,
-    rgba(45,40,96,0.90) 100%
+    rgba(50,12,50,0.96) 0%,
+    rgba(84,24,84,0.78) 50%,
+    rgba(50,12,50,0.90) 100%
   );
 }
 .hero-grid { display: none; }
@@ -196,12 +196,12 @@
 }
 .hero-orb-1 {
   width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(91,49,123,0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(122,41,122,0.35) 0%, transparent 70%);
   top: -200px; right: -200px;
 }
 .hero-orb-2 {
   width: 450px; height: 450px;
-  background: radial-gradient(circle, rgba(255,179,132,0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255,184,102,0.07) 0%, transparent 70%);
   bottom: 0; left: -100px;
 }
 .hero-inner {
@@ -215,8 +215,8 @@
 }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(255,179,132,0.14);
-  border: 1px solid rgba(255,179,132,0.28);
+  background: rgba(255,184,102,0.14);
+  border: 1px solid rgba(255,184,102,0.28);
   border-radius: 40px; padding: 6px 16px 6px 8px;
   margin-bottom: 26px;
 }
@@ -270,7 +270,7 @@
 .hero-card {
   background: rgba(255,255,255,0.06);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,179,132,0.20);
+  border: 1px solid rgba(255,184,102,0.20);
   border-radius: var(--radius-lg); padding: 32px;
   margin-bottom: 14px;
 }
@@ -303,8 +303,8 @@
   transition: var(--transition);
 }
 .hmc:hover {
-  background: rgba(255,179,132,0.07);
-  border-color: rgba(255,179,132,0.2);
+  background: rgba(255,184,102,0.07);
+  border-color: rgba(255,184,102,0.2);
 }
 .hmc-icon { font-size: 20px; flex-shrink: 0; }
 .hmc-label {
@@ -360,7 +360,7 @@
   background: var(--peach-dark); color: var(--white);
   transform: translateY(-2px); box-shadow: var(--shadow-md);
 }
-.div-btn.corporate { background: rgba(45,40,96,0.12); color: var(--purple-dark); }
+.div-btn.corporate { background: rgba(50,12,50,0.12); color: var(--purple-dark); }
 .div-btn.corporate:hover { background: var(--purple-dark); color: var(--white); }
 
 /* ===== FOUNDERS ===== */
@@ -392,13 +392,13 @@
 .founders-img-wrap {
   border-radius: var(--radius-lg); overflow: hidden;
   box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(255,179,132,0.2);
+  border: 1px solid rgba(255,184,102,0.2);
 }
 .founders-img-wrap img { width: 100%; display: block; }
 .founders-year-badge {
   display: inline-flex; align-items: center; gap: 10px;
-  background: rgba(255,179,132,0.15);
-  border: 1px solid rgba(255,179,132,0.3);
+  background: rgba(255,184,102,0.15);
+  border: 1px solid rgba(255,184,102,0.3);
   border-radius: 40px; padding: 8px 20px;
   margin-bottom: 20px;
 }
@@ -417,7 +417,7 @@
 }
 .milestone {
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,179,132,0.12);
+  border: 1px solid rgba(255,184,102,0.12);
   border-radius: var(--radius); padding: 20px;
   text-align: center;
 }
@@ -461,7 +461,7 @@
 }
 .p-num {
   font-family: var(--font-h); font-size: 42px;
-  font-weight: 900; color: rgba(66,59,125,0.1);
+  font-weight: 900; color: rgba(84,24,84,0.1);
   line-height: 1; flex-shrink: 0;
 }
 .p-icon {
@@ -505,10 +505,10 @@
   position: relative;
 }
 .div-head.charity {
-  background: linear-gradient(135deg, var(--purple-dark) 0%, #1a1640 100%);
+  background: linear-gradient(135deg, var(--purple-dark) 0%, #1a0f1a 100%);
 }
 .div-head.corporate {
-  background: linear-gradient(135deg, #1c1c2e 0%, #2d2860 100%);
+  background: linear-gradient(135deg, #1c141c 0%, #320c32 100%);
 }
 .div-icon {
   position: absolute; top: 18px; right: 20px;
@@ -543,13 +543,13 @@
 }
 .region-card {
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,179,132,0.12);
+  border: 1px solid rgba(255,184,102,0.12);
   border-radius: var(--radius-lg); padding: 24px;
   transition: var(--transition);
 }
 .region-card:hover {
-  background: rgba(255,179,132,0.09);
-  border-color: rgba(255,179,132,0.3);
+  background: rgba(255,184,102,0.09);
+  border-color: rgba(255,184,102,0.3);
   transform: translateY(-3px);
 }
 .rc-icon { font-size: 28px; margin-bottom: 12px; }
@@ -587,7 +587,7 @@
   letter-spacing: -0.02em;
 }
 .tsf-text p {
-  font-size: 16px; color: rgba(45,40,96,0.72);
+  font-size: 16px; color: rgba(50,12,50,0.72);
   line-height: 1.8; margin-bottom: 28px;
 }
 .tsf-visual {
@@ -610,7 +610,7 @@
 .ts-label {
   font-size: 10px; font-weight: 700;
   letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(45,40,96,0.55); margin-top: 4px;
+  color: rgba(50,12,50,0.55); margin-top: 4px;
   font-family: var(--font-accent);
 }
 
@@ -702,13 +702,13 @@
 }
 .book-card {
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,179,132,0.14);
+  border: 1px solid rgba(255,184,102,0.14);
   border-radius: var(--radius-lg); overflow: hidden;
   transition: var(--transition);
 }
 .book-card:hover {
-  background: rgba(255,179,132,0.1);
-  border-color: rgba(255,179,132,0.32);
+  background: rgba(255,184,102,0.1);
+  border-color: rgba(255,184,102,0.32);
   transform: translateY(-4px);
   box-shadow: 0 24px 48px rgba(0,0,0,0.35);
 }
@@ -717,11 +717,11 @@
   align-items: center; justify-content: center; font-size: 56px;
 }
 .bc-a2r { background: linear-gradient(135deg, #0d2211, #1a4422); }
-.bc-mm { background: linear-gradient(135deg, #1a1640, #2d2860); }
+.bc-mm { background: linear-gradient(135deg, #1a0f1a, #320c32); }
 .bc-other { background: linear-gradient(135deg, #3a1a00, #6b3300); }
 .book-body { padding: 22px; }
 .book-author {
-  font-size: 11px; color: rgba(255,179,132,0.65);
+  font-size: 11px; color: rgba(255,184,102,0.65);
   font-weight: 700; letter-spacing: 0.1em;
   text-transform: uppercase; font-family: var(--font-accent);
   margin-bottom: 6px;
@@ -739,7 +739,7 @@
 .book-link {
   font-family: var(--font-h); font-size: 11px;
   font-weight: 700; letter-spacing: 0.06em;
-  color: var(--peach); border: 1px solid rgba(255,179,132,0.3);
+  color: var(--peach); border: 1px solid rgba(255,184,102,0.3);
   padding: 6px 14px; border-radius: 40px;
   transition: var(--transition);
 }
@@ -957,7 +957,7 @@
           background:linear-gradient(135deg,var(--purple-pale),#d4cee8);
           aspect-ratio:4/3; display:flex; flex-direction:column;
           align-items:center; justify-content:center; gap:10px;
-          border:2px dashed rgba(66,59,125,0.2);
+          border:2px dashed rgba(84,24,84,0.2);
           font-family:var(--font-h); font-size:12px;
           font-weight:700; letter-spacing:0.1em;
           text-transform:uppercase; color:var(--purple-light);
@@ -1186,7 +1186,7 @@
         <div class="rc-icon">🌍</div>
         <div class="rc-region">Region 1</div>
         <div class="rc-ceo">Timothee Ouattara</div>
-        <div style="font-size:11px; color:rgba(255,179,132,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Africa Regional CEO</div>
+        <div style="font-size:11px; color:rgba(255,184,102,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Africa Regional CEO</div>
         <div class="rc-countries">
           Ghana, Nigeria, Sierra Leone, Liberia, Cameroon,
           Benin, Cote d'Ivoire, DR Congo, Senegal, Mali,
@@ -1197,7 +1197,7 @@
         <div class="rc-icon">🌎</div>
         <div class="rc-region">Region 2</div>
         <div class="rc-ceo">Lindsay Oaks</div>
-        <div style="font-size:11px; color:rgba(255,179,132,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">North America Regional CEO</div>
+        <div style="font-size:11px; color:rgba(255,184,102,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">North America Regional CEO</div>
         <div class="rc-countries">
           USA, Canada (Global HQ in Montreal)
         </div>
@@ -1206,7 +1206,7 @@
         <div class="rc-icon">🌎</div>
         <div class="rc-region">Region 3</div>
         <div class="rc-ceo">Claudia</div>
-        <div style="font-size:11px; color:rgba(255,179,132,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Latin America Regional CEO</div>
+        <div style="font-size:11px; color:rgba(255,184,102,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Latin America Regional CEO</div>
         <div class="rc-countries">
           Mexico, Colombia and growing presence
           across Latin America
@@ -1216,7 +1216,7 @@
         <div class="rc-icon">🌍</div>
         <div class="rc-region">Region 4</div>
         <div class="rc-ceo">Silvana Koenig</div>
-        <div style="font-size:11px; color:rgba(255,179,132,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Europe Regional CEO</div>
+        <div style="font-size:11px; color:rgba(255,184,102,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Europe Regional CEO</div>
         <div class="rc-countries">
           Switzerland, Germany, Latvia, Netherlands,
           Egypt, UAE and surrounding nations
@@ -1226,7 +1226,7 @@
         <div class="rc-icon">🌏</div>
         <div class="rc-region">Region 5</div>
         <div class="rc-ceo">Ramesh Bhusal</div>
-        <div style="font-size:11px; color:rgba(255,179,132,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Asia Regional CEO</div>
+        <div style="font-size:11px; color:rgba(255,184,102,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Asia Regional CEO</div>
         <div class="rc-countries">
           Nepal, Pakistan, China, South Korea,
           South East Asia and surrounding nations
@@ -1236,7 +1236,7 @@
         <div class="rc-icon">🌏</div>
         <div class="rc-region">Region 6</div>
         <div class="rc-ceo">Stephen Scott</div>
-        <div style="font-size:11px; color:rgba(255,179,132,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Oceania Regional CEO</div>
+        <div style="font-size:11px; color:rgba(255,184,102,0.7); font-weight:700; letter-spacing:0.08em; text-transform:uppercase; font-family:var(--font-accent); margin-bottom:8px;">Oceania Regional CEO</div>
         <div class="rc-countries">
           Australia and South Pacific nations
         </div>
@@ -1252,7 +1252,7 @@
   <div class="container">
     <div class="tsf-inner">
       <div class="tsf-text animate-on-scroll">
-        <div class="overline" style="color:rgba(45,40,96,0.58);">Flagship Programme</div>
+        <div class="overline" style="color:rgba(50,12,50,0.58);">Flagship Programme</div>
         <h2>The Shadrach<br>Fellowship</h2>
         <p>
           An intensive, one-year missional discipleship and leadership
@@ -1262,7 +1262,7 @@
         </p>
         <div style="display:flex; gap:14px; flex-wrap:wrap;">
           <a href="community.html" class="btn btn-white">Explore the Fellowship</a>
-          <a href="community.html#apply" class="btn btn-outline-purple" style="border-color:rgba(45,40,96,0.38);">Apply for 2027</a>
+          <a href="community.html#apply" class="btn btn-outline-purple" style="border-color:rgba(50,12,50,0.38);">Apply for 2027</a>
         </div>
       </div>
       <div class="tsf-visual animate-on-scroll">

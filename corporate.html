@@ -10,30 +10,30 @@
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap" rel="stylesheet">
   <style>
   :root {
-    --purple:       #423b7d;
-    --purple-dark:  #2d2860;
-    --purple-mid:   #5B317B;
-    --purple-light: #7a6fb0;
-    --purple-pale:  #f0eef8;
-    --peach:        #FFB384;
-    --peach-dark:   #e89060;
-    --peach-pale:   #fff5ee;
-    --orange:       #F4A623;
+    --purple:       #541854;
+    --purple-dark:  #320c32;
+    --purple-mid:   #7a297a;
+    --purple-light: #b668b6;
+    --purple-pale:  #fbf4fb;
+    --peach:        #ffb866;
+    --peach-dark:   #df6e0c;
+    --peach-pale:   #fff3e5;
+    --orange:       #fc9018;
     --green:        #2e7d32;
     --white:        #ffffff;
     --off-white:    #faf9f7;
     --light-grey:   #f2f0ed;
     --mid-grey:     #eaeaea;
-    --text:         #1a1a2e;
-    --text-light:   #5a5a7a;
+    --text:         #1a1420;
+    --text-light:   #6b5a68;
     --font-h:       'Playfair Display', serif;
     --font-body:    'Satoshi', sans-serif;
     --font-accent:  'Satoshi', sans-serif;
     --nav-h:        80px;
     --transition:   all 0.32s cubic-bezier(0.4,0,0.2,1);
-    --shadow-sm:    0 2px 12px rgba(66,59,125,0.08);
-    --shadow-md:    0 8px 32px rgba(66,59,125,0.14);
-    --shadow-lg:    0 20px 60px rgba(66,59,125,0.20);
+    --shadow-sm:    0 2px 12px rgba(84,24,84,0.08);
+    --shadow-md:    0 8px 32px rgba(84,24,84,0.14);
+    --shadow-lg:    0 20px 60px rgba(84,24,84,0.20);
     --radius:       12px;
     --radius-lg:    20px;
   }
@@ -51,13 +51,13 @@
   .nav-links a { font-family: var(--font-h); font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; color: #555; padding: 8px 13px; border-radius: 6px; transition: var(--transition); }
   .nav-links a:hover, .nav-links a.active { color: var(--purple); background: var(--purple-pale); }
   .nav-contribute a { background: var(--peach) !important; color: var(--purple-dark) !important; border-radius: 40px !important; font-weight: 700 !important; padding: 9px 20px !important; }
-  .nav-contribute a:hover { background: var(--peach-dark) !important; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(255,140,80,0.4) !important; }
+  .nav-contribute a:hover { background: var(--peach-dark) !important; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(252,144,24,0.4) !important; }
   .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
   .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: var(--transition); }
 
   /* BUTTONS */
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 40px; font-family: var(--font-h); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; transition: var(--transition); cursor: pointer; border: none; text-decoration: none; }
-  .btn-peach { background: var(--peach); color: var(--purple-dark); } .btn-peach:hover { background: var(--peach-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,140,80,0.4); }
+  .btn-peach { background: var(--peach); color: var(--purple-dark); } .btn-peach:hover { background: var(--peach-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(252,144,24,0.4); }
   .btn-purple { background: var(--purple); color: var(--white); } .btn-purple:hover { background: var(--purple-dark); transform: translateY(-2px); box-shadow: var(--shadow-md); }
   .btn-outline-white { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.5); } .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: var(--white); transform: translateY(-2px); }
   .btn-outline-purple { background: transparent; color: var(--purple); border: 1.5px solid var(--purple); } .btn-outline-purple:hover { background: var(--purple); color: var(--white); transform: translateY(-2px); }
@@ -91,7 +91,7 @@
 
   /* CARD SYSTEM */
   .card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--mid-grey); overflow: hidden; transition: var(--transition); }
-  .card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: rgba(66,59,125,0.15); }
+  .card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: rgba(84,24,84,0.15); }
   .card-purple { background: var(--purple-dark); border-color: transparent; }
 
   /* STATS ROW */
@@ -148,8 +148,8 @@
   .svc-desc { font-size: 14px; color: var(--text-light); line-height: 1.7; }
   .approach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: var(--radius-lg); overflow: hidden; margin-top: 48px; }
   .approach-item { padding: 32px; background: var(--purple-dark); border-bottom: 1px solid rgba(255,255,255,0.08); border-right: 1px solid rgba(255,255,255,0.08); }
-  .approach-item:nth-child(even) { background: rgba(45,40,96,0.85); }
-  .ai-num { font-family: var(--font-h); font-size: 48px; font-weight: 900; color: rgba(255,179,132,0.15); line-height: 1; margin-bottom: 8px; }
+  .approach-item:nth-child(even) { background: rgba(50,12,50,0.85); }
+  .ai-num { font-family: var(--font-h); font-size: 48px; font-weight: 900; color: rgba(255,184,102,0.15); line-height: 1; margin-bottom: 8px; }
   .ai-title { font-family: var(--font-h); font-size: 16px; font-weight: 800; color: var(--peach); margin-bottom: 8px; }
   .ai-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.65; }
   @media(max-width:1100px) { .services-grid { grid-template-columns: 1fr 1fr; } }

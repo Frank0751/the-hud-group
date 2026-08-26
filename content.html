@@ -10,13 +10,13 @@
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap" rel="stylesheet">
   <style>
     :root {
-      --purple:#423b7d; --purple-dark:#2d2860; --purple-mid:#5B317B; --purple-light:#7a6fb0; --purple-pale:#f0eef8;
-      --peach:#FFB384; --peach-dark:#e89060; --peach-pale:#fff5ee; --orange:#F4A623;
+      --purple:#541854; --purple-dark:#320c32; --purple-mid:#7a297a; --purple-light:#b668b6; --purple-pale:#fbf4fb;
+      --peach:#ffb866; --peach-dark:#df6e0c; --peach-pale:#fff3e5; --orange:#fc9018;
       --white:#ffffff; --off-white:#faf9f7; --light-grey:#f2f0ed; --mid-grey:#eaeaea;
-      --text:#1a1a2e; --text-light:#5a5a7a;
+      --text:#1a1420; --text-light:#6b5a68;
       --font-h:'Playfair Display',serif; --font-body:'Satoshi',sans-serif; --font-accent:'Satoshi',sans-serif;
       --nav-h:80px; --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
-      --shadow-sm:0 2px 12px rgba(66,59,125,0.08); --shadow-md:0 8px 32px rgba(66,59,125,0.14); --shadow-lg:0 20px 60px rgba(66,59,125,0.20);
+      --shadow-sm:0 2px 12px rgba(84,24,84,0.08); --shadow-md:0 8px 32px rgba(84,24,84,0.14); --shadow-lg:0 20px 60px rgba(84,24,84,0.20);
       --radius:12px; --radius-lg:20px;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -63,9 +63,9 @@
     .report-card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--mid-grey);transition:var(--transition)}
     .report-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
     .report-cover{height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:24px;text-align:center}
-    .report-cover.purple{background:linear-gradient(135deg,var(--purple-dark),#1a1640)}
+    .report-cover.purple{background:linear-gradient(135deg,var(--purple-dark),#1a0f1a)}
     .report-cover.peach{background:linear-gradient(135deg,var(--peach-dark),#8B4000)}
-    .report-cover.dark{background:linear-gradient(135deg,#1a1a2e,#0d0d1a)}
+    .report-cover.dark{background:linear-gradient(135deg,#1a1420,#0d0d1a)}
     .report-year{font-family:var(--font-h);font-size:56px;font-weight:900;color:rgba(255,255,255,0.1);position:absolute;bottom:8px;right:16px;line-height:1}
     .report-type{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:8px}
     .report-title-cover{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--white);line-height:1.3}
@@ -78,7 +78,7 @@
     .blog-featured-grid{display:grid;grid-template-columns:2fr 1fr;gap:32px;margin-top:40px}
     .blog-featured{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--mid-grey);background:var(--white);transition:var(--transition);cursor:pointer}
     .blog-featured:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
-    .blog-featured-img{height:260px;background:linear-gradient(135deg,var(--purple-dark),#1a1640);display:flex;align-items:center;justify-content:center;font-size:48px}
+    .blog-featured-img{height:260px;background:linear-gradient(135deg,var(--purple-dark),#1a0f1a);display:flex;align-items:center;justify-content:center;font-size:48px}
     .blog-featured-body{padding:28px}
     .blog-tag{display:inline-block;background:var(--purple);color:var(--white);font-family:var(--font-accent);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:40px;margin-bottom:12px}
     .blog-tag.peach{background:var(--peach-dark)}
@@ -107,13 +107,13 @@
     .category-header:hover{background:var(--off-white)}
     .training-category.open .category-header{background:var(--purple-dark)}
     .category-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:var(--transition)}
-    .training-category.open .category-icon{background:rgba(255,179,132,0.2)}
+    .training-category.open .category-icon{background:rgba(255,184,102,0.2)}
     .category-title{font-family:var(--font-h);font-size:16px;font-weight:800;color:var(--purple-dark);flex:1;transition:var(--transition)}
     .training-category.open .category-title{color:var(--white)}
     .category-desc{font-size:13px;color:var(--text-light);transition:var(--transition)}
     .training-category.open .category-desc{color:rgba(255,255,255,0.6)}
     .category-count{font-family:var(--font-accent);font-size:10px;font-weight:700;background:var(--purple-pale);color:var(--purple);padding:3px 10px;border-radius:40px;transition:var(--transition)}
-    .training-category.open .category-count{background:rgba(255,179,132,0.2);color:var(--peach)}
+    .training-category.open .category-count{background:rgba(255,184,102,0.2);color:var(--peach)}
     .category-chevron{font-size:12px;color:var(--text-light);transition:transform 0.3s ease;flex-shrink:0}
     .training-category.open .category-chevron{transform:rotate(180deg);color:var(--peach)}
     .category-body{display:none;background:var(--off-white);border-top:1px solid var(--mid-grey)}

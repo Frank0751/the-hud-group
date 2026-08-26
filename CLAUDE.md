@@ -44,15 +44,28 @@ the-hud-group/
 ## Brand Identity (NEVER CHANGE THESE)
 
 ```css
---purple:       #423b7d;
---purple-dark:  #2d2860;
---peach:        #FFB384;
---peach-dark:   #e89060;
---orange:       #F4A623;
---font-h:       'Raleway', sans-serif;    /* all headings */
---font-body:    'Lato', sans-serif;       /* body text */
---font-accent:  'Montserrat', sans-serif; /* labels, badges */
+--purple:       #541854;  /* sampled directly from the logo mark */
+--purple-dark:  #320c32;
+--purple-mid:   #7a297a;
+--purple-light: #b668b6;
+--purple-pale:  #fbf4fb;
+--peach:        #ffb866;
+--peach-dark:   #df6e0c;
+--peach-pale:   #fff3e5;
+--orange:       #fc9018;  /* sampled directly from the logo mark */
+--text:         #1a1420;
+--text-light:   #6b5a68;
+--font-h:       'Playfair Display', serif;  /* all headings, a distinctive serif */
+--font-body:    'Satoshi', sans-serif;      /* body text, loaded via Fontshare CDN */
+--font-accent:  'Satoshi', sans-serif;      /* labels, badges */
 ```
+
+The purple and orange are sampled pixel-for-pixel from `images/the-hud-group-hi-res-logo.png`
+(a deep magenta-purple and a vivid warm orange, HSL hue ~300° and ~32°). Every other
+purple/peach shade is derived from those two anchors by adjusting lightness/saturation only,
+so the whole palette stays one coherent hue family instead of the old, unrelated blue-indigo.
+Satoshi is loaded from `https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300` and
+Playfair Display from Google Fonts — both linked in the `<head>` of every page.
 
 **Logo:** `images/the-hud-group-hi-res-logo.png`
 **Tagline:** "To inspire...totally"
