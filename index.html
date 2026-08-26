@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The HuD Group Global | Equipping Leaders. Transforming Nations.</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/cropped-the-hud-group-favicon-32x32.png">
   <meta name="description" content="The HuD Group (The Human Development Group) is a dynamic, international, Christian not-for-profit network and movement focused on the development of holistic Emerging and Established Leaders. Active in 30 countries.">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap" rel="stylesheet">
@@ -463,6 +464,10 @@
   font-weight: 900; color: rgba(66,59,125,0.1);
   line-height: 1; flex-shrink: 0;
 }
+.p-icon {
+  width: 44px; height: 44px; object-fit: contain;
+  flex-shrink: 0; margin-top: 2px;
+}
 .p-content {}
 .p-label {
   font-family: var(--font-accent); font-size: 9px;
@@ -812,7 +817,7 @@
     </button>
   </nav>
 <section class="hero">
-  <div class="hero-bg" style="background-image:url("images/hud-group-home-bg.jpg");"></div>
+  <div class="hero-bg" style="background-image:url('images/hud-group-home-bg.jpg');"></div>
   <div class="hero-overlay"></div>
   <div class="hero-grid"></div>
   <div class="hero-orb hero-orb-1"></div>
@@ -1055,6 +1060,7 @@
     <div class="strategy-grid">
       <div class="p-card animate-on-scroll">
         <div class="p-num">01</div>
+        <img src="images/prayer-icon.png" alt="" class="p-icon" aria-hidden="true">
         <div class="p-content">
           <div class="p-label">Prevailing</div>
           <div class="p-title">Prayer</div>
@@ -1063,6 +1069,7 @@
       </div>
       <div class="p-card animate-on-scroll">
         <div class="p-num">02</div>
+        <img src="images/001-voluntary-p61lskz6s9wiqdpd5tdltijyhayrqc0p1y49amgj28.png" alt="" class="p-icon" aria-hidden="true">
         <div class="p-content">
           <div class="p-label">Inspirational</div>
           <div class="p-title">People</div>
@@ -1071,6 +1078,7 @@
       </div>
       <div class="p-card animate-on-scroll">
         <div class="p-num">03</div>
+        <img src="images/016-charity-p61lskz6s9wiqdpd5tdltijyhayrqc0p1y49amgj28.png" alt="" class="p-icon" aria-hidden="true">
         <div class="p-content">
           <div class="p-label">Empowering</div>
           <div class="p-title">Programs</div>
@@ -1079,6 +1087,7 @@
       </div>
       <div class="p-card animate-on-scroll">
         <div class="p-num">04</div>
+        <img src="images/020-love-p61lskz6s9wiqdpd5tdltijyhayrqc0p1y49amgj28.png" alt="" class="p-icon" aria-hidden="true">
         <div class="p-content">
           <div class="p-label">Paradigm-Shifting</div>
           <div class="p-title">Products</div>
@@ -1087,6 +1096,7 @@
       </div>
       <div class="p-card animate-on-scroll">
         <div class="p-num">05</div>
+        <img src="images/022-map-location-p61lskz6s9wiqdpd5tdltijyhayrqc0p1y49amgj28.png" alt="" class="p-icon" aria-hidden="true">
         <div class="p-content">
           <div class="p-label">Transformational</div>
           <div class="p-title">Places</div>
@@ -1095,6 +1105,7 @@
       </div>
       <div class="p-card animate-on-scroll">
         <div class="p-num">06</div>
+        <img src="images/021-charity-p61lskz6s9wiqdpd5tdltijyhayrqc0p1y49amgj28.png" alt="" class="p-icon" aria-hidden="true">
         <div class="p-content">
           <div class="p-label">Impactful</div>
           <div class="p-title">Projects</div>
@@ -1461,7 +1472,7 @@
     nav.classList.toggle('scrolled', window.scrollY > 20);
   }, { passive: true });
 
-  // Mobile menu — open/close with X animation
+  // Mobile menu: open/close with X animation
   if (ham && navLinks) {
     ham.addEventListener('click', () => {
       const open = navLinks.classList.toggle('open');

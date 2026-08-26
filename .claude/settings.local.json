@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -cE \"\\\\\\\\\\\\\\\\'\" community.html)",
+      "Bash(grep -oE '\\(Africa|North America|Latin America|Europe|Asia|Oceania\\)[^<]{0,30}\\(ountr|egion\\)[^<]{0,15}' countries.html)",
+      "Bash(node -e ' *)",
+      "Bash(grep -oE \"\\(Twelve|twelve|12\\) [A-Za-z ]{0,20}[Ff]ellows|\\(Nine|nine|9\\) [A-Za-z ]{0,20}\\([Gg]raduates|[Ff]ellows\\)|\\(Four|four|4\\) [A-Za-z ]{0,20}[Mm]entees\" community.html)"
+    ]
+  }
+}
