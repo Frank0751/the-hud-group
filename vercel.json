@@ -1,6 +1,8 @@
 {
+  "redirects": [
+    { "source": "/apply/", "destination": "/apply", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/apply", "destination": "/apply.html" },
-    { "source": "/apply/", "destination": "/apply.html" }
+    { "source": "/apply", "destination": "/apply.html" }
   ]
 }
