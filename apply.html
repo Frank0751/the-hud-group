@@ -57,8 +57,6 @@
     /* ===== SHARED ===== */
     .container{max-width:1240px;margin:0 auto;padding:0 48px}
     .section{padding:112px 0}
-    .overline{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-accent);font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:16px}
-    .overline::before{content:'';width:22px;height:2px;border-radius:2px;background:currentColor;opacity:.7}
     h2.section-title{font-size:clamp(32px,3.8vw,50px);line-height:1.08;color:var(--purple-dark);margin-bottom:18px}
     h2.section-title em{font-style:italic;font-weight:500;color:var(--purple-mid)}
     .section-lead{font-size:18px;color:var(--text-light);line-height:1.7;max-width:600px}
@@ -150,7 +148,6 @@
     .format-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
     .format-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(32,6,32,.96) 0%,rgba(32,6,32,.86) 42%,rgba(32,6,32,.35) 100%)}
     .format-inner{position:relative;z-index:1;max-width:600px}
-    .format .overline{color:var(--peach)}
     .format h2.section-title{color:#fff}
     .format h2.section-title em{color:var(--peach)}
     .format-list{list-style:none;display:grid;gap:16px;margin-top:30px}
@@ -174,7 +171,6 @@
     /* ===== PROCESS ===== */
     .process{background:var(--white)}
     .process-head{text-align:center;max-width:640px;margin:0 auto 56px}
-    .process-head .overline{justify-content:center}
     .process-head .section-lead{margin:0 auto}
     .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:t;position:relative}
     .timeline::before{content:'';position:absolute;top:22px;left:12.5%;right:12.5%;height:2px;background:linear-gradient(90deg,var(--orange),var(--purple-light));opacity:.5}
@@ -187,7 +183,6 @@
     /* ===== FORM SECTION ===== */
     .form-section{background:linear-gradient(180deg,var(--purple-pale) 0%,var(--off-white) 55%);scroll-margin-top:calc(var(--nav-h) - 72px)}
     .form-head{text-align:center;max-width:680px;margin:0 auto 44px}
-    .form-head .overline{justify-content:center}
     .form-head .section-lead{margin:0 auto}
     .form-shell{max-width:860px;margin:0 auto}
     .draft-banner{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--peach-pale);border:1px solid rgba(223,110,12,0.28);border-radius:var(--radius);padding:12px 18px;margin-bottom:18px;font-size:14.5px;color:var(--purple-dark)}
@@ -355,12 +350,12 @@
     @media(max-width:1100px){
       .container{padding:0 32px}
       .hero-grid{grid-template-columns:1fr;gap:56px}
-      .hero-visual{max-width:640px}
+      .hero-visual{max-width:640px;margin:0 auto;width:100%}
       .hero-frame{aspect-ratio:16/11}
       .hero-note{left:16px}
       .gain-grid,.who-grid{grid-template-columns:1fr;gap:48px}
       .gain-media{position:static}
-      .who-photo{aspect-ratio:16/11;max-width:640px}
+      .who-photo{aspect-ratio:16/11;max-width:640px;margin:0 auto;width:100%}
       .timeline{grid-template-columns:1fr 1fr;row-gap:40px}
       .timeline::before{display:none}
       .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:220px 220px 220px}
@@ -401,12 +396,45 @@
       .stepper{margin-bottom:46px;gap:4px}
       .step-dot{width:34px;height:34px;font-size:14px}
       .stepper li::after{top:16px;left:calc(50% + 21px);right:calc(-50% + 21px)}
+
+      /* Centred layout for phones */
+      h2.section-title{text-align:center}
+      .section-lead{margin-left:auto;margin-right:auto;text-align:center}
+      .hero-copy{text-align:center}
+      .hero-desc{margin-left:auto;margin-right:auto}
+      .hero-ctas{justify-content:center}
+      .hero-facts{justify-content:stretch;justify-items:center;text-align:center}
+      .hero-note{flex-direction:column;align-items:center;text-align:center}
+      .gain-media{text-align:center}
+      .collage-cap{border-left:0;padding-left:0;text-align:center}
+      .benefit-list li{grid-template-columns:1fr;justify-items:center;text-align:center;gap:6px;padding:18px 8px}
+      .benefit-list li:hover{padding-left:8px}
+      .who-grid > div{text-align:center}
+      .who-photo figcaption{text-align:center}
+      .quality{flex-direction:column;align-items:center;gap:2px;text-align:center}
+      .quality span{text-align:center}
+      .ready-box{text-align:center;padding:28px 22px}
+      .ready-box li{padding-left:0}
+      .ready-box li::before{position:static;display:inline-block;vertical-align:-3px;margin-right:8px}
+      .format-inner{text-align:center;margin:0 auto}
+      .format-list li{grid-template-columns:1fr;justify-items:center;text-align:center;gap:10px}
+      .quote-copy{text-align:center}
+      .community-head{align-items:center;text-align:center}
+      .closing{align-items:center;text-align:center}
+      .step-kicker,.step h3.step-title{text-align:center}
+      .step-intro{text-align:center;margin-left:auto;margin-right:auto}
+      .rating-group h4,.rating-group > .field-hint{text-align:center}
+      .footer-grid{text-align:center}
+      .footer-brand p{margin:0 auto}
+      .footer-bottom{flex-direction:column;gap:12px;text-align:center}
     }
     @media(max-width:560px){
       .container{padding:0 16px}
       .hero-ctas .btn{flex:1 1 100%}
       .timeline{grid-template-columns:1fr}
-      .qualities{grid-template-columns:1fr}
+      .qualities{grid-template-columns:1fr 1fr;gap:10px}
+      .quality{padding:14px 10px}
+      .quality b{font-size:16.5px;white-space:normal;line-height:1.25}
       .scale{grid-template-columns:repeat(5,1fr)}
       .mosaic{grid-template-columns:1fr 1fr;grid-template-rows:200px 160px 160px}
       .form-nav{flex-wrap:wrap}
@@ -460,7 +488,6 @@
   <section class="section gain" id="about">
     <div class="container gain-grid">
       <div class="gain-media">
-        <div class="overline">The Journey</div>
         <h2 class="section-title">What you will gain as a <em>Shadrach Fellow</em></h2>
         <p class="section-lead">Ten outcomes the fellowship is designed to grow in you over one year of weekly sessions, a mid-year retreat and a community that walks with you.</p>
         <div class="collage reveal">
@@ -491,8 +518,7 @@
         <figcaption>&ldquo;Faithful people who will be able to teach others also.&rdquo; 2 Timothy 2:2</figcaption>
       </figure>
       <div>
-        <div class="overline">Who We Are Looking For</div>
-        <h2 class="section-title">Faithful people who can <em>reproduce themselves</em></h2>
+        <h2 class="section-title">We are looking for faithful people who can <em>reproduce themselves</em></h2>
         <p class="section-lead">In line with 2 Timothy 2:2, the fellowship seeks individuals between 17 and 39 who embody these eight qualities.</p>
         <div class="qualities">
           <div class="quality"><b>Faithful</b><span>Luke 5:4-5</span></div>
@@ -522,8 +548,7 @@
     <div class="format-bg"><img src="images/apply/tsf-hybrid-session.jpg" alt="" width="1600" height="1195" loading="lazy" decoding="async"></div>
     <div class="container">
       <div class="format-inner reveal">
-        <div class="overline">The Format</div>
-        <h2 class="section-title">One year, every Friday, <em>wherever you are</em></h2>
+        <h2 class="section-title">A one-year journey, every Friday, <em>wherever you are</em></h2>
         <p class="section-lead" style="color:rgba(255,255,255,0.75)">The fellowship is hybrid. Fellows across Africa and beyond meet online every week, then gather in person once a year.</p>
         <ul class="format-list">
           <li><div class="format-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3"/></svg></div><div><b>Weekly sessions online</b><span>Every Friday from 6 to 8 PM UTC on Zoom, so working professionals and students can take part.</span></div></li>
@@ -547,8 +572,7 @@
   <section class="section process" id="process">
     <div class="container">
       <div class="process-head">
-        <div class="overline">The Process</div>
-        <h2 class="section-title">From application to <em>fellowship</em></h2>
+        <h2 class="section-title">What happens <em>after you apply</em></h2>
         <p class="section-lead">Every application is read prayerfully. Here is what happens after you submit.</p>
       </div>
       <div class="timeline reveal">
@@ -563,8 +587,7 @@
   <section class="section form-section" id="application">
     <div class="container">
       <div class="form-head">
-        <div class="overline">Application Form</div>
-        <h2 class="section-title">Tell us about yourself</h2>
+        <h2 class="section-title">Start your <em>application</em></h2>
         <p class="section-lead" id="formLead">Six short steps. Your answers go straight to The HuD Group team.</p>
       </div>
 
@@ -864,7 +887,6 @@
     <div class="container">
       <div class="community-head">
         <div>
-          <div class="overline">The Community</div>
           <h2 class="section-title">A fellowship that <em>walks with you</em></h2>
         </div>
         <p class="section-lead">Fellows pray together, eat together and grow together. The friendships formed here last well beyond the year.</p>
