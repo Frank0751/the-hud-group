@@ -336,4 +336,11 @@ Total project: ~4.5MB uncompressed — well within normal site limits.
   in `apply.html`, and `validate_` and `columns_` in `backend/tsf-applications/Code.gs`.
   The age range (17 to 39), 200 word limit and 5 MB file limit are enforced in both.
 - Drafts are kept in the visitor's browser (localStorage), never the uploaded files or the consent box.
+- **Typography on apply.html (pilot for a sitewide refresh):** headings use **Gambetta** (Fontshare serif,
+  weights 500/600) and everything else uses **Satoshi**, loaded in one Fontshare request. Nav, buttons,
+  numbers and labels are Satoshi with lining figures. The other pages still use Playfair Display until the
+  refresh is rolled out.
+- **apply.html photos** live in `images/apply/` (local web-sized JPGs, converted from the Cloudinary originals):
+  tsf-table-discipleship (hero), tsf-teaching-mission, tsf-life-story-map, tsf-prayer, tsf-hybrid-session,
+  tsf-disciples-shirt, tsf-cohort-group, tsf-community-meal, tsf-reflection, tsf-joy-selfie.
 - Do not publish applicant names or answers anywhere on the site. Applicant data is private.
