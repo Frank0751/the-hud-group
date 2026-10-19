@@ -3,7 +3,7 @@
 ## Project Overview
 
 This is the upgraded website for **The HuD Group Global** (thehudgroupglobal.org).
-It is a complete 8-page static HTML website built to be handed over to a WordPress developer.
+It is a complete 9-page static HTML website built to be handed over to a WordPress developer.
 The design upgrades the original site while preserving its identity, colors, and structure exactly.
 
 ---
@@ -20,6 +20,10 @@ the-hud-group/
   content.html        ← Training library, reports, blog, videos
   contact.html        ← Contact form, leadership team
   contribute.html     ← Giving / donate page
+  apply.html          ← TSF 2026/2027 application form (6-step form, posts to Google Apps Script)
+  backend/
+    tsf-applications/ ← Code.gs (Apps Script receiver) + README.md (5-minute setup)
+  reports/            ← Downloadable PDFs (2025 Global Annual Report)
   images/             ← All site images (local, no CDN)
     hud-group-home-bg.jpg           ← Hero background image
     the-hud-group-hi-res-logo.png   ← HuD Group logo
@@ -164,7 +168,10 @@ Three book cards: A2R, Disciple Ship, Other Publications
 - The section reflects the Kwiverr brand which uses green (matching the K diagram)
 - The diagram itself is the original graphic `images/kwiverr-formation-konstant.png`
   (© 2022 Yaw Perbi) displayed as-is, not a CSS recreation — keep it original
-- Applications badge: "2027 Applications Open in September" (NOT accepting now)
+- **Applications are OPEN until 20 November 2026** (2026/2027 cohort, ages 17 to 39, free).
+  The badge, hero button and Apply section all point to `apply.html`. After the deadline the
+  form on `apply.html` closes itself automatically (`CONFIG.deadline`), but the community page
+  copy must then be updated by hand to say applications are closed
 - TSF 2026 has exactly 12 core fellows
 - TSF 2025 has exactly 9 graduates (Cohort 1)
 - TSFx 2026 has exactly 4 mentees
@@ -230,6 +237,8 @@ All sections marked with `<!-- DEVELOPER: -->` in the HTML need real content:
 - PDF links for reports (replace href="#" with actual PDF paths)
 - YouTube video IDs (replace in video card thumbnails)
 - Contact form backend (connect to Formspree: action="https://formspree.io/f/YOUR_ID")
+- **apply.html: paste the Apps Script web app URL into `CONFIG.endpoint`** (steps in
+  `backend/tsf-applications/README.md`). Until then the form shows a polite "not switched on yet" message
 - Board member names and photos (15 placeholders on contact.html)
 - Street addresses for Montreal and Accra offices
 - Social media handles (update all social links with real URLs)
@@ -311,3 +320,20 @@ After local image extraction (no base64 embedding):
 - images/ folder: ~2.9MB total
 
 Total project: ~4.5MB uncompressed — well within normal site limits.
+
+---
+
+## TSF Application Form (apply.html)
+
+- Mirrors the Google Form "THE SHADRACH FELLOWSHIP 2026/2027 Application Form" question for
+  question (10 Google sections grouped into 6 steps). The commitment rating and consent box are
+  required on the website.
+- Submissions go to a Google Apps Script web app bound to a response sheet that is created and owned by
+  **engage@thehudgroupglobal.org**, so the sheet, Drive folder and emails all stay under the organisation's
+  own account (`setupCheck` refuses any other account). It saves a row, stores the CV and recommendation letter in a private Drive folder, emails
+  engage@thehudgroupglobal.org and emails the applicant a reference number (TSF27-001 and so on).
+- The question list lives in two places that must stay in step: the form fields and the `F` registry
+  in `apply.html`, and `validate_` and `columns_` in `backend/tsf-applications/Code.gs`.
+  The age range (17 to 39), 200 word limit and 5 MB file limit are enforced in both.
+- Drafts are kept in the visitor's browser (localStorage), never the uploaded files or the consent box.
+- Do not publish applicant names or answers anywhere on the site. Applicant data is private.

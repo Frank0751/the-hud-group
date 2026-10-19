@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply: The Shadrach Fellowship 2026/2027 | The HuD Group Global</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="images/cropped-the-hud-group-favicon-32x32.png">
+  <meta name="description" content="Apply for The Shadrach Fellowship 2026/2027, a year-long missional discipleship journey with Dr. Yaw Perbi for emerging leaders aged 17 to 39. Applications close 20 November 2026.">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple:#541854; --purple-dark:#320c32; --purple-mid:#7a297a; --purple-light:#b668b6; --purple-pale:#fbf4fb;
+      --peach:#ffb866; --peach-dark:#df6e0c; --peach-pale:#fff3e5; --orange:#fc9018;
+      --green:#2e7d32; --danger:#b3261e; --danger-pale:#fdeceb;
+      --white:#ffffff; --off-white:#faf9f7; --light-grey:#f2f0ed; --mid-grey:#eaeaea;
+      --text:#1a1420; --text-light:#6b5a68;
+      --font-h:'Playfair Display',serif; --font-body:'Satoshi',sans-serif; --font-accent:'Satoshi',sans-serif;
+      --nav-h:80px; --transition:all 0.32s cubic-bezier(0.4,0,0.2,1);
+      --shadow-sm:0 2px 12px rgba(84,24,84,0.08); --shadow-md:0 8px 32px rgba(84,24,84,0.14); --shadow-lg:0 20px 60px rgba(84,24,84,0.20);
+      --radius:12px; --radius-lg:20px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:16px;overflow-x:hidden}
+    body{font-family:var(--font-body);color:var(--text);background:var(--off-white);line-height:1.65;-webkit-font-smoothing:antialiased}
+    img{max-width:100%;display:block} a{color:inherit;text-decoration:none}
+    button{font-family:inherit}
+    :focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+
+    /* ===== NAV ===== */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.07);display:flex;align-items:center;padding:0 48px;box-shadow:var(--shadow-sm)}
+    .nav-logo img{height:42px;width:auto}
+    .nav-links{margin-left:auto;display:flex;align-items:center;gap:2px;list-style:none}
+    .nav-links a{font-family:var(--font-h);font-size:12.5px;font-weight:600;letter-spacing:0.04em;color:#555;padding:8px 13px;border-radius:6px;transition:var(--transition)}
+    .nav-links a:hover,.nav-links a.active{color:var(--purple);background:var(--purple-pale)}
+    .nav-contribute a{background:var(--peach)!important;color:var(--purple-dark)!important;border-radius:40px!important;font-weight:700!important;padding:9px 20px!important}
+    .nav-contribute a:hover{background:var(--peach-dark)!important;transform:translateY(-1px);box-shadow:0 4px 14px rgba(252,144,24,0.4)!important}
+    .nav-hamburger{display:none;margin-left:auto;background:none;border:none;cursor:pointer;padding:8px}
+    .nav-hamburger span{display:block;width:22px;height:2px;background:var(--text);margin:5px 0;border-radius:2px;transition:var(--transition)}
+    .nav-hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .nav-hamburger.active span:nth-child(2){opacity:0;transform:translateX(-10px)}
+    .nav-hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+    /* ===== SHARED ===== */
+    .container{max-width:1280px;margin:0 auto;padding:0 48px}
+    .section{padding:96px 0}
+    .overline{display:flex;align-items:center;gap:10px;font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:14px}
+    h2.section-title{font-family:var(--font-h);font-size:clamp(28px,4vw,46px);font-weight:900;line-height:1.1;letter-spacing:-0.02em;color:var(--purple-dark);margin-bottom:16px}
+    .section-lead{font-size:17px;color:var(--text-light);line-height:1.75;max-width:640px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:40px;font-family:var(--font-h);font-size:13px;font-weight:700;letter-spacing:0.04em;transition:var(--transition);cursor:pointer;border:none;min-height:48px}
+    .btn-peach{background:var(--peach);color:var(--purple-dark)} .btn-peach:hover{background:var(--peach-dark);color:var(--white);transform:translateY(-2px);box-shadow:0 6px 20px rgba(252,144,24,0.4)}
+    .btn-purple{background:var(--purple);color:var(--white)} .btn-purple:hover{background:var(--purple-dark);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+    .btn-outline-white{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.45)} .btn-outline-white:hover{border-color:var(--white);background:rgba(255,255,255,0.1);transform:translateY(-2px)}
+    .btn-outline-purple{background:transparent;color:var(--purple);border:1.5px solid var(--purple)} .btn-outline-purple:hover{background:var(--purple);color:var(--white)}
+    .btn[disabled]{opacity:0.6;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+
+    /* ===== HERO ===== */
+    .apply-hero{background:var(--purple-dark);position:relative;overflow:hidden;padding:calc(var(--nav-h) + 72px) 0 72px}
+    .apply-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,184,102,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,184,102,0.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+    .hero-shape-1{position:absolute;top:-120px;right:-100px;width:480px;height:480px;border-radius:50%;background:rgba(255,184,102,0.07);pointer-events:none}
+    .hero-shape-2{position:absolute;bottom:-160px;left:-120px;width:400px;height:400px;border-radius:50%;background:rgba(122,41,122,0.25);pointer-events:none}
+    .apply-hero-inner{position:relative;z-index:2}
+    .crumbs{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:26px}
+    .crumbs a:hover{color:var(--peach)} .crumbs span{margin:0 8px;opacity:0.5}
+    .hero-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,184,102,0.15);border:1px solid rgba(255,184,102,0.3);border-radius:40px;padding:7px 18px 7px 12px;margin-bottom:26px}
+    .hero-badge-dot{width:8px;height:8px;border-radius:50%;background:var(--peach);animation:pulse 2s ease infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.35)}}
+    .hero-badge-text{font-family:var(--font-accent);font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--peach)}
+    .apply-hero h1{font-family:var(--font-h);font-size:clamp(38px,5.6vw,70px);font-weight:900;color:var(--white);line-height:1.03;letter-spacing:-0.025em;margin-bottom:10px;max-width:860px}
+    .apply-hero h1 em{font-style:normal;color:var(--peach);display:block}
+    .hero-cohort{font-family:var(--font-h);font-style:italic;font-size:clamp(16px,2vw,20px);color:rgba(255,255,255,0.65);margin-bottom:24px}
+    .hero-desc{font-size:17px;color:rgba(255,255,255,0.75);line-height:1.8;max-width:640px;margin-bottom:34px}
+    .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+    .hero-facts{display:grid;grid-template-columns:repeat(4,auto);justify-content:start;gap:12px 44px;margin-top:44px;padding-top:30px;border-top:1px solid rgba(255,255,255,0.12)}
+    .hero-fact-num{font-family:var(--font-h);font-size:26px;font-weight:900;color:var(--peach);line-height:1.1}
+    .hero-fact-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:4px}
+
+    /* ===== INTRO ===== */
+    .intro{background:var(--white)}
+    .intro-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:72px;align-items:start}
+    .benefit-list{list-style:none;counter-reset:b;display:grid;gap:12px;margin-top:28px}
+    .benefit-list li{counter-increment:b;display:flex;gap:16px;align-items:flex-start;padding:14px 18px;border-radius:var(--radius);background:var(--off-white);border:1px solid var(--mid-grey);font-size:15px;color:var(--text);line-height:1.55;transition:var(--transition)}
+    .benefit-list li:hover{border-color:var(--peach);background:var(--peach-pale)}
+    .benefit-list li::before{content:counter(b,decimal-leading-zero);font-family:var(--font-h);font-weight:900;font-size:20px;line-height:1.2;color:var(--purple-light);flex-shrink:0;min-width:28px}
+    .benefit-list q{quotes:"\201C" "\201D";font-style:italic;color:var(--text-light)}
+    .qualities{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0 30px}
+    .quality{background:var(--purple-pale);border-radius:var(--radius);padding:16px 18px;border-left:3px solid var(--purple)}
+    .quality b{display:block;font-family:var(--font-h);font-size:16px;color:var(--purple-dark);margin-bottom:2px}
+    .quality span{font-size:12px;color:var(--text-light);font-weight:500}
+    .ready-box{background:linear-gradient(135deg,var(--purple-dark),var(--purple));color:var(--white);border-radius:var(--radius-lg);padding:30px 32px;box-shadow:var(--shadow-md)}
+    .ready-box h3{font-family:var(--font-h);font-size:21px;font-weight:800;margin-bottom:14px;color:var(--peach)}
+    .ready-box ul{list-style:none;display:grid;gap:11px}
+    .ready-box li{position:relative;padding-left:28px;font-size:14.5px;color:rgba(255,255,255,0.85);line-height:1.55}
+    .ready-box li::before{content:'';position:absolute;left:0;top:4px;width:16px;height:16px;border-radius:50%;background:var(--peach) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.4l2.3 2.3 4.7-4.9' fill='none' stroke='%23320c32' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+    .faq-link{display:inline-flex;margin-top:22px;font-weight:700;font-size:14px;color:var(--peach);border-bottom:1.5px solid rgba(255,184,102,0.4);padding-bottom:2px}
+    .faq-link:hover{border-color:var(--peach)}
+
+    /* ===== PROCESS ===== */
+    .process{background:var(--off-white)}
+    .process-head{text-align:center;max-width:640px;margin:0 auto 48px}
+    .process-head .overline{justify-content:center}
+    .process-head .section-lead{margin:0 auto}
+    .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:t}
+    .t-step{counter-increment:t;position:relative;background:var(--white);border:1px solid var(--mid-grey);border-radius:var(--radius-lg);padding:28px 24px;transition:var(--transition)}
+    .t-step:hover{box-shadow:var(--shadow-md);border-color:var(--peach);transform:translateY(-3px)}
+    .t-step::before{content:counter(t);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--purple);color:var(--white);font-family:var(--font-h);font-weight:900;font-size:17px;margin-bottom:16px}
+    .t-step.now::before{background:var(--orange);color:var(--purple-dark)}
+    .t-step h3{font-family:var(--font-h);font-size:17px;font-weight:800;color:var(--purple-dark);margin-bottom:6px}
+    .t-step p{font-size:13.5px;color:var(--text-light);line-height:1.65}
+
+    /* ===== FORM SECTION ===== */
+    .form-section{background:linear-gradient(180deg,var(--purple-pale) 0%,var(--white) 100%);scroll-margin-top:var(--nav-h)}
+    .form-head{text-align:center;max-width:680px;margin:0 auto 40px}
+    .form-head .overline{justify-content:center}
+    .form-head .section-lead{margin:0 auto}
+    .form-shell{max-width:860px;margin:0 auto}
+    .draft-banner{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--peach-pale);border:1px solid rgba(223,110,12,0.3);border-radius:var(--radius);padding:12px 18px;margin-bottom:18px;font-size:14px;color:var(--purple-dark)}
+    .draft-banner[hidden]{display:none}
+    .draft-banner button{background:none;border:none;color:var(--peach-dark);font-weight:700;font-size:13px;cursor:pointer;text-decoration:underline;padding:4px}
+
+    /* stepper */
+    .stepper{list-style:none;display:flex;justify-content:space-between;gap:6px;margin-bottom:22px;position:relative}
+    .stepper li{flex:1;position:relative;text-align:center}
+    .stepper li::after{content:'';position:absolute;top:19px;left:calc(50% + 24px);right:calc(-50% + 24px);height:2px;background:var(--mid-grey);transition:var(--transition)}
+    .stepper li:last-child::after{display:none}
+    .stepper li.done::after{background:var(--purple)}
+    .step-dot{width:40px;height:40px;border-radius:50%;border:2px solid var(--mid-grey);background:var(--white);color:var(--text-light);font-family:var(--font-h);font-weight:900;font-size:15px;cursor:default;transition:var(--transition);display:inline-grid;place-items:center;position:relative;z-index:1}
+    .stepper li.done .step-dot{background:var(--purple);border-color:var(--purple);color:var(--white);cursor:pointer}
+    .stepper li.done .step-dot:hover{background:var(--purple-dark)}
+    .stepper li.current .step-dot{background:var(--orange);border-color:var(--orange);color:var(--purple-dark);box-shadow:0 0 0 5px rgba(252,144,24,0.2)}
+    .stepper li.reached .step-dot{cursor:pointer}
+    .step-name{display:block;margin-top:8px;font-size:11.5px;font-weight:700;letter-spacing:0.04em;color:var(--text-light)}
+    .stepper li.current .step-name{color:var(--purple-dark)}
+    .progress{height:6px;background:var(--mid-grey);border-radius:6px;overflow:hidden;margin-bottom:26px}
+    .progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--orange));border-radius:6px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1)}
+
+    /* card + steps */
+    .form-card{background:var(--white);border:1px solid var(--mid-grey);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:44px 48px}
+    .step{animation:stepIn 0.35s ease}
+    @keyframes stepIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+    .step-kicker{font-family:var(--font-accent);font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:6px}
+    .step h3.step-title{font-family:var(--font-h);font-size:clamp(24px,3.2vw,32px);font-weight:900;color:var(--purple-dark);line-height:1.15;margin-bottom:8px;outline:none}
+    .step-intro{font-size:15px;color:var(--text-light);margin-bottom:30px;max-width:620px}
+    .field{margin-bottom:26px;border:0;min-width:0}
+    .field[hidden]{display:none}
+    .field-label{display:block;font-weight:700;font-size:14.5px;color:var(--purple-dark);margin-bottom:8px;line-height:1.45;padding:0}
+    .req{color:var(--peach-dark);margin-left:2px}
+    .field-hint{font-size:13px;color:var(--text-light);margin:-2px 0 10px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+    input[type=text],input[type=email],input[type=tel],input[type=number],textarea{width:100%;font:inherit;font-size:16px;color:var(--text);background:var(--white);border:1.5px solid #d9d4d8;border-radius:10px;padding:13px 15px;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none;appearance:none}
+    input[type=number]{-moz-appearance:textfield}
+    input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+    textarea{min-height:140px;resize:vertical;line-height:1.6}
+    input::placeholder,textarea::placeholder{color:#a99ea7}
+    input:hover,textarea:hover{border-color:var(--purple-light)}
+    input:focus,textarea:focus{outline:none;border-color:var(--purple);box-shadow:0 0 0 4px rgba(84,24,84,0.12)}
+    input[readonly]{background:var(--light-grey);color:var(--text-light)}
+    .has-error input[type=text],.has-error input[type=email],.has-error input[type=tel],.has-error input[type=number],.has-error textarea{border-color:var(--danger);background:var(--danger-pale)}
+    .field-error{display:flex;gap:6px;align-items:flex-start;color:var(--danger);font-size:13px;font-weight:600;margin-top:8px;line-height:1.4}
+    .field-error[hidden]{display:none}
+    .field-error::before{content:'!';flex-shrink:0;display:grid;place-items:center;width:16px;height:16px;margin-top:1px;border-radius:50%;background:var(--danger);color:#fff;font-size:11px;font-weight:900}
+    .counter{display:flex;justify-content:flex-end;margin-top:6px;font-size:12.5px;font-weight:700;color:var(--text-light)}
+    .counter.over{color:var(--danger)} .counter.near{color:var(--peach-dark)}
+    .check-line{display:flex;gap:10px;align-items:center;margin-top:10px;font-size:13.5px;color:var(--text-light);cursor:pointer;width:fit-content}
+    .check-line input{width:18px;height:18px;accent-color:var(--purple);cursor:pointer}
+
+    /* yes / no pills */
+    .choices{display:flex;gap:12px;flex-wrap:wrap}
+    .choice{position:relative;cursor:pointer}
+    .choice input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer;margin:0}
+    .choice span{display:inline-flex;align-items:center;justify-content:center;min-width:104px;min-height:46px;padding:0 24px;border:1.5px solid #d9d4d8;border-radius:40px;font-weight:700;font-size:14.5px;color:var(--text-light);background:var(--white);transition:var(--transition)}
+    .choice:hover span{border-color:var(--purple);color:var(--purple)}
+    .choice input:checked+span{background:var(--purple);border-color:var(--purple);color:var(--white);box-shadow:0 4px 14px rgba(84,24,84,0.25)}
+    .choice input:focus-visible+span{outline:3px solid var(--orange);outline-offset:2px}
+    .has-error .choice span{border-color:var(--danger)}
+    .cond{margin-left:0;padding:20px 22px;background:var(--purple-pale);border-radius:var(--radius);border-left:3px solid var(--purple-light);animation:stepIn 0.3s ease}
+    .cond .field{margin-bottom:0}
+
+    /* ratings */
+    .rating-group{margin-bottom:34px}
+    .rating-group h4{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--purple-dark);margin-bottom:4px}
+    .scale-key{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--text-light);letter-spacing:0.04em;margin:8px 0 6px;text-transform:uppercase}
+    .rating-row{border:0;padding:14px 0;border-top:1px solid var(--mid-grey);min-width:0}
+    .rating-row:first-of-type{border-top:0}
+    .rating-row legend{float:left;width:100%;font-weight:600;font-size:14.5px;color:var(--text);margin-bottom:8px;padding:0}
+    .rating-row .scale{clear:both}
+    .scale{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+    .num{position:relative;cursor:pointer}
+    .num input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer;margin:0}
+    .num span{display:grid;place-items:center;height:42px;border:1.5px solid #d9d4d8;border-radius:10px;font-weight:700;font-size:14px;color:var(--text-light);background:var(--white);transition:var(--transition)}
+    .num:hover span{border-color:var(--purple);color:var(--purple);transform:translateY(-2px)}
+    .num input:checked+span{background:var(--purple);border-color:var(--purple);color:var(--white);box-shadow:0 4px 12px rgba(84,24,84,0.28)}
+    .num input:focus-visible+span{outline:3px solid var(--orange);outline-offset:2px}
+    .has-error .num span{border-color:var(--danger)}
+
+    /* files */
+    .file-drop{position:relative;border:2px dashed #cfc6cd;border-radius:var(--radius);background:var(--off-white);padding:26px 20px;text-align:center;transition:var(--transition)}
+    .file-drop:hover,.file-drop:focus-within{border-color:var(--purple);background:var(--purple-pale)}
+    .file-drop input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+    .file-drop svg{width:34px;height:34px;color:var(--purple);margin:0 auto 8px}
+    .file-drop strong{color:var(--purple)}
+    .file-drop small{display:block;color:var(--text-light);font-size:12.5px;margin-top:2px}
+    .has-error .file-drop{border-color:var(--danger);background:var(--danger-pale)}
+    .file-chip{display:flex;align-items:center;gap:12px;background:var(--purple-pale);border:1px solid rgba(84,24,84,0.2);border-radius:var(--radius);padding:12px 16px}
+    .file-chip[hidden]{display:none}
+    .file-chip svg{width:26px;height:26px;color:var(--green);flex-shrink:0}
+    .file-meta{min-width:0;flex:1}
+    .file-name{display:block;font-weight:700;font-size:14px;color:var(--purple-dark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .file-size{font-size:12px;color:var(--text-light)}
+    .file-remove{background:none;border:1.5px solid #d9d4d8;border-radius:30px;padding:6px 14px;font-weight:700;font-size:12.5px;color:var(--text-light);cursor:pointer;transition:var(--transition)}
+    .file-remove:hover{border-color:var(--danger);color:var(--danger)}
+
+    .consent{background:var(--off-white);border:1.5px solid var(--mid-grey);border-radius:var(--radius);padding:18px 20px}
+    .consent label{display:flex;gap:14px;align-items:flex-start;cursor:pointer;font-size:14.5px;line-height:1.6;color:var(--text)}
+    .consent input{width:22px;height:22px;margin-top:2px;accent-color:var(--purple);flex-shrink:0;cursor:pointer}
+    .has-error.consent{border-color:var(--danger);background:var(--danger-pale)}
+    .hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+    /* nav buttons */
+    .form-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:36px;padding-top:26px;border-top:1px solid var(--mid-grey)}
+    .form-nav .btn-back{background:none;border:1.5px solid #d9d4d8;color:var(--text-light)}
+    .form-nav .btn-back:hover{border-color:var(--purple);color:var(--purple)}
+    .form-nav .btn-back[hidden]{visibility:hidden;display:inline-flex}
+    .save-note{font-size:12.5px;font-weight:600;color:var(--text-light);display:flex;align-items:center;gap:6px;opacity:0;transition:opacity 0.4s}
+    .save-note.show{opacity:1}
+    .save-note::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green)}
+    .form-error{display:none;margin-top:22px;background:var(--danger-pale);border:1px solid rgba(179,38,30,0.35);color:var(--danger);border-radius:var(--radius);padding:16px 18px;font-size:14.5px;font-weight:600;line-height:1.55}
+    .form-error.show{display:block}
+    .form-error a{text-decoration:underline}
+    .spinner{width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(50,12,50,0.25);border-top-color:var(--purple-dark);animation:spin 0.8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .form-foot{text-align:center;font-size:13px;color:var(--text-light);margin-top:20px}
+    .form-foot a{color:var(--purple);font-weight:700;text-decoration:underline}
+
+    /* success + closed */
+    .result-card{background:var(--white);border:1px solid var(--mid-grey);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);padding:56px 48px;text-align:center}
+    .result-card[hidden]{display:none}
+    .result-icon{width:76px;height:76px;border-radius:50%;background:var(--green);display:grid;place-items:center;margin:0 auto 22px;animation:pop 0.5s cubic-bezier(0.34,1.56,0.64,1)}
+    .result-icon.muted{background:var(--text-light)}
+    .result-icon svg{width:38px;height:38px;color:#fff}
+    @keyframes pop{from{transform:scale(0.4);opacity:0}to{transform:scale(1);opacity:1}}
+    .result-card h3{font-family:var(--font-h);font-size:clamp(26px,3.6vw,36px);font-weight:900;color:var(--purple-dark);margin-bottom:10px}
+    .result-card p{font-size:16px;color:var(--text-light);max-width:560px;margin:0 auto 14px}
+    .ref-chip{display:inline-block;background:var(--purple-pale);border:1.5px dashed var(--purple-light);border-radius:12px;padding:10px 24px;margin:8px 0 22px;font-family:var(--font-h);font-weight:900;font-size:24px;letter-spacing:0.06em;color:var(--purple)}
+    .next-list{text-align:left;max-width:520px;margin:10px auto 28px;list-style:none;display:grid;gap:10px}
+    .next-list li{display:flex;gap:12px;font-size:14.5px;color:var(--text);line-height:1.55}
+    .next-list li::before{content:'';flex-shrink:0;width:8px;height:8px;border-radius:50%;background:var(--orange);margin-top:8px}
+    .result-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+    /* ===== FOOTER ===== */
+    .footer{background:#161616;color:var(--white);padding:72px 0 0}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;padding-bottom:52px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:28px}
+    .footer-logo-text{font-family:var(--font-h);font-size:22px;font-weight:900;margin-bottom:4px}
+    .footer-logo-text em{font-style:normal;color:var(--peach)}
+    .footer-tagline{font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--peach);margin-bottom:14px}
+    .footer-brand p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75;max-width:300px}
+    .footer-col h4{font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--peach);margin-bottom:14px}
+    .footer-col a{display:block;font-size:13px;color:rgba(255,255,255,0.55);padding:4px 0;transition:var(--transition)}
+    .footer-col a:hover{color:var(--white);padding-left:4px}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:22px 0;font-size:12px;color:rgba(255,255,255,0.3)}
+    .footer-cta{background:var(--peach);color:var(--purple-dark);font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:10px 24px;border-radius:40px;transition:var(--transition)}
+    .footer-cta:hover{background:var(--peach-dark)}
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:1100px){
+      .container{padding:0 32px}
+      .intro-grid{grid-template-columns:1fr;gap:48px}
+      .timeline{grid-template-columns:1fr 1fr}
+      .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+    }
+    @media(max-width:768px){
+      .nav{padding:0 20px}
+      .nav-links{display:none}
+      .nav-links.open{display:flex;flex-direction:column;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--white);padding:12px 16px 20px;box-shadow:var(--shadow-md);gap:2px;animation:slideDown 0.22s ease}
+      .nav-links.open li a{font-size:14px;padding:13px 14px;border-radius:8px;display:block}
+      .nav-hamburger{display:block}
+      .container{padding:0 20px}
+      .section{padding:64px 0}
+      .apply-hero{padding:calc(var(--nav-h) + 40px) 0 52px}
+      .hero-facts{grid-template-columns:1fr 1fr;gap:20px 28px}
+      .form-card{padding:30px 22px}
+      .result-card{padding:40px 22px}
+      .grid-2{grid-template-columns:1fr}
+      .step-name{display:none}
+      .stepper li.current .step-name{display:block;position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;top:44px}
+      .stepper{margin-bottom:46px}
+      .step-dot{width:34px;height:34px;font-size:14px}
+      .stepper li::after{top:16px;left:calc(50% + 21px);right:calc(-50% + 21px)}
+      .stepper{gap:4px}
+    }
+    @media(max-width:560px){
+      .container{padding:0 16px}
+      .timeline{grid-template-columns:1fr}
+      .qualities{grid-template-columns:1fr}
+      .scale{grid-template-columns:repeat(5,1fr)}
+      .form-nav{flex-wrap:wrap}
+      .form-nav .save-note{order:3;width:100%;justify-content:center}
+      .form-nav .btn{flex:1}
+      .footer-grid{grid-template-columns:1fr}
+      .footer-bottom{flex-direction:column;gap:12px;text-align:center}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:0.001ms!important;animation-iteration-count:1!important;transition-duration:0.001ms!important;scroll-behavior:auto!important}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-logo"><a href="index.html"><img src="images/the-hud-group-hi-res-logo.png" alt="The HuD Group Global"></a></div>
+    <ul class="nav-links">
+      <li><a href="charity.html">Charity</a></li>
+      <li><a href="corporate.html">Corporate</a></li>
+      <li><a href="countries.html">Countries</a></li>
+      <li><a href="community.html" class="active">Community</a></li>
+      <li><a href="content.html">Content</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="nav-contribute"><a href="contribute.html">Contribute</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <header class="apply-hero">
+    <div class="hero-shape-1"></div><div class="hero-shape-2"></div>
+    <div class="container apply-hero-inner">
+      <div class="crumbs"><a href="community.html">Community</a><span>/</span>Apply</div>
+      <div class="hero-badge"><div class="hero-badge-dot"></div><span class="hero-badge-text" id="heroBadge">Applications are open</span></div>
+      <h1>Apply to <em>The Shadrach Fellowship</em></h1>
+      <p class="hero-cohort">The 2026/2027 Cohort</p>
+      <p class="hero-desc">Become a personal disciple of Dr. Yaw Perbi as he follows Jesus Christ. This is a year-long, transformational missional discipleship journey that equips you spiritually, intellectually, emotionally, socially and practically to become a mature disciple who disciples others.</p>
+      <div class="hero-ctas">
+        <a href="#application" class="btn btn-peach" id="heroApply">Start Your Application</a>
+        <a href="https://bit.ly/Overview_FAQ_ShadrachFelllowship" target="_blank" rel="noopener" class="btn btn-outline-white">Read the Overview FAQ</a>
+      </div>
+      <div class="hero-facts">
+        <div><div class="hero-fact-num">17 to 39</div><div class="hero-fact-label">Age range</div></div>
+        <div><div class="hero-fact-num">Free</div><div class="hero-fact-label">No cost to join</div></div>
+        <div><div class="hero-fact-num">Fridays</div><div class="hero-fact-label">6 to 8 PM UTC, online</div></div>
+        <div><div class="hero-fact-num">12 months</div><div class="hero-fact-label">January to December 2027</div></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section intro" id="about">
+    <div class="container intro-grid">
+      <div>
+        <div class="overline">The Journey</div>
+        <h2 class="section-title">What you will gain as a Shadrach Fellow</h2>
+        <p class="section-lead">Ten outcomes the fellowship is designed to grow in you over one year of weekly sessions, a mid-year retreat, and a community that walks with you.</p>
+        <ul class="benefit-list">
+          <li><div>Deepen your relationship with the Triune God <em>(intimacy)</em></div></li>
+          <li><div>Develop your emotional health. <q>It is impossible to be spiritually mature while remaining emotionally immature.</q></div></li>
+          <li><div>Build Christ-like character as a follower of Jesus <em>(imitation)</em></div></li>
+          <li><div>Discover and deploy your spiritual and natural gifts for every relevant sector <em>(influence)</em></div></li>
+          <li><div>Learn practical life skills, from marriage to money, from a veteran mentor</div></li>
+          <li><div>Be built up, like Shadrach, as a vibrant marketplace influencer for the Kingdom of God <em>(leader)</em></div></li>
+          <li><div>Catch a vision and develop a heart for God's world, especially Unreached People Groups</div></li>
+          <li><div>Acquire the mindset and skillset to make and multiply movements <em>(disciple-making and church-planting)</em></div></li>
+          <li><div>Compose and adhere to Spirit-inspired personal vision and mission statements, values, goals and strategies</div></li>
+          <li><div>Join an intimate community of passionate friends, followers and fishers of Jesus Christ</div></li>
+        </ul>
+      </div>
+      <div>
+        <div class="overline">Who We Are Looking For</div>
+        <h2 class="section-title">Faithful people who can reproduce themselves</h2>
+        <p class="section-lead">In line with 2 Timothy 2:2, the fellowship seeks individuals who embody these eight qualities.</p>
+        <div class="qualities">
+          <div class="quality"><b>Faithful</b><span>Luke 5:4-5</span></div>
+          <div class="quality"><b>Available</b><span>Luke 5:4-5</span></div>
+          <div class="quality"><b>Initiative-taking</b><span>John 1:40-41, 45</span></div>
+          <div class="quality"><b>Influential</b><span>John 1:42, 46</span></div>
+          <div class="quality"><b>Teachable</b><span>Luke 5:6-10a</span></div>
+          <div class="quality"><b>Hungry</b><span>John 1:35-39</span></div>
+          <div class="quality"><b>Send-able</b><span>Luke 10:1-4</span></div>
+          <div class="quality"><b>Obedient</b><span>Matthew 28:19-20</span></div>
+        </div>
+        <div class="ready-box">
+          <h3>Have these ready</h3>
+          <ul>
+            <li>A recommendation letter from a church leader, a relative, or an employer</li>
+            <li>Your current CV</li>
+            <li>Quiet time to reflect on your story, your values and your dream. You can save a draft and come back to it.</li>
+            <li>Your application submitted by <strong id="deadlineInline">20 November 2026</strong></li>
+          </ul>
+          <a class="faq-link" href="https://bit.ly/Overview_FAQ_ShadrachFelllowship" target="_blank" rel="noopener">Read more about the fellowship</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section process" id="process">
+    <div class="container">
+      <div class="process-head">
+        <div class="overline">The Process</div>
+        <h2 class="section-title">From application to fellowship</h2>
+        <p class="section-lead">Every application is read prayerfully. Here is what happens after you submit.</p>
+      </div>
+      <div class="timeline">
+        <div class="t-step now"><h3>Apply online</h3><p>Complete the six short steps below and upload your CV and recommendation letter.</p></div>
+        <div class="t-step"><h3>Screening</h3><p>Your application is checked against the eligibility criteria and the eight qualities above.</p></div>
+        <div class="t-step"><h3>Shortlisting</h3><p>Shortlisted applicants are contacted by email or WhatsApp to arrange an interview.</p></div>
+        <div class="t-step"><h3>Final interviews</h3><p>Dr. Yaw Perbi and Frank Koomson meet shortlisted applicants before final selections are made.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section form-section" id="application">
+    <div class="container">
+      <div class="form-head">
+        <div class="overline">Application Form</div>
+        <h2 class="section-title">Tell us about yourself</h2>
+        <p class="section-lead" id="formLead">Six short steps. Your answers go straight to The HuD Group team.</p>
+      </div>
+
+      <div class="form-shell">
+        <div class="result-card" id="closedCard" hidden>
+          <div class="result-icon muted" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h3>Applications have closed</h3>
+          <p>Applications for the 2026/2027 cohort closed on 20 November 2026. Thank you for your interest in The Shadrach Fellowship.</p>
+          <p>To hear when the next cohort opens, write to <a href="mailto:engage@thehudgroupglobal.org?subject=TSF%20next%20cohort" style="color:var(--purple);font-weight:700;text-decoration:underline">engage@thehudgroupglobal.org</a>.</p>
+          <div class="result-actions"><a href="community.html" class="btn btn-purple">Back to Community</a></div>
+        </div>
+
+        <div class="result-card" id="successCard" hidden tabindex="-1">
+          <div class="result-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          <h3>Application received</h3>
+          <p>Thank you, <strong id="successName"></strong>. Your application to The Shadrach Fellowship 2026/2027 is in.</p>
+          <div class="ref-chip" id="successRef">TSF27-000</div>
+          <p>A confirmation has been sent to <strong id="successEmail"></strong>. If it does not arrive within a few minutes, check your spam folder and quote this reference when you write to us.</p>
+          <ul class="next-list">
+            <li>Your application will be screened against the eligibility criteria.</li>
+            <li>Shortlisted applicants will be contacted by email or WhatsApp.</li>
+            <li>Interviews are held with Dr. Yaw Perbi and Frank Koomson.</li>
+          </ul>
+          <div class="result-actions">
+            <a href="community.html" class="btn btn-purple">Back to Community</a>
+            <a href="index.html" class="btn btn-outline-purple">Visit the Homepage</a>
+          </div>
+        </div>
+
+        <div id="formShell">
+          <div class="draft-banner" id="draftBanner" hidden>
+            <span>We restored the draft you saved earlier. Please choose your files again.</span>
+            <button type="button" id="clearDraft">Start over</button>
+          </div>
+
+          <ol class="stepper" id="stepper" aria-label="Application progress"></ol>
+          <div class="progress" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+
+          <form class="form-card" id="applyForm" novalidate autocomplete="on">
+            <div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+            <!-- STEP 1 -->
+            <section class="step" data-title="About you">
+              <div class="step-kicker">Step 1 of 6</div>
+              <h3 class="step-title" tabindex="-1">About you</h3>
+              <p class="step-intro">Tell us who you are and how we can reach you.</p>
+              <div class="grid-2">
+                <div class="field" data-field="firstName">
+                  <label class="field-label" for="firstName">First name <span class="req" aria-hidden="true">*</span></label>
+                  <input type="text" id="firstName" name="firstName" autocomplete="given-name" maxlength="80">
+                  <p class="field-error" role="alert" hidden></p>
+                </div>
+                <div class="field" data-field="surname">
+                  <label class="field-label" for="surname">Surname <span class="req" aria-hidden="true">*</span></label>
+                  <input type="text" id="surname" name="surname" autocomplete="family-name" maxlength="80">
+                  <p class="field-error" role="alert" hidden></p>
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="field" data-field="age">
+                  <label class="field-label" for="age">Age <span class="req" aria-hidden="true">*</span></label>
+                  <input type="number" id="age" name="age" inputmode="numeric" min="17" max="39" autocomplete="off" aria-describedby="hint-age">
+                  <p class="field-hint" id="hint-age" style="margin:8px 0 0">The fellowship is for ages 17 to 39.</p>
+                  <p class="field-error" role="alert" hidden></p>
+                </div>
+                <div class="field" data-field="email">
+                  <label class="field-label" for="email">Email <span class="req" aria-hidden="true">*</span></label>
+                  <input type="email" id="email" name="email" autocomplete="email" inputmode="email" maxlength="120">
+                  <p class="field-error" role="alert" hidden></p>
+                </div>
+              </div>
+              <div class="grid-2">
+                <div class="field" data-field="phone">
+                  <label class="field-label" for="phone">Phone number <span class="req" aria-hidden="true">*</span></label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="+233 24 000 0000" maxlength="30">
+                  <p class="field-error" role="alert" hidden></p>
+                </div>
+                <div class="field" data-field="whatsapp">
+                  <label class="field-label" for="whatsapp">WhatsApp number <span class="req" aria-hidden="true">*</span></label>
+                  <input type="tel" id="whatsapp" name="whatsapp" autocomplete="off" inputmode="tel" placeholder="+233 24 000 0000" maxlength="30">
+                  <label class="check-line"><input type="checkbox" id="sameAsPhone"> Same as my phone number</label>
+                  <p class="field-error" role="alert" hidden></p>
+                </div>
+              </div>
+              <div class="field" data-field="location">
+                <label class="field-label" for="location">Location (city and country) <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="location" name="location" autocomplete="address-level2" placeholder="Accra, Ghana" maxlength="120">
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+            </section>
+
+            <!-- STEP 2 -->
+            <section class="step" data-title="Your story" hidden>
+              <div class="step-kicker">Step 2 of 6</div>
+              <h3 class="step-title" tabindex="-1">Your story</h3>
+              <p class="step-intro">This section gives us a holistic picture of your personal and spiritual journey so far. Speak in your own words.</p>
+              <div class="field" data-field="lifeStory">
+                <label class="field-label" for="lifeStory">Tell us your summarised life story <span class="req" aria-hidden="true">*</span></label>
+                <p class="field-hint" id="hint-story">200 words maximum.</p>
+                <textarea id="lifeStory" name="lifeStory" aria-describedby="hint-story counter-story" maxlength="2400"></textarea>
+                <div class="counter" id="counter-story" aria-live="polite">0 / 200 words</div>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+              <div class="field" data-field="aboutYou">
+                <label class="field-label" for="aboutYou">What is the most important thing you would like us to know about you? <span class="req" aria-hidden="true">*</span></label>
+                <p class="field-hint">In a sentence or two.</p>
+                <input type="text" id="aboutYou" name="aboutYou" maxlength="400">
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+              <fieldset class="field" data-field="hasDiscipler">
+                <legend class="field-label">Have you ever had a formal &ldquo;Discipler&rdquo;? <span class="req" aria-hidden="true">*</span></legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="hasDiscipler" value="Yes"><span>Yes</span></label>
+                  <label class="choice"><input type="radio" name="hasDiscipler" value="No"><span>No</span></label>
+                </div>
+                <p class="field-error" role="alert" hidden></p>
+              </fieldset>
+              <div class="cond field" data-if="hasDiscipler" data-eq="Yes" data-field="disciplerExperience" hidden>
+                <label class="field-label" for="disciplerExperience">When was that, and how did it go? <span class="req" aria-hidden="true">*</span></label>
+                <textarea id="disciplerExperience" name="disciplerExperience" maxlength="2400" disabled></textarea>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+              <div class="cond field" data-if="hasDiscipler" data-eq="No" data-field="noDisciplerReason" hidden>
+                <label class="field-label" for="noDisciplerReason">Why not? Why now, or why did it stop? <span class="req" aria-hidden="true">*</span></label>
+                <textarea id="noDisciplerReason" name="noDisciplerReason" maxlength="2400" disabled></textarea>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+            </section>
+
+            <!-- STEP 3 -->
+            <section class="step" data-title="Self-awareness" hidden>
+              <div class="step-kicker">Step 3 of 6</div>
+              <h3 class="step-title" tabindex="-1">Self-awareness</h3>
+              <p class="step-intro">A look at the foundations you may already have laid. There are no wrong answers here. We simply want to start where you are.</p>
+              <fieldset class="field" data-field="lifeStoryMapped">
+                <legend class="field-label">Have you mapped out your life story and drawn insights from it? <span class="req" aria-hidden="true">*</span></legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="lifeStoryMapped" value="Yes"><span>Yes</span></label>
+                  <label class="choice"><input type="radio" name="lifeStoryMapped" value="No"><span>No</span></label>
+                </div>
+                <p class="field-error" role="alert" hidden></p>
+              </fieldset>
+              <fieldset class="field" data-field="genogram">
+                <legend class="field-label">Have you drawn your Genogram? <span class="req" aria-hidden="true">*</span></legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="genogram" value="Yes"><span>Yes</span></label>
+                  <label class="choice"><input type="radio" name="genogram" value="No"><span>No</span></label>
+                </div>
+                <p class="field-error" role="alert" hidden></p>
+              </fieldset>
+              <fieldset class="field" data-field="personalityTest">
+                <legend class="field-label">Have you ever taken a personality test? <span class="req" aria-hidden="true">*</span></legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="personalityTest" value="Yes"><span>Yes</span></label>
+                  <label class="choice"><input type="radio" name="personalityTest" value="No"><span>No</span></label>
+                </div>
+                <p class="field-error" role="alert" hidden></p>
+              </fieldset>
+              <div class="cond field" data-if="personalityTest" data-eq="Yes" data-field="personalityDetails" hidden>
+                <label class="field-label" for="personalityDetails">Which kind, and what were the results? <span class="req" aria-hidden="true">*</span></label>
+                <textarea id="personalityDetails" name="personalityDetails" maxlength="2400" disabled></textarea>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+              <fieldset class="field" data-field="personalMission">
+                <legend class="field-label">Do you have a Personal Mission Statement? <span class="req" aria-hidden="true">*</span></legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="personalMission" value="Yes"><span>Yes</span></label>
+                  <label class="choice"><input type="radio" name="personalMission" value="No"><span>No</span></label>
+                </div>
+                <p class="field-error" role="alert" hidden></p>
+              </fieldset>
+              <fieldset class="field" data-field="familyMission">
+                <legend class="field-label">Do you have a Family Mission Statement? <span class="req" aria-hidden="true">*</span></legend>
+                <p class="field-hint">For your family of procreation, or the family you are forming.</p>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="familyMission" value="Yes"><span>Yes</span></label>
+                  <label class="choice"><input type="radio" name="familyMission" value="No"><span>No</span></label>
+                </div>
+                <p class="field-error" role="alert" hidden></p>
+              </fieldset>
+              <fieldset class="field" data-field="valuesWorked">
+                <legend class="field-label">Have you worked through your personal values? <span class="req" aria-hidden="true">*</span></legend>
+                <div class="choices">
+                  <label class="choice"><input type="radio" name="valuesWorked" value="Yes"><span>Yes</span></label>
+                  <label class="choice"><input type="radio" name="valuesWorked" value="No"><span>No</span></label>
+                </div>
+                <p class="field-error" role="alert" hidden></p>
+              </fieldset>
+              <div class="cond field" data-if="valuesWorked" data-eq="Yes" data-field="values" hidden>
+                <label class="field-label" for="values">What are they? <span class="req" aria-hidden="true">*</span></label>
+                <textarea id="values" name="values" maxlength="2400" disabled></textarea>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+            </section>
+
+            <!-- STEP 4 -->
+            <section class="step" data-title="Dreams and life areas" hidden>
+              <div class="step-kicker">Step 4 of 6</div>
+              <h3 class="step-title" tabindex="-1">Dreams and life areas</h3>
+              <p class="step-intro">Tell us what you are working towards, then rate each area of your life honestly. This is a snapshot of where you are today, not a test.</p>
+              <div class="field" data-field="bigDream">
+                <label class="field-label" for="bigDream">What is the BIG dream you are working on right now? <span class="req" aria-hidden="true">*</span></label>
+                <textarea id="bigDream" name="bigDream" maxlength="2400"></textarea>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+              <div class="rating-group">
+                <h4>Rate each area from 1 to 10</h4>
+                <p class="field-hint">1 means terrible and 10 means terrific.</p>
+                <div class="scale-key" aria-hidden="true"><span>1 Terrible</span><span>10 Terrific</span></div>
+                <div id="ratingsLife"></div>
+              </div>
+              <div class="rating-group">
+                <h4>Your spiritual life</h4>
+                <div id="ratingsSpirit"></div>
+              </div>
+            </section>
+
+            <!-- STEP 5 -->
+            <section class="step" data-title="Faith and documents" hidden>
+              <div class="step-kicker">Step 5 of 6</div>
+              <h3 class="step-title" tabindex="-1">Faith and documents</h3>
+              <p class="step-intro">Share the milestones of your faith and upload the two documents we need.</p>
+              <div class="field" data-field="spiritualJourney">
+                <label class="field-label" for="spiritualJourney">Describe your spiritual journey <span class="req" aria-hidden="true">*</span></label>
+                <p class="field-hint">Share the significant milestones in your spiritual life, especially how you came to faith in Jesus Christ and how you have grown since. Alongside the strong points and wonderful opportunities, please also share the challenges and threats to your spiritual vitality.</p>
+                <textarea id="spiritualJourney" name="spiritualJourney" style="min-height:190px" maxlength="5000"></textarea>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+              <div class="field" data-field="recommendation">
+                <span class="field-label" id="lbl-recommendation">Recommendation letter <span class="req" aria-hidden="true">*</span></span>
+                <p class="field-hint" id="hint-recommendation">From a church leader, a relative, or an employer. PDF, DOC, DOCX, JPG or PNG, up to 5 MB.</p>
+                <div class="file-drop">
+                  <input type="file" id="recommendation" name="recommendation" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" aria-labelledby="lbl-recommendation" aria-describedby="hint-recommendation">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+                  <div><strong>Choose a file</strong> or drag it here</div>
+                  <small>PDF, DOC, DOCX, JPG or PNG</small>
+                </div>
+                <div class="file-chip" hidden>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>
+                  <div class="file-meta"><span class="file-name"></span><span class="file-size"></span></div>
+                  <button type="button" class="file-remove" aria-label="Remove recommendation letter">Remove</button>
+                </div>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+              <div class="field" data-field="cv">
+                <span class="field-label" id="lbl-cv">Upload your CV <span class="req" aria-hidden="true">*</span></span>
+                <p class="field-hint" id="hint-cv">PDF, DOC or DOCX, up to 5 MB.</p>
+                <div class="file-drop">
+                  <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" aria-labelledby="lbl-cv" aria-describedby="hint-cv">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4m0 0l-4 4m4-4l4 4"/><path d="M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3"/></svg>
+                  <div><strong>Choose a file</strong> or drag it here</div>
+                  <small>PDF, DOC or DOCX</small>
+                </div>
+                <div class="file-chip" hidden>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>
+                  <div class="file-meta"><span class="file-name"></span><span class="file-size"></span></div>
+                  <button type="button" class="file-remove" aria-label="Remove CV">Remove</button>
+                </div>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+            </section>
+
+            <!-- STEP 6 -->
+            <section class="step" data-title="Commitment" hidden>
+              <div class="step-kicker">Step 6 of 6</div>
+              <h3 class="step-title" tabindex="-1">Your commitment</h3>
+              <p class="step-intro">Almost done. Tell us why you want to join and how committed you are to this journey.</p>
+              <div class="field" data-field="whyJoin">
+                <label class="field-label" for="whyJoin">Why do you want to join The Shadrach Fellowship? <span class="req" aria-hidden="true">*</span></label>
+                <p class="field-hint">Include your motivation.</p>
+                <textarea id="whyJoin" name="whyJoin" maxlength="4000"></textarea>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+              <fieldset class="field" data-field="commitment">
+                <legend class="field-label">This journey will require commitment of time, attention, presence, energy, resources, and integrity. If you are selected, how would you rate your level of commitment to this transformational missional discipleship journey? <span class="req" aria-hidden="true">*</span></legend>
+                <div class="scale-key" aria-hidden="true"><span>1 Not at all</span><span>10 All in</span></div>
+                <div class="scale" role="radiogroup" aria-label="Commitment from 1 to 10" id="commitScale"></div>
+                <p class="field-error" role="alert" hidden></p>
+              </fieldset>
+              <div class="field consent" data-field="consent">
+                <label><input type="checkbox" id="consent" name="consent"><span>I confirm that the information I have given is true and complete. I understand that The HuD Group will use it only to consider my application, and will keep it confidential.</span></label>
+                <p class="field-error" role="alert" hidden></p>
+              </div>
+              <div class="form-error" id="formError" role="alert"></div>
+            </section>
+
+            <div class="form-nav">
+              <button type="button" class="btn btn-back" id="btnBack" hidden>Back</button>
+              <span class="save-note" id="saveNote" aria-live="polite">Draft saved</span>
+              <button type="button" class="btn btn-peach" id="btnNext">Continue</button>
+            </div>
+          </form>
+          <p class="form-foot">Your draft is saved in this browser only. Questions? Email <a href="mailto:engage@thehudgroupglobal.org?subject=TSF%20Application%20Help">engage@thehudgroupglobal.org</a> or call +233 206 634 459.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-text">The HuD <em>Group</em></div>
+          <div class="footer-tagline">Equipping Leaders. Transforming Nations.</div>
+          <p>A Christian international leadership development network operating across 30 countries, with offices in Montreal and Accra.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Organisation</h4>
+          <a href="charity.html">Charity</a>
+          <a href="corporate.html">Corporate</a>
+          <a href="countries.html">Countries</a>
+          <a href="contact.html">Leadership</a>
+          <a href="contact.html">Contact Us</a>
+        </div>
+        <div class="footer-col">
+          <h4>The Fellowship</h4>
+          <a href="community.html#about">About TSF</a>
+          <a href="community.html#roadmap">Year Roadmap</a>
+          <a href="community.html#fellows">Fellows</a>
+          <a href="community.html#faq">FAQs</a>
+          <a href="apply.html">Apply for 2027</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="mailto:engage@thehudgroupglobal.org">engage@thehudgroupglobal.org</a>
+          <a href="https://thehudgroupglobal.org" target="_blank" rel="noopener">thehudgroupglobal.org</a>
+          <a href="contribute.html">Partner With Us</a>
+          <a href="https://www.canadahelps.org/en/charities/the-hud-group-le-groupe-hud/" target="_blank" rel="noopener">Give via CanadaHelps</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Copyright 2025 The HuD Group Global. All rights reserved. Registered Charity, Canada</span>
+        <a href="contribute.html" class="footer-cta">Give Now</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    /* ============================================================
+       CONFIGURATION
+       endpoint: paste the Google Apps Script web app URL here after
+       deploying backend/tsf-applications/Code.gs (see its README).
+       ============================================================ */
+    var CONFIG = {
+      endpoint: 'https://script.google.com/macros/s/AKfycbz4JHhppGCi42YgWIQKojnSeobD0cSsQQZRe_mvCoDHicJX_mFLBVSbExJfwOBqQaS-/exec',
+      deadline: '2026-11-20T23:59:59Z',
+      deadlineLabel: '20 November 2026',
+      contactEmail: 'engage@thehudgroupglobal.org',
+      maxFileBytes: 5 * 1024 * 1024,
+      maxWords: 200,
+      minAge: 17,
+      maxAge: 39,
+      draftKey: 'tsf2627_application_draft_v1'
+    };
+
+    var RATINGS = {
+      life: [['professional', 'Professional'], ['financial', 'Financial'], ['health', 'Health & Wellness'], ['emotional', 'Emotional'], ['relationships', 'Relationships (Social Life)']],
+      spirit: [['bible', 'Bible reading/Studying'], ['worship', 'Worship/Adoration'], ['prayer', 'Prayer'], ['fellowship', 'Fellowship'], ['witnessing', 'Witnessing/Evangelism'], ['service', 'Service'], ['christlikeness', 'Christ-likeness/Fruit of the Spirit'], ['missions', 'National/Global Missions']]
+    };
+
+    var FILE_RULES = {
+      recommendation: { noun: 'recommendation letter', ext: ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'], list: 'PDF, DOC, DOCX, JPG or PNG' },
+      cv: { noun: 'CV', ext: ['pdf', 'doc', 'docx'], list: 'PDF, DOC or DOCX' }
+    };
+
+    var $ = function (s, r) { return (r || document).querySelector(s); };
+    var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+    /* ---------- nav ---------- */
+    var ham = $('.nav-hamburger'), navLinks = $('.nav-links'), nav = $('.nav');
+    ham.addEventListener('click', function () {
+      var open = navLinks.classList.toggle('open');
+      ham.classList.toggle('active', open);
+      ham.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', function (e) {
+      if (!nav.contains(e.target)) { navLinks.classList.remove('open'); ham.classList.remove('active'); ham.setAttribute('aria-expanded', 'false'); }
+    });
+
+    /* ---------- deadline ---------- */
+    var deadline = new Date(CONFIG.deadline).getTime();
+    var closed = Date.now() > deadline;
+    (function () {
+      var badge = $('#heroBadge');
+      if (closed) { badge.textContent = 'Applications have closed'; return; }
+      var days = Math.ceil((deadline - Date.now()) / 86400000);
+      var when = days <= 1 ? 'Closes today' : 'Closes ' + CONFIG.deadlineLabel + ' (' + days + ' days left)';
+      badge.textContent = 'Applications are open. ' + when;
+    })();
+
+    var form = $('#applyForm');
+    if (closed) {
+      $('#formShell').hidden = true;
+      $('#closedCard').hidden = false;
+      $('#heroApply').style.display = 'none';
+      $('#formLead').textContent = 'The 2026/2027 application window has ended.';
+      return;
+    }
+
+    /* ---------- build rating rows + commitment scale ---------- */
+    function scaleHTML(name) {
+      var out = '';
+      for (var i = 1; i <= 10; i++) {
+        out += '<label class="num"><input type="radio" name="' + name + '" value="' + i + '"><span>' + i + '</span></label>';
+      }
+      return out;
+    }
+    function buildRatings(targetId, list) {
+      $('#' + targetId).innerHTML = list.map(function (r) {
+        return '<fieldset class="rating-row" data-field="rate_' + r[0] + '">' +
+          '<legend>' + r[1] + '</legend>' +
+          '<div class="scale" role="radiogroup" aria-label="' + r[1] + ' from 1 to 10">' + scaleHTML('rate_' + r[0]) + '</div>' +
+          '<p class="field-error" role="alert" hidden></p></fieldset>';
+      }).join('');
+    }
+    buildRatings('ratingsLife', RATINGS.life);
+    buildRatings('ratingsSpirit', RATINGS.spirit);
+    $('#commitScale').innerHTML = scaleHTML('commitment');
+
+    /* ---------- field registry ---------- */
+    var F = [
+      { n: 'firstName', s: 0, l: 'your first name' },
+      { n: 'surname', s: 0, l: 'your surname' },
+      { n: 'age', s: 0, k: 'age' },
+      { n: 'email', s: 0, k: 'email' },
+      { n: 'phone', s: 0, k: 'tel', l: 'phone number' },
+      { n: 'whatsapp', s: 0, k: 'tel', l: 'WhatsApp number' },
+      { n: 'location', s: 0, l: 'your city and country' },
+      { n: 'lifeStory', s: 1, k: 'words' },
+      { n: 'aboutYou', s: 1, l: 'a sentence or two about yourself' },
+      { n: 'hasDiscipler', s: 1, k: 'radio' },
+      { n: 'disciplerExperience', s: 1, l: 'when that was and how it went', showIf: ['hasDiscipler', 'Yes'] },
+      { n: 'noDisciplerReason', s: 1, l: 'why not, and why now', showIf: ['hasDiscipler', 'No'] },
+      { n: 'lifeStoryMapped', s: 2, k: 'radio' },
+      { n: 'genogram', s: 2, k: 'radio' },
+      { n: 'personalityTest', s: 2, k: 'radio' },
+      { n: 'personalityDetails', s: 2, l: 'which test and your results', showIf: ['personalityTest', 'Yes'] },
+      { n: 'personalMission', s: 2, k: 'radio' },
+      { n: 'familyMission', s: 2, k: 'radio' },
+      { n: 'valuesWorked', s: 2, k: 'radio' },
+      { n: 'values', s: 2, l: 'your personal values', showIf: ['valuesWorked', 'Yes'] },
+      { n: 'bigDream', s: 3, l: 'your BIG dream' }
+    ];
+    RATINGS.life.concat(RATINGS.spirit).forEach(function (r) {
+      F.push({ n: 'rate_' + r[0], s: 3, k: 'rating', l: r[1] });
+    });
+    F.push(
+      { n: 'spiritualJourney', s: 4, l: 'your spiritual journey' },
+      { n: 'recommendation', s: 4, k: 'file' },
+      { n: 'cv', s: 4, k: 'file' },
+      { n: 'whyJoin', s: 5, l: 'why you want to join' },
+      { n: 'commitment', s: 5, k: 'rating', l: 'your commitment' },
+      { n: 'consent', s: 5, k: 'check' }
+    );
+
+    var byName = {};
+    F.forEach(function (f) { byName[f.n] = f; });
+
+    function elOf(n) { return form.elements.namedItem(n); }
+    function wrapOf(n) { return form.querySelector('[data-field="' + n + '"]'); }
+    function wordCount(t) { t = (t || '').trim(); return t ? t.split(/\s+/).length : 0; }
+    function extOf(name) { var m = /\.([A-Za-z0-9]+)$/.exec(name || ''); return m ? m[1].toLowerCase() : ''; }
+    function fmtSize(b) { return b < 1048576 ? Math.max(1, Math.round(b / 1024)) + ' KB' : (b / 1048576).toFixed(1) + ' MB'; }
+
+    function valueOf(f) {
+      switch (f.k) {
+        case 'radio': case 'rating':
+          var c = form.querySelector('input[name="' + f.n + '"]:checked'); return c ? c.value : '';
+        case 'file': var i = elOf(f.n); return i && i.files && i.files[0] ? i.files[0] : null;
+        case 'check': return elOf(f.n).checked;
+        default: return (elOf(f.n).value || '').trim();
+      }
+    }
+    function isActive(f) {
+      if (!f.showIf) return true;
+      var parent = byName[f.showIf[0]];
+      return valueOf(parent) === f.showIf[1];
+    }
+
+    /* ---------- errors ---------- */
+    function setError(n, msg) {
+      var w = wrapOf(n); if (!w) return;
+      var e = $('.field-error', w); if (!e) return;
+      if (msg) {
+        e.textContent = msg; e.hidden = false; w.classList.add('has-error');
+        $$('input,textarea', w).forEach(function (el) { el.setAttribute('aria-invalid', 'true'); });
+      } else {
+        e.hidden = true; e.textContent = ''; w.classList.remove('has-error');
+        $$('input,textarea', w).forEach(function (el) { el.removeAttribute('aria-invalid'); });
+      }
+    }
+
+    function check(f) {
+      if (!isActive(f)) return '';
+      var v = valueOf(f);
+      switch (f.k) {
+        case 'age':
+          if (v === '') return 'Please enter your age.';
+          var a = Number(v);
+          if (!isFinite(a) || a % 1 !== 0) return 'Please enter your age as a whole number.';
+          if (a < CONFIG.minAge || a > CONFIG.maxAge) return 'The fellowship is for ages ' + CONFIG.minAge + ' to ' + CONFIG.maxAge + '.';
+          return '';
+        case 'email':
+          if (!v) return 'Please enter your email address.';
+          return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Please enter a valid email address, like name@example.com.';
+        case 'tel':
+          if (!v) return 'Please enter your ' + f.l + '.';
+          var digits = v.replace(/\D/g, '');
+          return (/^[0-9+()\-\s.]+$/.test(v) && digits.length >= 7 && digits.length <= 16) ? '' : 'Please enter a valid number, including the country code if you can.';
+        case 'words':
+          if (!v) return 'Please tell us your life story.';
+          return wordCount(v) > CONFIG.maxWords ? 'Please shorten your story to ' + CONFIG.maxWords + ' words or fewer (it is ' + wordCount(v) + ').' : '';
+        case 'radio': return v ? '' : 'Please choose Yes or No.';
+        case 'rating': return v ? '' : 'Please choose a number from 1 to 10.';
+        case 'check': return v ? '' : 'Please tick the box to confirm before you submit.';
+        case 'file':
+          var rule = FILE_RULES[f.n];
+          if (!v) return 'Please upload your ' + rule.noun + '.';
+          if (rule.ext.indexOf(extOf(v.name)) === -1) return 'The ' + rule.noun + ' must be a ' + rule.list + ' file.';
+          if (v.size > CONFIG.maxFileBytes) return 'That file is ' + fmtSize(v.size) + '. The limit is 5 MB.';
+          if (v.size === 0) return 'That file looks empty. Please choose another.';
+          return '';
+        default:
+          return v ? '' : 'Please enter ' + f.l + '.';
+      }
+    }
+
+    function validateStep(s, quiet) {
+      var firstBad = null;
+      F.forEach(function (f) {
+        if (f.s !== s) return;
+        var msg = check(f);
+        if (!quiet) setError(f.n, msg);
+        if (msg && !firstBad) firstBad = f.n;
+      });
+      return firstBad;
+    }
+
+    function focusField(n) {
+      var w = wrapOf(n); if (!w) return;
+      var target = $('input:not([type=hidden]):not([disabled]),textarea', w);
+      var f = byName[n];
+      if (f && (f.k === 'radio' || f.k === 'rating')) target = $('input:checked', w) || $('input', w);
+      if (target) { try { target.focus({ preventScroll: true }); } catch (e) { target.focus(); } }
+      w.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    /* ---------- stepper ---------- */
+    var steps = $$('.step', form), total = steps.length;
+    var current = 0, reached = 0;
+    var stepper = $('#stepper'), bar = $('#progressBar');
+    var btnBack = $('#btnBack'), btnNext = $('#btnNext');
+
+    stepper.innerHTML = steps.map(function (st, i) {
+      return '<li><button type="button" class="step-dot" data-i="' + i + '" aria-label="Step ' + (i + 1) + ': ' + st.getAttribute('data-title') + '">' + (i + 1) + '</button><span class="step-name">' + st.getAttribute('data-title') + '</span></li>';
+    }).join('');
+
+    function renderStepper() {
+      $$('li', stepper).forEach(function (li, i) {
+        li.classList.toggle('current', i === current);
+        li.classList.toggle('done', i < current);
+        li.classList.toggle('reached', i <= reached);
+        var b = $('button', li);
+        if (i === current) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+        b.textContent = i < current ? '✓' : String(i + 1);
+      });
+      bar.style.width = (current / (total - 1)) * 100 + '%';
+      btnBack.hidden = current === 0;
+      btnNext.textContent = current === total - 1 ? 'Submit Application' : 'Continue';
+    }
+
+    function show(i, opts) {
+      opts = opts || {};
+      current = i; reached = Math.max(reached, i);
+      steps.forEach(function (s, k) { s.hidden = k !== i; });
+      renderStepper();
+      if (!opts.silent) {
+        var top = $('#stepper').getBoundingClientRect().top + window.pageYOffset - (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h'), 10) || 80) - 20;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        var h = $('.step-title', steps[i]); if (h) { try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
+      }
+      saveDraft();
+    }
+
+    stepper.addEventListener('click', function (e) {
+      var b = e.target.closest('.step-dot'); if (!b) return;
+      var i = Number(b.getAttribute('data-i'));
+      if (i === current || i > reached) return;
+      if (i > current) { // moving forward through steps must keep earlier steps valid
+        for (var s = current; s < i; s++) { var bad = validateStep(s); if (bad) { show(s); focusField(bad); return; } }
+      }
+      show(i);
+    });
+
+    btnBack.addEventListener('click', function () { if (current > 0) show(current - 1); });
+    btnNext.addEventListener('click', function () {
+      var bad = validateStep(current);
+      if (bad) { focusField(bad); return; }
+      if (current < total - 1) { show(current + 1); } else { submit(); }
+    });
+    form.addEventListener('submit', function (e) { e.preventDefault(); btnNext.click(); });
+    form.addEventListener('keydown', function (e) { // Enter inside a text input moves on, never submits early
+      if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'checkbox' && e.target.type !== 'radio' && e.target.type !== 'file') {
+        e.preventDefault(); btnNext.click();
+      }
+    });
+
+    /* ---------- conditionals ---------- */
+    function syncConditionals() {
+      $$('[data-if]', form).forEach(function (el) {
+        var parent = byName[el.getAttribute('data-if')];
+        var on = valueOf(parent) === el.getAttribute('data-eq');
+        el.hidden = !on;
+        $$('input,textarea', el).forEach(function (i) { i.disabled = !on; });
+        if (!on) setError(el.getAttribute('data-field'), '');
+      });
+    }
+
+    /* ---------- word counter ---------- */
+    var story = elOf('lifeStory'), counter = $('#counter-story');
+    function updateCounter() {
+      var n = wordCount(story.value);
+      counter.textContent = n + ' / ' + CONFIG.maxWords + ' words';
+      counter.classList.toggle('over', n > CONFIG.maxWords);
+      counter.classList.toggle('near', n > CONFIG.maxWords * 0.9 && n <= CONFIG.maxWords);
+    }
+
+    /* ---------- WhatsApp same as phone ---------- */
+    var same = $('#sameAsPhone'), phone = elOf('phone'), wa = elOf('whatsapp');
+    function mirror() {
+      if (same.checked) { wa.value = phone.value; wa.readOnly = true; var w = wrapOf('whatsapp'); if (w && w.classList.contains('has-error')) setError('whatsapp', check(byName.whatsapp)); }
+      else { wa.readOnly = false; }
+    }
+    same.addEventListener('change', function () { mirror(); setError('whatsapp', ''); saveDraft(); });
+    phone.addEventListener('input', mirror);
+
+    /* ---------- files ---------- */
+    function setupFile(name) {
+      var w = wrapOf(name), input = elOf(name), drop = $('.file-drop', w), chip = $('.file-chip', w);
+      function render() {
+        var file = input.files && input.files[0];
+        drop.hidden = !!file; chip.hidden = !file;
+        if (file) { $('.file-name', chip).textContent = file.name; $('.file-size', chip).textContent = fmtSize(file.size); }
+      }
+      input.addEventListener('change', function () {
+        render();
+        var f = byName[name], msg = check(f);
+        setError(name, msg);
+        if (msg) { input.value = ''; render(); setError(name, msg); }
+      });
+      $('.file-remove', chip).addEventListener('click', function () { input.value = ''; render(); input.focus(); });
+    }
+    setupFile('recommendation'); setupFile('cv');
+
+    /* ---------- live error clearing ---------- */
+    function onChange(e) {
+      var t = e.target; if (!t.name) return;
+      var f = byName[t.name];
+      if (t.name === 'lifeStory') updateCounter();
+      if (f && f.k !== 'file') {
+        if (wrapOf(t.name) && wrapOf(t.name).classList.contains('has-error')) { var m = check(f); if (!m || e.type === 'change') setError(t.name, m); }
+      }
+      syncConditionals();
+      saveDraft();
+    }
+    form.addEventListener('input', onChange);
+    form.addEventListener('change', onChange);
+    // Validate a text field once the person leaves it, so mistakes surface early but never while typing.
+    form.addEventListener('focusout', function (e) {
+      var t = e.target; var f = t && t.name ? byName[t.name] : null;
+      if (!f || f.k === 'file' || f.k === 'radio' || f.k === 'rating' || f.k === 'check') return;
+      if (!valueOf(f) && !wrapOf(f.n).classList.contains('has-error')) return; // do not nag on an untouched empty field
+      setError(f.n, check(f));
+    });
+
+    /* ---------- draft ---------- */
+    var saveTimer, noteTimer, submitted = false;
+    function collect() {
+      var d = {};
+      F.forEach(function (f) {
+        if (f.k === 'file' || f.n === 'consent') return; // consent is always given fresh at submission
+        var el = elOf(f.n); if (!el) return;
+        if (f.k === 'radio' || f.k === 'rating') d[f.n] = valueOf(f);
+        else if (f.k === 'check') d[f.n] = valueOf(f);
+        else d[f.n] = el.value;
+      });
+      d.sameAsPhone = same.checked;
+      return d;
+    }
+    function saveDraft() {
+      if (submitted) return;
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function () {
+        try {
+          var d = collect();
+          var any = Object.keys(d).some(function (k) { return d[k] && d[k] !== false; });
+          if (!any) return;
+          localStorage.setItem(CONFIG.draftKey, JSON.stringify({ v: 1, t: Date.now(), step: current, reached: reached, data: d }));
+          var n = $('#saveNote'); n.classList.add('show'); clearTimeout(noteTimer);
+          noteTimer = setTimeout(function () { n.classList.remove('show'); }, 1800);
+        } catch (e) { /* storage unavailable: the form still works */ }
+      }, 450);
+    }
+    function loadDraft() {
+      try {
+        var raw = localStorage.getItem(CONFIG.draftKey); if (!raw) return false;
+        var s = JSON.parse(raw); if (!s || s.v !== 1 || !s.data) return false;
+        F.forEach(function (f) {
+          if (f.k === 'file' || f.n === 'consent') return;
+          var val = s.data[f.n]; if (val === undefined || val === '' || val === false) return;
+          if (f.k === 'radio' || f.k === 'rating') { var r = form.querySelector('input[name="' + f.n + '"][value="' + val + '"]'); if (r) r.checked = true; }
+          else if (f.k === 'check') elOf(f.n).checked = !!val;
+          else elOf(f.n).value = val;
+        });
+        same.checked = !!s.data.sameAsPhone; mirror();
+        syncConditionals(); updateCounter();
+        reached = Math.min(total - 1, s.reached || 0);
+        show(Math.min(reached, s.step || 0), { silent: true });
+        return true;
+      } catch (e) { return false; }
+    }
+    function clearDraft() { try { localStorage.removeItem(CONFIG.draftKey); } catch (e) { } }
+
+    $('#clearDraft').addEventListener('click', function () {
+      if (!window.confirm('Clear everything you have entered and start again?')) return;
+      clearDraft(); form.reset(); same.checked = false; mirror();
+      $$('.file-drop', form).forEach(function (d) { d.hidden = false; });
+      $$('.file-chip', form).forEach(function (c) { c.hidden = true; });
+      F.forEach(function (f) { setError(f.n, ''); });
+      syncConditionals(); updateCounter(); reached = 0; show(0);
+      $('#draftBanner').hidden = true;
+    });
+
+    /* ---------- submit ---------- */
+    var sending = false, startedAt = Date.now();
+    var formError = $('#formError');
+    function showFormError(html) { formError.innerHTML = html; formError.classList.add('show'); formError.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    function hideFormError() { formError.classList.remove('show'); formError.innerHTML = ''; }
+    function setBusy(b) {
+      btnNext.disabled = b; btnBack.disabled = b;
+      btnNext.innerHTML = b ? '<span class="spinner" aria-hidden="true"></span> Submitting, please wait' : 'Submit Application';
+    }
+    function readFile(file) {
+      return new Promise(function (resolve, reject) {
+        var r = new FileReader();
+        r.onload = function () { resolve({ name: file.name, type: file.type, data: String(r.result).split(',')[1] || '' }); };
+        r.onerror = function () { reject(new Error('read')); };
+        r.readAsDataURL(file);
+      });
+    }
+
+    function submit() {
+      if (sending) return;
+      hideFormError();
+      for (var s = 0; s < total; s++) {
+        var bad = validateStep(s);
+        if (bad) { show(s); setTimeout(function () { focusField(bad); }, 120); showFormErrorSoft(s); return; }
+      }
+      if (!CONFIG.endpoint) {
+        showFormError('Online submission is not switched on yet. Please email your application to <a href="mailto:' + CONFIG.contactEmail + '?subject=TSF%202026%2F2027%20Application">' + CONFIG.contactEmail + '</a> and we will help you right away.');
+        if (window.console) console.warn('apply.html: CONFIG.endpoint is empty. Deploy backend/tsf-applications/Code.gs and paste its web app URL into CONFIG.endpoint.');
+        return;
+      }
+      sending = true; setBusy(true);
+
+      var app = {};
+      F.forEach(function (f) {
+        if (f.k === 'file' || !isActive(f)) return;
+        if (f.n.indexOf('rate_') === 0) { app.ratings = app.ratings || {}; app.ratings[f.n.slice(5)] = Number(valueOf(f)); }
+        else if (f.n === 'age' || f.n === 'commitment') app[f.n] = Number(valueOf(f));
+        else app[f.n] = valueOf(f);
+      });
+
+      Promise.all([readFile(valueOf(byName.recommendation)), readFile(valueOf(byName.cv))]).then(function (files) {
+        app.files = { recommendation: files[0], cv: files[1] };
+        app.website = elOf('website').value;
+        app.elapsedMs = Date.now() - startedAt;
+        app.page = 'apply.html';
+        var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+        var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 120000);
+        // text/plain keeps this a "simple" request, so the browser sends no CORS preflight to Apps Script.
+        return fetch(CONFIG.endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(app), signal: ctrl ? ctrl.signal : undefined })
+          .then(function (res) { clearTimeout(timer); return res.json(); })
+          .then(function (out) {
+            if (out && out.ok) { success(out.ref, app); }
+            else { showFormError(escapeHtml((out && out.error) || 'Something went wrong. Please try again.')); }
+          });
+      }).catch(function () {
+        showFormError('We could not reach the server, so your application has <strong>not</strong> been sent. Your answers are still here. Please check your connection and try again, or email <a href="mailto:' + CONFIG.contactEmail + '">' + CONFIG.contactEmail + '</a>.');
+      }).then(function () {
+        sending = false; if (!$('#successCard').hidden) return; setBusy(false);
+      });
+    }
+    function showFormErrorSoft(stepIndex) { /* field errors already show inline on the step */ }
+    function escapeHtml(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+    function success(ref, app) {
+      submitted = true; clearTimeout(saveTimer); // a pending autosave must not resurrect the draft
+      clearDraft();
+      $('#successRef').textContent = ref || 'Received';
+      $('#successName').textContent = app.firstName;
+      $('#successEmail').textContent = app.email;
+      $('#formShell').hidden = true;
+      var card = $('#successCard'); card.hidden = false;
+      $('#formLead').textContent = 'Thank you for applying.';
+      var top = card.getBoundingClientRect().top + window.pageYOffset - 110;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      card.focus({ preventScroll: true });
+    }
+
+    /* ---------- init ---------- */
+    syncConditionals(); updateCounter(); renderStepper();
+    if (loadDraft()) { $('#draftBanner').hidden = false; }
+    $('#deadlineInline').textContent = CONFIG.deadlineLabel;
+  })();
+  </script>
+</body>
+</html>
