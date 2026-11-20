@@ -4,12 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Countries | The HuD Group Global</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="images/cropped-the-hud-group-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="images/icons/favicon-48.png">
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#320c32">
+  <meta name="color-scheme" content="light dark">
+  <!-- LAUNCH: remove the next line when this page is ready to appear in Google. -->
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://the-hud-group.vercel.app/countries.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The HuD Group Global">
+  <meta property="og:title" content="Countries | The HuD Group Global">
+  <meta property="og:description" content="The HuD Group Global is active in 30 countries across 6 regions. Explore our global network of leaders.">
+  <meta property="og:url" content="https://the-hud-group.vercel.app/countries.html">
+  <meta property="og:image" content="https://the-hud-group.vercel.app/images/og-site.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Countries | The HuD Group Global">
+  <meta name="twitter:description" content="The HuD Group Global is active in 30 countries across 6 regions. Explore our global network of leaders.">
+  <meta name="twitter:image" content="https://the-hud-group.vercel.app/images/og-site.jpg">
   <meta name="description" content="The HuD Group Global is active in 30 countries across 6 regions. Explore our global network of leaders.">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=gambetta@500,501,600&display=swap" rel="stylesheet">
   <style>
   :root {
+    --surface:#ffffff; --heading:#320c32; --accent-ink:#541854; --accent-ink-2:#7a297a; --accent-text:#a64b08;
     --purple:       #541854;
     --purple-dark:  #320c32;
     --purple-mid:   #7a297a;
@@ -26,7 +48,7 @@
     --mid-grey:     #eaeaea;
     --text:         #1a1420;
     --text-light:   #6b5a68;
-    --font-h:       'Playfair Display', serif;
+    --font-h:'Gambetta',Georgia,'Times New Roman',serif;
     --font-body:    'Satoshi', sans-serif;
     --font-accent:  'Satoshi', sans-serif;
     --nav-h:        80px;
@@ -48,19 +70,19 @@
   .nav.scrolled { box-shadow: var(--shadow-md); }
   .nav-logo img { height: 42px; width: auto; }
   .nav-links { margin-left: auto; display: flex; align-items: center; gap: 2px; list-style: none; }
-  .nav-links a { font-family: var(--font-h); font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; color: #555; padding: 8px 13px; border-radius: 6px; transition: var(--transition); }
-  .nav-links a:hover, .nav-links a.active { color: var(--purple); background: var(--purple-pale); }
-  .nav-contribute a { background: var(--peach) !important; color: var(--purple-dark) !important; border-radius: 40px !important; font-weight: 700 !important; padding: 9px 20px !important; }
+  .nav-links a { font-family: var(--font-body); font-size: 12.5px; font-weight: 600; letter-spacing: 0.04em; color: #555; padding: 8px 13px; border-radius: 6px; transition: var(--transition); }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent-ink); background: var(--purple-pale); }
+  .nav-contribute a { background: var(--peach) !important; color: var(--heading) !important; border-radius: 40px !important; font-weight: 700 !important; padding: 9px 20px !important; }
   .nav-contribute a:hover { background: var(--peach-dark) !important; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(252,144,24,0.4) !important; }
   .nav-hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
   .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: var(--transition); }
 
   /* BUTTONS */
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 40px; font-family: var(--font-h); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; transition: var(--transition); cursor: pointer; border: none; text-decoration: none; }
-  .btn-peach { background: var(--peach); color: var(--purple-dark); } .btn-peach:hover { background: var(--peach-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(252,144,24,0.4); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 40px; font-family: var(--font-body); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; transition: var(--transition); cursor: pointer; border: none; text-decoration: none; }
+  .btn-peach { background: var(--peach); color: var(--heading); } .btn-peach:hover { background: var(--peach-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(252,144,24,0.4); }
   .btn-purple { background: var(--purple); color: var(--white); } .btn-purple:hover { background: var(--purple-dark); transform: translateY(-2px); box-shadow: var(--shadow-md); }
   .btn-outline-white { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.5); } .btn-outline-white:hover { background: rgba(255,255,255,0.1); border-color: var(--white); transform: translateY(-2px); }
-  .btn-outline-purple { background: transparent; color: var(--purple); border: 1.5px solid var(--purple); } .btn-outline-purple:hover { background: var(--purple); color: var(--white); transform: translateY(-2px); }
+  .btn-outline-purple { background: transparent; color: var(--accent-ink); border: 1.5px solid var(--purple); } .btn-outline-purple:hover { background: var(--purple); color: var(--white); transform: translateY(-2px); }
   .btn-white { background: var(--white); color: var(--purple-dark); } .btn-white:hover { background: var(--off-white); transform: translateY(-2px); box-shadow: var(--shadow-md); }
   .btn-sm { padding: 9px 18px; font-size: 12px; }
 
@@ -68,11 +90,11 @@
   .section { padding: 96px 0; }
   .section-sm { padding: 64px 0; }
   .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
-  .overline { display: flex; align-items: center; gap: 10px; font-family: var(--font-accent); font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--peach-dark); margin-bottom: 14px; }
+  .overline { display: flex; align-items: center; gap: 10px; font-family: var(--font-accent); font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 14px; }
   .overline::before { display: none; }
   .overline.light { color: var(--peach); } .overline.light::before { background: var(--peach); }
   .overline.center { justify-content: center; }
-  h2.section-title { font-family: var(--font-h); font-size: clamp(28px, 4vw, 50px); font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; color: var(--purple-dark); margin-bottom: 16px; }
+  h2.section-title { font-family: var(--font-h); font-size: clamp(28px, 4vw, 50px); font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; color: var(--heading); margin-bottom: 16px; }
   h2.section-title.white { color: var(--white); }
   h2.section-title.center { text-align: center; }
   .section-lead { font-size: 17px; color: var(--text-light); line-height: 1.75; max-width: 620px; }
@@ -90,7 +112,7 @@
   .ph-overline::before { display: none; }
 
   /* CARD SYSTEM */
-  .card { background: var(--white); border-radius: var(--radius-lg); border: 1px solid var(--mid-grey); overflow: hidden; transition: var(--transition); }
+  .card { background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--mid-grey); overflow: hidden; transition: var(--transition); }
   .card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: rgba(84,24,84,0.15); }
   .card-purple { background: var(--purple-dark); border-color: transparent; }
 
@@ -107,12 +129,12 @@
   .footer-brand {}
   .footer-logo-wrap { margin-bottom: 20px; }
   .footer-logo-wrap img { height: 38px; filter: brightness(0) invert(1); opacity: 0.9; }
-  .footer-tagline { font-family: var(--font-h); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--peach); margin-bottom: 14px; }
+  .footer-tagline { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--peach); margin-bottom: 14px; }
   .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.8; max-width: 300px; margin-bottom: 24px; }
   .footer-socials { display: flex; gap: 10px; }
   .footer-social-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 14px; transition: var(--transition); }
   .footer-social-btn:hover { background: var(--peach); border-color: var(--peach); }
-  .footer-col h4 { font-family: var(--font-h); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.9); margin-bottom: 18px; }
+  .footer-col h4 { font-family: var(--font-body); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.9); margin-bottom: 18px; }
   .footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.45); padding: 4px 0; transition: var(--transition); line-height: 1.6; }
   .footer-col a:hover { color: var(--white); padding-left: 4px; }
   .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; font-size: 12px; color: rgba(255,255,255,0.25); }
@@ -137,25 +159,25 @@
 
   /* RESPONSIVE */
   @media (max-width: 1100px) { .container { padding: 0 32px; } .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; } }
-  @media (max-width: 768px) { .nav { padding: 0 20px; } .nav-links { display: none; } .nav-links.open { display: flex; flex-direction: column; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--white); padding: 12px 16px 20px; box-shadow: var(--shadow-md); gap: 2px; animation: slideDown 0.22s ease; } .nav-links.open li a { font-size: 14px; padding: 13px 14px; border-radius: 8px; display: block; } .nav-hamburger { display: block; } .section { padding: 60px 0; } .container { padding: 0 20px; } .page-hero { padding: var(--nav-h) 20px 60px; } .footer-top { grid-template-columns: 1fr; } .footer-cta-strip { flex-direction: column; text-align: center; padding: 28px 20px; } h2.section-title { font-size: clamp(26px, 7vw, 40px); } .btn { min-height: 48px; } }
+  @media (max-width: 768px) { .nav { padding: 0 20px; } .nav-links { display: none; } .nav-links.open { display: flex; flex-direction: column; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--surface); padding: 12px 16px 20px; box-shadow: var(--shadow-md); gap: 2px; animation: slideDown 0.22s ease; } .nav-links.open li a { font-size: 14px; padding: 13px 14px; border-radius: 8px; display: block; } .nav-hamburger { display: block; } .section { padding: 60px 0; } .container { padding: 0 20px; } .page-hero { padding: var(--nav-h) 20px 60px; } .footer-top { grid-template-columns: 1fr; } .footer-cta-strip { flex-direction: column; text-align: center; padding: 28px 20px; } h2.section-title { font-size: clamp(26px, 7vw, 40px); } .btn { min-height: 48px; } }
   @media (max-width: 520px) { .footer-bottom { flex-direction: column; gap: 12px; text-align: center; } }
 
   .filter-bar { display:flex; gap:10px; flex-wrap:wrap; margin:40px 0 32px; }
-  .filter-btn { font-family:var(--font-h); font-size:12px; font-weight:700; letter-spacing:0.06em; padding:9px 20px; border-radius:40px; border:1.5px solid var(--mid-grey); background:none; color:var(--text-light); cursor:pointer; transition:var(--transition); }
-  .filter-btn:hover { border-color:var(--purple); color:var(--purple); }
+  .filter-btn { font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:0.06em; padding:9px 20px; border-radius:40px; border:1.5px solid var(--mid-grey); background:none; color:var(--text-light); cursor:pointer; transition:var(--transition); }
+  .filter-btn:hover { border-color:var(--purple); color:var(--accent-ink); }
   .filter-btn.active { background:var(--purple-dark); border-color:var(--purple-dark); color:var(--white); }
 
   .region-block { margin-bottom:60px; }
   .region-heading { display:flex; align-items:center; gap:14px; padding-bottom:14px; border-bottom:2px solid var(--mid-grey); margin-bottom:28px; }
   .rh-icon { font-size:26px; }
-  .rh-name { font-family:var(--font-h); font-size:20px; font-weight:900; color:var(--purple-dark); }
+  .rh-name { font-family:var(--font-h); font-size:20px; font-weight:900; color:var(--heading); }
   .rh-ceo { margin-left:auto; }
-  .rh-ceo-label { font-family:var(--font-accent); font-size:9px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--peach-dark); margin-bottom:2px; }
-  .rh-ceo-name { font-family:var(--font-h); font-size:13px; font-weight:700; color:var(--purple-dark); }
-  .rh-count { font-family:var(--font-accent); font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--peach-dark); background:var(--peach-pale); padding:4px 14px; border-radius:40px; margin-left:12px; }
+  .rh-ceo-label { font-family:var(--font-accent); font-size:9px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent-text); margin-bottom:2px; }
+  .rh-ceo-name { font-family:var(--font-body); font-size:13px; font-weight:700; color:var(--heading); }
+  .rh-count { font-family:var(--font-accent); font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent-text); background:var(--peach-pale); padding:4px 14px; border-radius:40px; margin-left:12px; }
 
   .countries-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-  .country-card { background:var(--white); border-radius:var(--radius-lg); border:1px solid var(--mid-grey); padding:20px; transition:var(--transition); position:relative; overflow:hidden; }
+  .country-card { background:var(--surface); border-radius:var(--radius-lg); border:1px solid var(--mid-grey); padding:20px; transition:var(--transition); position:relative; overflow:hidden; }
   .country-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--mid-grey); transition:var(--transition); }
   .country-card.hq::before { background:var(--peach-dark); }
   .country-card.active::before { background:var(--purple); }
@@ -164,14 +186,14 @@
   .country-card:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); border-color:rgba(84,24,84,0.18); }
 
   .cc-flag { font-size:26px; margin-bottom:9px; line-height:1; }
-  .cc-name { font-family:var(--font-h); font-size:14px; font-weight:800; color:var(--text); margin-bottom:3px; }
+  .cc-name { font-family:var(--font-body); font-size:14px; font-weight:800; color:var(--text); margin-bottom:3px; }
   .cc-status { font-family:var(--font-accent); font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:9px; }
-  .cc-status.hq { color:var(--peach-dark); }
-  .cc-status.active { color:var(--purple); }
+  .cc-status.hq { color:var(--accent-text); }
+  .cc-status.active { color:var(--accent-ink); }
   .cc-status.growing { color:var(--purple-light); }
   .cc-status.emerging { color:var(--text-light); }
   .cc-ceo-label { font-family:var(--font-accent); font-size:9px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-light); margin-bottom:2px; }
-  .cc-ceo-name { font-family:var(--font-h); font-size:12px; font-weight:700; color:var(--text); margin-bottom:3px; }
+  .cc-ceo-name { font-family:var(--font-body); font-size:12px; font-weight:700; color:var(--text); margin-bottom:3px; }
   .cc-ceo-contact { font-size:11px; color:var(--text-light); word-break:break-all; }
   .cc-note { font-size:11px; color:var(--text-light); line-height:1.55; margin-top:8px; font-style:italic; border-top:1px solid var(--mid-grey); padding-top:8px; }
 
@@ -182,7 +204,7 @@
   .sb-label { font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.45); margin-top:6px; font-family:var(--font-accent); }
 
   .legend { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:32px; }
-  .legend-item { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-light); font-family:var(--font-h); font-weight:600; }
+  .legend-item { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-light); font-family:var(--font-body); font-weight:600; }
   .legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
   .legend-dot.hq { background:var(--peach-dark); }
   .legend-dot.active { background:var(--purple); }
@@ -193,10 +215,24 @@
   @media(max-width:768px){ .countries-grid{grid-template-columns:repeat(2,1fr);} .stats-band{grid-template-columns:repeat(2,1fr);} .rh-ceo{display:none;} }
   @media(max-width:480px){ .countries-grid{grid-template-columns:1fr 1fr;} }
 </style>
+  <style>
+    /* Dark mode: areas with a light or orange background keep light-mode colours inside. Generated from the rules above. */
+    @media(prefers-color-scheme:dark){
+      .nav-contribute a,
+      .btn-peach{--surface:#ffffff;--heading:#320c32;--accent-ink:#541854;--accent-ink-2:#7a297a;--accent-text:#8a3d04;--off-white:#faf9f7;--light-grey:#f2f0ed;--mid-grey:#eaeaea;--text:#1a1420;--text-light:#5c4b59;--purple-pale:#fbf4fb;--peach-pale:#fff3e5}
+      .nav-contribute a:hover,
+      .btn-peach:hover,
+      .overline.light::before,
+      .footer-social-btn:hover,
+      .country-card.hq::before,
+      .legend-dot.hq{--surface:#ffffff;--heading:#320c32;--accent-ink:#541854;--accent-ink-2:#7a297a;--accent-text:#8a3d04;--off-white:#faf9f7;--light-grey:#f2f0ed;--mid-grey:#eaeaea;--text:#1a1420;--text-light:#5c4b59;--purple-pale:#fbf4fb;--peach-pale:#fff3e5;color:var(--text)}
+    }
+  </style>
+  <link rel="stylesheet" href="assets/enhance.css">
 </head>
 <body>
   <nav class="nav">
-    <div class="nav-logo"><a href="index.html"><img src="images/the-hud-group-hi-res-logo.png" alt="The HuD Group Global"></a></div>
+    <div class="nav-logo"><a href="index.html"><picture><source srcset="images/the-hud-group-logo-dark.png" media="(prefers-color-scheme: dark)"><img src="images/the-hud-group-logo.png" alt="The HuD Group Global" width="477" height="160"></picture></a></div>
     <ul class="nav-links">
       <li><a href="charity.html" class="">Charity</a></li>
 <li><a href="corporate.html" class="">Corporate</a></li>
@@ -326,12 +362,12 @@
   <div class="cc-flag">🇿🇦</div>
   <div class="cc-name">South Africa</div>
   <div class="cc-status growing">GROWING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">Home of TSF 2025 Fellow David Adedokun Adeoye (studying here).</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">Home of TSF 2025 Fellow David Adedokun Adeoye (studying here).</div>
 </div><div class="country-card growing animate-on-scroll">
   <div class="cc-flag">🇱🇸</div>
   <div class="cc-name">Lesotho</div>
   <div class="cc-status growing">GROWING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">Home of TSF 2026 Fellow Keabetsoe Letuka.</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">Home of TSF 2026 Fellow Keabetsoe Letuka.</div>
 </div><div class="country-card active animate-on-scroll">
   <div class="cc-flag">🇪🇬</div>
   <div class="cc-name">Egypt</div>
@@ -353,7 +389,7 @@
   <div class="cc-flag">🇨🇦</div>
   <div class="cc-name">Canada</div>
   <div class="cc-status hq">HQ</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">Global HQ in Montreal. Registered Canadian charity.</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">Global HQ in Montreal. Registered Canadian charity.</div>
 </div><div class="country-card active animate-on-scroll">
   <div class="cc-flag">🇺🇸</div>
   <div class="cc-name">USA</div>
@@ -375,12 +411,12 @@
   <div class="cc-flag">🇲🇽</div>
   <div class="cc-name">Mexico</div>
   <div class="cc-status growing">GROWING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">Latin America growing presence.</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">Latin America growing presence.</div>
 </div><div class="country-card growing animate-on-scroll">
   <div class="cc-flag">🇨🇴</div>
   <div class="cc-name">Colombia</div>
   <div class="cc-status growing">GROWING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">Latin America growing presence.</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">Latin America growing presence.</div>
 </div></div></div>
 <div class="region-block" data-region="europe">
   <div class="region-heading">
@@ -407,17 +443,17 @@
   <div class="cc-flag">🇩🇪</div>
   <div class="cc-name">Germany</div>
   <div class="cc-status growing">GROWING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">Growing European presence.</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">Growing European presence.</div>
 </div><div class="country-card growing animate-on-scroll">
   <div class="cc-flag">🇱🇻</div>
   <div class="cc-name">Latvia</div>
   <div class="cc-status growing">GROWING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">Growing Baltic presence.</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">Growing Baltic presence.</div>
 </div><div class="country-card emerging animate-on-scroll">
   <div class="cc-flag">🇦🇪</div>
   <div class="cc-name">UAE</div>
   <div class="cc-status emerging">EMERGING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">Middle East and North Africa region. Emerging presence.</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">Middle East and North Africa region. Emerging presence.</div>
 </div></div></div>
 <div class="region-block" data-region="asia">
   <div class="region-heading">
@@ -439,17 +475,17 @@
   <div class="cc-flag">🇵🇰</div>
   <div class="cc-name">Pakistan</div>
   <div class="cc-status growing">GROWING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">South Asia growing presence.</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">South Asia growing presence.</div>
 </div><div class="country-card emerging animate-on-scroll">
   <div class="cc-flag">🇨🇳</div>
   <div class="cc-name">China</div>
   <div class="cc-status emerging">EMERGING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">East Asia emerging presence.</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">East Asia emerging presence.</div>
 </div><div class="country-card growing animate-on-scroll">
   <div class="cc-flag">🇰🇷</div>
   <div class="cc-name">South Korea</div>
   <div class="cc-status growing">GROWING</div>
-  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--mid-grey);">To be confirmed</div><div class="cc-note">Home of TSF 2026 Fellow Evans Dormenyoh (GKS Scholar).</div>
+  <div class="cc-ceo-label">Country CEO</div><div class="cc-ceo-name" style="color:var(--text-light);">To be confirmed</div><div class="cc-note">Home of TSF 2026 Fellow Evans Dormenyoh (GKS Scholar).</div>
 </div></div></div>
 <div class="region-block" data-region="oceania">
   <div class="region-heading">
@@ -493,7 +529,7 @@
       </div>
       <div class="footer-top">
         <div class="footer-brand">
-          <div class="footer-logo-wrap"><img src="images/the-hud-group-hi-res-logo.png" alt="The HuD Group"></div>
+          <div class="footer-logo-wrap"><img src="images/the-hud-group-hi-res-logo.png" alt="The HuD Group" decoding="async" width="329" height="111"></div>
           <div class="footer-tagline">To inspire...totally</div>
           <p>A Christian international leadership development network raising and releasing holistic leaders across 30 countries.</p>
           <div class="footer-socials">
@@ -561,5 +597,6 @@
   }
 
   </script>
+  <script src="assets/enhance.js" defer></script>
 </body>
 </html>

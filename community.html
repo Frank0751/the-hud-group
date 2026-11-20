@@ -4,17 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Community: The Shadrach Fellowship | The HuD Group Global</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="images/cropped-the-hud-group-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="images/icons/favicon-48.png">
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#320c32">
+  <meta name="color-scheme" content="light dark">
+  <!-- LAUNCH: remove the next line when this page is ready to appear in Google. -->
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://the-hud-group.vercel.app/community.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The HuD Group Global">
+  <meta property="og:title" content="Community: The Shadrach Fellowship | The HuD Group Global">
+  <meta property="og:description" content="The Shadrach Fellowship: A Missional Discipleship Journey with Dr. Yaw Perbi. Become a disciple of Jesus Christ who makes disciples.">
+  <meta property="og:url" content="https://the-hud-group.vercel.app/community.html">
+  <meta property="og:image" content="https://the-hud-group.vercel.app/images/og-site.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Community: The Shadrach Fellowship | The HuD Group Global">
+  <meta name="twitter:description" content="The Shadrach Fellowship: A Missional Discipleship Journey with Dr. Yaw Perbi. Become a disciple of Jesus Christ who makes disciples.">
+  <meta name="twitter:image" content="https://the-hud-group.vercel.app/images/og-site.jpg">
   <meta name="description" content="The Shadrach Fellowship: A Missional Discipleship Journey with Dr. Yaw Perbi. Become a disciple of Jesus Christ who makes disciples.">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&display=swap" rel="stylesheet">
-  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=gambetta@500,501,600&display=swap" rel="stylesheet">
   <style>
     :root {
+    --surface:#ffffff; --heading:#320c32; --accent-ink:#541854; --accent-ink-2:#7a297a; --accent-text:#a64b08;
       --purple:#541854; --purple-dark:#320c32; --purple-mid:#7a297a; --purple-light:#b668b6; --purple-pale:#fbf4fb;
       --peach:#ffb866; --peach-dark:#df6e0c; --peach-pale:#fff3e5; --orange:#fc9018;
       --white:#ffffff; --off-white:#faf9f7; --light-grey:#f2f0ed; --mid-grey:#eaeaea;
       --text:#1a1420; --text-light:#6b5a68;
-      --font-h:'Playfair Display',serif; --font-body:'Satoshi',sans-serif; --font-accent:'Satoshi',sans-serif;
+      --font-h:'Gambetta',Georgia,'Times New Roman',serif; --font-body:'Satoshi',sans-serif; --font-accent:'Satoshi',sans-serif;
       --nav-h:80px; --transition:all 0.32s cubic-bezier(0.4,0,0.2,1);
       --shadow-sm:0 2px 12px rgba(84,24,84,0.08); --shadow-md:0 8px 32px rgba(84,24,84,0.14); --shadow-lg:0 20px 60px rgba(84,24,84,0.20);
       --radius:12px; --radius-lg:20px;
@@ -27,9 +49,9 @@
     .nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:var(--nav-h);background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.07);display:flex;align-items:center;padding:0 48px;box-shadow:var(--shadow-sm)}
     .nav-logo img{height:42px;width:auto}
     .nav-links{margin-left:auto;display:flex;align-items:center;gap:2px;list-style:none}
-    .nav-links a{font-family:var(--font-h);font-size:12.5px;font-weight:600;letter-spacing:0.04em;color:#555;padding:8px 13px;border-radius:6px;transition:var(--transition)}
-    .nav-links a:hover,.nav-links a.active{color:var(--purple);background:var(--purple-pale)}
-    .nav-contribute a{background:var(--peach)!important;color:var(--purple-dark)!important;border-radius:40px!important;font-weight:700!important;padding:9px 20px!important}
+    .nav-links a{font-family:var(--font-body);font-size:12.5px;font-weight:600;letter-spacing:0.04em;color:#555;padding:8px 13px;border-radius:6px;transition:var(--transition)}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent-ink);background:var(--purple-pale)}
+    .nav-contribute a{background:var(--peach)!important;color:var(--heading)!important;border-radius:40px!important;font-weight:700!important;padding:9px 20px!important}
     .nav-contribute a:hover{background:var(--peach-dark)!important;transform:translateY(-1px);box-shadow:0 4px 14px rgba(252,144,24,0.4)!important}
 
     .hero{min-height:100vh;background:var(--purple-dark);position:relative;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;padding-top:var(--nav-h)}
@@ -46,10 +68,10 @@
     .hero-subtitle{font-family:var(--font-h);font-size:clamp(15px,2vw,19px);font-weight:400;font-style:italic;color:rgba(255,255,255,0.65);margin-bottom:28px}
     .hero-desc{font-size:16px;color:rgba(255,255,255,0.72);line-height:1.8;max-width:520px;margin-bottom:36px}
     .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:40px;font-family:var(--font-h);font-size:13px;font-weight:700;letter-spacing:0.04em;transition:var(--transition);cursor:pointer;border:none}
-    .btn-peach{background:var(--peach);color:var(--purple-dark)} .btn-peach:hover{background:var(--peach-dark);transform:translateY(-2px);box-shadow:0 6px 20px rgba(252,144,24,0.4)}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:40px;font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:0.04em;transition:var(--transition);cursor:pointer;border:none}
+    .btn-peach{background:var(--peach);color:var(--heading)} .btn-peach:hover{background:var(--peach-dark);transform:translateY(-2px);box-shadow:0 6px 20px rgba(252,144,24,0.4)}
     .btn-outline-white{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.45)} .btn-outline-white:hover{border-color:var(--white);background:rgba(255,255,255,0.1);transform:translateY(-2px)}
-    .btn-outline-purple{background:transparent;color:var(--purple);border:1.5px solid var(--purple)} .btn-outline-purple:hover{background:var(--purple);color:var(--white);transform:translateY(-2px)}
+    .btn-outline-purple{background:transparent;color:var(--accent-ink);border:1.5px solid var(--purple)} .btn-outline-purple:hover{background:var(--purple);color:var(--white);transform:translateY(-2px)}
     .btn-white{background:var(--white);color:var(--purple-dark)} .btn-white:hover{background:var(--off-white);transform:translateY(-2px);box-shadow:var(--shadow-md)}
     .hero-facts{display:flex;gap:28px;margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.1)}
     .hero-fact-num{font-family:var(--font-h);font-size:30px;font-weight:900;color:var(--peach);line-height:1}
@@ -61,17 +83,17 @@
     .hbb-item:first-child{padding-left:0} .hbb-item:last-child{border-right:none}
     .hbb-icon{font-size:18px}
     .hbb-label{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45)}
-    .hbb-value{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--white)}
+    .hbb-value{font-family:var(--font-body);font-size:13px;font-weight:700;color:var(--white)}
 
     .section{padding:96px 0} .container{max-width:1280px;margin:0 auto;padding:0 48px}
-    .overline{display:flex;align-items:center;gap:10px;font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:14px}
+    .overline{display:flex;align-items:center;gap:10px;font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent-text);margin-bottom:14px}
     .overline::before{display:none}
     .overline.light{color:var(--peach)} .overline.light::before{background:var(--peach)}
-    h2.section-title{font-family:var(--font-h);font-size:clamp(28px,4vw,50px);font-weight:900;line-height:1.1;letter-spacing:-0.02em;color:var(--purple-dark);margin-bottom:16px}
+    h2.section-title{font-family:var(--font-h);font-size:clamp(28px,4vw,50px);font-weight:900;line-height:1.1;letter-spacing:-0.02em;color:var(--heading);margin-bottom:16px}
     h2.section-title.white{color:var(--white)}
     .section-lead{font-size:17px;color:var(--text-light);line-height:1.75;max-width:620px}
 
-    .about-section{background:var(--white)}
+    .about-section{background:var(--surface)}
     .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
     .about-text p{font-size:16px;color:var(--text-light);line-height:1.85;margin-bottom:18px}
     .about-text p strong{color:var(--text)}
@@ -81,8 +103,8 @@
     .pillars-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .pillar-card{background:var(--off-white);border:1px solid var(--mid-grey);border-radius:var(--radius);padding:18px 20px;transition:var(--transition);border-left:3px solid transparent}
     .pillar-card:hover{border-left-color:var(--peach);background:var(--peach-pale);transform:translateX(3px)}
-    .pillar-num{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.12em;color:var(--peach-dark);margin-bottom:4px}
-    .pillar-name{font-family:var(--font-h);font-size:15px;font-weight:800;color:var(--purple);margin-bottom:4px}
+    .pillar-num{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.12em;color:var(--accent-text);margin-bottom:4px}
+    .pillar-name{font-family:var(--font-body);font-size:15px;font-weight:800;color:var(--accent-ink);margin-bottom:4px}
     .pillar-desc{font-size:12px;color:var(--text-light);line-height:1.5}
 
     .formation-section{background:#2d5a2d;position:relative;overflow:hidden}
@@ -93,28 +115,28 @@
     .fp-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,184,102,0.15);border-radius:var(--radius);padding:20px;transition:var(--transition)}
     .fp-card:hover{background:rgba(255,184,102,0.1);border-color:rgba(255,184,102,0.35)}
     .fp-num{font-family:var(--font-h);font-size:32px;font-weight:900;color:rgba(255,184,102,0.2);line-height:1;margin-bottom:8px}
-    .fp-name{font-family:var(--font-h);font-size:16px;font-weight:800;color:var(--peach);margin-bottom:6px}
+    .fp-name{font-family:var(--font-body);font-size:16px;font-weight:800;color:var(--peach);margin-bottom:6px}
     .fp-desc{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5}
     .formation-visual{background:rgba(255,255,255,0.04);border:1px solid rgba(255,184,102,0.12);border-radius:var(--radius-lg);padding:32px}
-    .formation-tag{text-align:center;font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--peach);margin-bottom:20px}
-    .kwiverr-diagram{width:100%;display:block;border-radius:var(--radius);background:#fff;padding:12px}
+    .formation-tag{text-align:center;font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--peach);margin-bottom:20px}
+    .kwiverr-diagram{width:100%;display:block;border-radius:var(--radius);background:var(--surface);padding:12px}
 
     .roadmap-section{background:var(--light-grey)}
     .roadmap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:52px;border-radius:var(--radius-lg);overflow:hidden}
-    .roadmap-quarter{background:var(--white);padding:32px 24px;transition:var(--transition)}
+    .roadmap-quarter{background:var(--surface);padding:32px 24px;transition:var(--transition)}
     .roadmap-quarter:hover{background:var(--purple-dark)}
     .roadmap-quarter:hover .rq-title,.roadmap-quarter:hover .rq-label,.roadmap-quarter:hover .rq-desc{color:var(--white)!important}
     .roadmap-quarter:hover .rq-bar{background:var(--peach)}
     .roadmap-quarter:hover .rq-month{color:rgba(255,255,255,0.65);border-color:rgba(255,255,255,0.1)}
     .rq-bar{width:32px;height:3px;background:var(--peach-dark);border-radius:2px;margin-bottom:16px;transition:var(--transition)}
-    .rq-label{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:8px;transition:var(--transition)}
-    .rq-title{font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--purple-dark);margin-bottom:12px;transition:var(--transition)}
+    .rq-label{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent-text);margin-bottom:8px;transition:var(--transition)}
+    .rq-title{font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--heading);margin-bottom:12px;transition:var(--transition)}
     .rq-desc{font-size:13px;color:var(--text-light);line-height:1.65;transition:var(--transition)}
     .rq-months{margin-top:20px;display:flex;flex-direction:column;gap:6px}
     .rq-month{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-light);padding:6px 0;border-top:1px solid var(--mid-grey);transition:var(--transition)}
     .rq-month-dot{width:5px;height:5px;border-radius:50%;background:var(--peach);flex-shrink:0}
 
-    .facilitators-section{background:var(--white)}
+    .facilitators-section{background:var(--surface)}
     .facilitators-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:52px}
     .fac-card{background:var(--off-white);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--mid-grey);transition:var(--transition)}
     .fac-card:hover{box-shadow:var(--shadow-md);transform:translateY(-4px);border-color:var(--peach)}
@@ -122,32 +144,32 @@
     .fac-header{background:linear-gradient(135deg,var(--purple) 0%,var(--purple-dark) 100%);padding:32px 24px 0;position:relative;height:100px}
     .fac-img-wrap{width:88px;height:88px;border-radius:50%;border:4px solid var(--white);background:var(--off-white);overflow:hidden;position:absolute;bottom:-30px;left:24px;box-shadow:var(--shadow-sm)}
     .fac-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center top}
-    .fac-img-placeholder{width:100%;height:100%;background:linear-gradient(135deg,var(--purple-pale),#d4cee8);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:26px;font-weight:900;color:var(--purple)}
+    .fac-img-placeholder{width:100%;height:100%;background:linear-gradient(135deg,var(--purple-pale),#d4cee8);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:26px;font-weight:900;color:var(--accent-ink)}
     .fac-body{padding:46px 24px 28px}
-    .fac-role{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:4px}
+    .fac-role{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent-text);margin-bottom:4px}
     .fac-card.featured .fac-role{color:var(--peach)}
-    .fac-name{font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--purple-dark);margin-bottom:10px}
+    .fac-name{font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--heading);margin-bottom:10px}
     .fac-card.featured .fac-name{color:var(--white)}
     .fac-bio{font-size:13px;color:var(--text-light);line-height:1.7}
     .fac-card.featured .fac-bio{color:rgba(255,255,255,0.7)}
-    .fac-email{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:12px;color:var(--purple);font-weight:600}
+    .fac-email{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:12px;color:var(--accent-ink);font-weight:600}
     .fac-card.featured .fac-email{color:var(--peach)}
 
     .fellows-section{background:var(--off-white)}
     .fellows-tabs{display:flex;gap:8px;margin:40px 0 36px;flex-wrap:wrap}
-    .ftab{padding:10px 22px;border-radius:40px;border:1.5px solid var(--mid-grey);font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:0.05em;cursor:pointer;transition:var(--transition);background:none;color:var(--text-light)}
-    .ftab:hover{border-color:var(--purple);color:var(--purple)}
+    .ftab{padding:10px 22px;border-radius:40px;border:1.5px solid var(--mid-grey);font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.05em;cursor:pointer;transition:var(--transition);background:none;color:var(--text-light)}
+    .ftab:hover{border-color:var(--purple);color:var(--accent-ink)}
     .ftab.active{background:var(--purple-dark);border-color:var(--purple-dark);color:var(--white)}
     .fellows-panel{display:none} .fellows-panel.active{display:block}
     .fellows-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-    .fellow-card{background:var(--white);border-radius:var(--radius);overflow:hidden;border:1px solid var(--mid-grey);cursor:pointer;transition:var(--transition)}
+    .fellow-card{background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--mid-grey);cursor:pointer;transition:var(--transition)}
     .fellow-card:hover{box-shadow:var(--shadow-md);transform:translateY(-4px);border-color:var(--peach)}
     .fellow-top{height:80px;background:linear-gradient(135deg,var(--purple) 0%,var(--purple-dark) 100%)}
     .fellow-body{padding:20px 16px}
-    .fellow-name{font-family:var(--font-h);font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px;line-height:1.3}
-    .fellow-country{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:8px}
+    .fellow-name{font-family:var(--font-body);font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px;line-height:1.3}
+    .fellow-country{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-text);margin-bottom:8px}
     .fellow-snippet{font-size:12px;color:var(--text-light);line-height:1.55}
-    .fellow-more{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--purple);margin-top:10px;font-family:var(--font-h)}
+    .fellow-more{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--accent-ink);margin-top:10px;font-family:var(--font-body)}
 
     .graduates-image-hero{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);margin-top:48px;margin-bottom:40px}
     .graduates-image-hero img{width:100%;display:block}
@@ -157,11 +179,11 @@
     .cohort-gallery-item:hover img{transform:scale(1.06)}
     @media(max-width:640px){.cohort-gallery{grid-template-columns:1fr}}
     .graduates-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .grad-card{background:var(--white);border-radius:var(--radius);padding:20px;border:1px solid var(--mid-grey);transition:var(--transition)}
+    .grad-card{background:var(--surface);border-radius:var(--radius);padding:20px;border:1px solid var(--mid-grey);transition:var(--transition)}
     .grad-card:hover{border-color:var(--peach);box-shadow:var(--shadow-sm)}
     .grad-num{font-family:var(--font-h);font-size:28px;font-weight:900;color:rgba(84,24,84,0.12);line-height:1;margin-bottom:8px}
-    .grad-name{font-family:var(--font-h);font-size:15px;font-weight:800;color:var(--purple-dark);margin-bottom:3px}
-    .grad-country{font-size:11px;color:var(--peach-dark);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
+    .grad-name{font-family:var(--font-body);font-size:15px;font-weight:800;color:var(--heading);margin-bottom:3px}
+    .grad-country{font-size:11px;color:var(--accent-text);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px}
     .grad-snippet{font-size:12px;color:var(--text-light);line-height:1.55}
 
     .awards-section{background:var(--purple-dark)}
@@ -171,32 +193,32 @@
     .award-card img{width:100%;display:block}
     .award-note{background:rgba(255,255,255,0.06);border:1px solid rgba(255,184,102,0.2);border-radius:var(--radius);padding:20px 24px;margin-top:32px;font-size:14px;color:rgba(255,255,255,0.7);line-height:1.7}
 
-    .tsfx-section{background:var(--white)}
+    .tsfx-section{background:var(--surface)}
     .tsfx-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
     .tsfx-explainer p{font-size:15px;color:var(--text-light);line-height:1.8;margin-bottom:16px}
-    .tsfx-badge{display:inline-block;background:var(--purple-dark);color:var(--white);font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:40px;margin-bottom:16px}
+    .tsfx-badge{display:inline-block;background:var(--purple-dark);color:var(--white);font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:40px;margin-bottom:16px}
     .tsfx-callout{background:var(--purple-pale);border-left:3px solid var(--peach-dark);border-radius:0 var(--radius) var(--radius) 0;padding:20px 24px;margin-top:24px}
-    .tsfx-callout-title{font-family:var(--font-h);font-size:13px;font-weight:800;color:var(--purple);margin-bottom:6px}
+    .tsfx-callout-title{font-family:var(--font-body);font-size:13px;font-weight:800;color:var(--accent-ink);margin-bottom:6px}
     .tsfx-callout-text{font-size:13px;color:var(--text-light);line-height:1.65}
     .tsfx-image-wrap{border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);margin-bottom:20px}
     .tsfx-image-wrap img{width:100%;display:block}
     .tsfx-pairs{display:flex;flex-direction:column;gap:10px}
     .tsfx-pair{background:var(--off-white);border-radius:var(--radius);padding:14px 18px;border:1px solid var(--mid-grey);display:flex;justify-content:space-between;align-items:center;gap:12px}
-    .tsfx-mentee{font-family:var(--font-h);font-size:14px;font-weight:700;color:var(--text)}
-    .tsfx-arrow{color:var(--peach-dark);font-size:14px;flex-shrink:0}
+    .tsfx-mentee{font-family:var(--font-body);font-size:14px;font-weight:700;color:var(--text)}
+    .tsfx-arrow{color:var(--accent-text);font-size:14px;flex-shrink:0}
     .tsfx-mentor{font-size:12px;color:var(--text-light);text-align:right}
 
     .tsfx-profiles-section{background:var(--off-white)}
     .tsfx-profiles-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
-    .tsfx-profile-card{background:var(--white);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--mid-grey);transition:var(--transition)}
+    .tsfx-profile-card{background:var(--surface);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--mid-grey);transition:var(--transition)}
     .tsfx-profile-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--peach)}
     .tsfx-profile-top{height:72px;background:linear-gradient(135deg,var(--peach-dark) 0%,#c07020 100%);position:relative}
     .tsfx-profile-badge{position:absolute;top:12px;right:16px;background:rgba(255,255,255,0.2);border-radius:40px;padding:4px 12px;font-family:var(--font-accent);font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--white)}
     .tsfx-profile-body{padding:24px}
-    .tsfx-profile-name{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--purple-dark);margin-bottom:4px}
-    .tsfx-profile-mentored{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--peach-dark);margin-bottom:12px}
+    .tsfx-profile-name{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--heading);margin-bottom:4px}
+    .tsfx-profile-mentored{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent-text);margin-bottom:12px}
     .tsfx-profile-bio{font-size:13px;color:var(--text-light);line-height:1.75;margin-bottom:14px}
-    .tsfx-profile-email{font-size:12px;color:var(--purple);font-weight:600}
+    .tsfx-profile-email{font-size:12px;color:var(--accent-ink);font-weight:600}
 
     .testimonies-section{background:var(--purple-dark);position:relative;overflow:hidden}
     .testimonies-section::before{content:'"';position:absolute;font-family:var(--font-h);font-size:400px;font-weight:900;color:rgba(255,184,102,0.04);left:-40px;top:-80px;line-height:1;pointer-events:none}
@@ -204,53 +226,53 @@
     .testimony-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,184,102,0.15);border-radius:var(--radius-lg);padding:32px;transition:var(--transition)}
     .testimony-card:hover{background:rgba(255,184,102,0.08);border-color:rgba(255,184,102,0.3)}
     .testimony-quote-mark{font-family:var(--font-h);font-size:48px;font-weight:900;color:var(--peach);line-height:0.8;margin-bottom:16px;display:block}
-    .testimony-text{font-family:var(--font-h);font-size:15px;font-style:italic;font-weight:400;color:rgba(255,255,255,0.85);line-height:1.75;margin-bottom:24px}
+    .testimony-text{font-family:var(--font-body);font-size:15px;font-style:italic;font-weight:400;color:rgba(255,255,255,0.85);line-height:1.75;margin-bottom:24px}
     .testimony-author{display:flex;align-items:center;gap:14px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08)}
-    .testimony-author-avatar{width:44px;height:44px;border-radius:50%;background:rgba(255,184,102,0.2);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:14px;font-weight:900;color:var(--peach);flex-shrink:0}
-    .testimony-author-name{font-family:var(--font-h);font-size:13px;font-weight:800;color:var(--white);margin-bottom:2px}
+    .testimony-author-avatar{width:44px;height:44px;border-radius:50%;background:rgba(255,184,102,0.2);display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-size:14px;font-weight:900;color:var(--peach);flex-shrink:0}
+    .testimony-author-name{font-family:var(--font-body);font-size:13px;font-weight:800;color:var(--white);margin-bottom:2px}
     .testimony-author-role{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.06em}
 
     .retreat-section{background:var(--light-grey)}
     .retreat-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
     .retreat-text p{font-size:16px;color:var(--text-light);line-height:1.85;margin-bottom:16px}
-    .retreat-highlight{background:var(--white);border-radius:var(--radius);padding:24px;border-left:4px solid var(--peach-dark);margin-bottom:16px}
-    .retreat-highlight-title{font-family:var(--font-h);font-size:13px;font-weight:800;color:var(--purple);margin-bottom:6px}
+    .retreat-highlight{background:var(--surface);border-radius:var(--radius);padding:24px;border-left:4px solid var(--peach-dark);margin-bottom:16px}
+    .retreat-highlight-title{font-family:var(--font-body);font-size:13px;font-weight:800;color:var(--accent-ink);margin-bottom:6px}
     .retreat-highlight-text{font-size:13px;color:var(--text-light);line-height:1.65}
     .retreat-photos-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .retreat-photo-slot{background:linear-gradient(135deg,var(--purple-pale),#d4cee8);border-radius:var(--radius);border:2px dashed rgba(84,24,84,0.2);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-family:var(--font-h);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-light);text-align:center;padding:16px}
+    .retreat-photo-slot{background:linear-gradient(135deg,var(--purple-pale),#d4cee8);border-radius:var(--radius);border:2px dashed rgba(84,24,84,0.2);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-family:var(--font-body);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-light);text-align:center;padding:16px}
     .retreat-photo-slot::before{content:'📷';font-size:24px}
 
     .apply-section{background:linear-gradient(135deg,var(--peach-dark) 0%,var(--orange) 100%);position:relative;overflow:hidden}
     .apply-section::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.06) 1px,transparent 1px);background-size:40px 40px}
     .apply-inner{position:relative;z-index:1;text-align:center;max-width:900px;margin:0 auto}
-    .apply-section h2{font-family:var(--font-h);font-size:clamp(32px,5vw,56px);font-weight:900;color:var(--purple-dark);line-height:1.1;margin-bottom:12px;letter-spacing:-0.02em}
+    .apply-section h2{font-family:var(--font-h);font-size:clamp(32px,5vw,56px);font-weight:900;color:var(--heading);line-height:1.1;margin-bottom:12px;letter-spacing:-0.02em}
     .apply-next{background:rgba(255,255,255,0.55);border-radius:var(--radius-lg);padding:28px 36px;margin-bottom:36px}
-    .apply-next h3{font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--purple-dark);margin-bottom:8px}
-    .apply-next p{font-size:15px;color:rgba(50,12,50,0.75)}
+    .apply-next h3{font-family:var(--font-h);font-size:20px;font-weight:900;color:var(--heading);margin-bottom:8px}
+    .apply-next p{font-size:15px;color:rgba(50,12,50,0.85)}
     .apply-criteria-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0 28px;text-align:left}
     .criteria-item{background:rgba(255,255,255,0.55);border-radius:var(--radius);padding:16px 18px}
-    .criteria-title{font-family:var(--font-h);font-size:13px;font-weight:800;color:var(--purple-dark);margin-bottom:4px}
-    .criteria-desc{font-size:12px;color:rgba(50,12,50,0.7);line-height:1.5}
+    .criteria-title{font-family:var(--font-body);font-size:13px;font-weight:800;color:var(--heading);margin-bottom:4px}
+    .criteria-desc{font-size:12px;color:rgba(50,12,50,0.85);line-height:1.5}
     .apply-ctas{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
 
-    .faq-section{background:var(--white)}
+    .faq-section{background:var(--surface)}
     .faq-grid{max-width:900px;margin:48px auto 0}
     .faq-item{border-bottom:1px solid var(--mid-grey)}
-    .faq-question{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;cursor:pointer;font-family:var(--font-h);font-size:16px;font-weight:700;color:var(--purple-dark);transition:var(--transition)}
-    .faq-question:hover{color:var(--purple)}
-    .faq-icon{width:28px;height:28px;border-radius:50%;background:var(--purple-pale);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--purple);flex-shrink:0;transition:var(--transition)}
-    .faq-item.open .faq-icon{background:var(--peach);color:var(--purple-dark);transform:rotate(45deg)}
+    .faq-question{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;cursor:pointer;font-family:var(--font-body);font-size:16px;font-weight:700;color:var(--heading);transition:var(--transition)}
+    .faq-question:hover{color:var(--accent-ink)}
+    .faq-icon{width:28px;height:28px;border-radius:50%;background:var(--purple-pale);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--accent-ink);flex-shrink:0;transition:var(--transition)}
+    .faq-item.open .faq-icon{background:var(--peach);color:var(--heading);transform:rotate(45deg)}
     .faq-answer{display:none;padding:0 0 22px;font-size:15px;color:var(--text-light);line-height:1.8;max-width:780px}
     .faq-item.open .faq-answer{display:block}
 
     .modal-overlay{position:fixed;inset:0;background:rgba(50,12,50,0.75);backdrop-filter:blur(5px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
     .modal-overlay.open{display:flex}
-    .modal{background:var(--white);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,0.3);animation:modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+    .modal{background:var(--surface);border-radius:var(--radius-lg);max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,0.3);animation:modalIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
     @keyframes modalIn{from{opacity:0;transform:scale(0.92) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
     .modal-head{background:linear-gradient(135deg,var(--purple-dark) 0%,#1a0f1a 100%);padding:32px;display:flex;gap:24px;align-items:flex-end;position:relative;border-radius:var(--radius-lg) var(--radius-lg) 0 0;min-height:160px}
     .modal-head::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 0%,rgba(255,184,102,0.12),transparent 60%);border-radius:inherit}
     .modal-photo{width:100px;height:100px;border-radius:50%;background:var(--off-white);border:4px solid var(--white);overflow:hidden;flex-shrink:0;position:relative;z-index:1;box-shadow:var(--shadow-sm)}
-    .modal-photo-initials{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:32px;font-weight:900;background:linear-gradient(135deg,var(--purple-pale),#d4cee8);color:var(--purple)}
+    .modal-photo-initials{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:32px;font-weight:900;background:linear-gradient(135deg,var(--purple-pale),#d4cee8);color:var(--accent-ink)}
     .modal-head-info{position:relative;z-index:1;padding-bottom:4px}
     .modal-head-name{font-family:var(--font-h);font-size:24px;font-weight:900;color:var(--white);margin-bottom:4px}
     .modal-head-role{font-family:var(--font-accent);font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--peach);margin-bottom:4px}
@@ -258,9 +280,9 @@
     .modal-close{position:absolute;top:16px;right:16px;z-index:2;background:rgba(255,255,255,0.15);border:none;color:var(--white);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
     .modal-close:hover{background:rgba(255,255,255,0.3)}
     .modal-body{padding:32px}
-    .modal-section-title{font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--peach-dark);padding-bottom:8px;border-bottom:1px solid var(--mid-grey);margin-bottom:14px}
+    .modal-section-title{font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent-text);padding-bottom:8px;border-bottom:1px solid var(--mid-grey);margin-bottom:14px}
     .modal-body p{font-size:14px;color:var(--text-light);line-height:1.8;margin-bottom:12px}
-    .modal-contact{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--purple);margin-top:8px}
+    .modal-contact{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--accent-ink);margin-top:8px}
 
     .footer{background:#161616;color:var(--white);padding:72px 0 0}
     .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;padding-bottom:52px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:28px}
@@ -268,21 +290,45 @@
     .footer-logo-text em{font-style:normal;color:var(--peach)}
     .footer-tagline{font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--peach);margin-bottom:14px}
     .footer-brand p{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75;max-width:300px}
-    .footer-col h4{font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--peach);margin-bottom:14px}
+    .footer-col h4{font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--peach);margin-bottom:14px}
     .footer-col a{display:block;font-size:13px;color:rgba(255,255,255,0.55);padding:4px 0;transition:var(--transition)}
     .footer-col a:hover{color:var(--white);padding-left:4px}
     .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:22px 0;font-size:12px;color:rgba(255,255,255,0.3)}
-    .footer-cta{background:var(--peach);color:var(--purple-dark);font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:10px 24px;border-radius:40px;transition:var(--transition)}
+    .footer-cta{background:var(--peach);color:var(--heading);font-family:var(--font-body);font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:10px 24px;border-radius:40px;transition:var(--transition)}
     .footer-cta:hover{background:var(--peach-dark)}
 
     @media(max-width:1100px){.container{padding:0 32px}.about-grid,.formation-inner,.tsfx-inner,.retreat-inner{grid-template-columns:1fr;gap:48px}.fellows-grid{grid-template-columns:repeat(3,1fr)}.facilitators-grid{grid-template-columns:1fr 1fr}.roadmap-grid{grid-template-columns:1fr 1fr}.awards-grid{grid-template-columns:repeat(2,1fr)}.apply-criteria-grid{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1fr 1fr;gap:40px}.tsfx-profiles-grid{grid-template-columns:1fr}}
     @media(max-width:768px){.hero-inner{grid-template-columns:1fr;gap:40px}.hero-right{display:none}.fellows-grid{grid-template-columns:repeat(2,1fr)}.testimonies-grid{grid-template-columns:1fr}.graduates-grid{grid-template-columns:1fr 1fr}.nav{padding:0 24px}.hero-bottom-bar{padding:16px 24px;flex-wrap:wrap}.hbb-item{border-right:none;padding:8px 0}}
     @media(max-width:520px){.fellows-grid{grid-template-columns:1fr}.awards-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;gap:12px;text-align:center}.apply-criteria-grid{grid-template-columns:1fr}}
   </style>
+  <style>
+    /* Dark mode: areas with a light or orange background keep light-mode colours inside. Generated from the rules above. */
+    @media(prefers-color-scheme:dark){
+      .nav-contribute a,
+      .btn-peach,
+      .fac-img-placeholder,
+      .retreat-photo-slot,
+      .faq-item.open .faq-icon,
+      .modal-photo-initials,
+      .footer-cta{--surface:#ffffff;--heading:#320c32;--accent-ink:#541854;--accent-ink-2:#7a297a;--accent-text:#8a3d04;--off-white:#faf9f7;--light-grey:#f2f0ed;--mid-grey:#eaeaea;--text:#1a1420;--text-light:#5c4b59;--purple-pale:#fbf4fb;--peach-pale:#fff3e5}
+      .nav-contribute a:hover,
+      .hero-badge-dot,
+      .btn-peach:hover,
+      .overline.light::before,
+      .kwiverr-diagram,
+      .roadmap-quarter:hover .rq-bar,
+      .rq-bar,
+      .rq-month-dot,
+      .tsfx-profile-top,
+      .apply-section,
+      .footer-cta:hover{--surface:#ffffff;--heading:#320c32;--accent-ink:#541854;--accent-ink-2:#7a297a;--accent-text:#8a3d04;--off-white:#faf9f7;--light-grey:#f2f0ed;--mid-grey:#eaeaea;--text:#1a1420;--text-light:#5c4b59;--purple-pale:#fbf4fb;--peach-pale:#fff3e5;color:var(--text)}
+    }
+  </style>
+  <link rel="stylesheet" href="assets/enhance.css">
 </head>
 <body>
   <nav class="nav">
-    <div class="nav-logo"><a href="index.html"><img src="images/the-hud-group-hi-res-logo.png" alt="The HuD Group"></a></div>
+    <div class="nav-logo"><a href="index.html"><picture><source srcset="images/the-hud-group-logo-dark.png" media="(prefers-color-scheme: dark)"><img src="images/the-hud-group-logo.png" alt="The HuD Group" width="477" height="160"></picture></a></div>
     <ul class="nav-links">
       <li><a href="charity.html">Charity</a></li>
       <li><a href="corporate.html">Corporate</a></li>
@@ -305,6 +351,7 @@
           <a href="apply.html" class="btn btn-peach">Apply Now</a>
           <a href="#about" class="btn btn-outline-white">Learn More</a>
         </div>
+        <p style="margin:18px 0 26px;font-size:14px;line-height:1.6;color:rgba(255,255,255,0.8)">Already a fellow? <a href="portal.html" style="color:var(--peach);font-weight:700;text-decoration:underline;text-underline-offset:3px">Sign in to the Fellows Portal</a></p>
         <div class="hero-facts">
           <div class="hero-fact"><div class="hero-fact-num">2</div><div class="hero-fact-label">Cohorts</div></div>
           <div class="hero-fact"><div class="hero-fact-num">9</div><div class="hero-fact-label">2025 Graduates</div></div>
@@ -313,7 +360,7 @@
         </div>
       </div>
       <div class="hero-right">
-        <div class="hero-app-image"><img src="images/tsf-2025-maiden-1.jpg" alt="The Shadrach Fellowship in session"></div>
+        <div class="hero-app-image"><picture><source type="image/webp" srcset="images/tsf-2025-maiden-1.webp"><img src="images/tsf-2025-maiden-1.jpg" alt="The Shadrach Fellowship in session" decoding="async" width="828" height="645"></picture></div>
       </div>
     </div>
     <div class="hero-bottom-bar">
@@ -372,7 +419,7 @@
         </div>
         <div class="formation-visual">
           <div class="formation-tag">The Kwiverr Formation Konstant</div>
-          <img src="images/kwiverr-formation-konstant.png" alt="The Kwiverr Formation Konstant: a K-shaped diagram mapping Missional, Leadership, Communal, and Spiritual Formation against Hospitality, Organizational Dynamics, Missional Community, Reflective Lifestyle, Global Diversity, Character, and Lifelong Learning. Biblically-informed, Research-based, Spirit-empowered. Copyright 2022 Yaw Perbi." class="kwiverr-diagram">
+          <picture><source type="image/webp" srcset="images/kwiverr-formation-konstant.webp"><img src="images/kwiverr-formation-konstant.png" alt="The Kwiverr Formation Konstant: a K-shaped diagram mapping Missional, Leadership, Communal, and Spiritual Formation against Hospitality, Organizational Dynamics, Missional Community, Reflective Lifestyle, Global Diversity, Character, and Lifelong Learning. Biblically-informed, Research-based, Spirit-empowered. Copyright 2022 Yaw Perbi." class="kwiverr-diagram" loading="lazy" decoding="async" width="997" height="830"></picture>
         </div>
       </div>
     </div>
@@ -397,9 +444,9 @@
       <p class="section-lead">The Shadrach Fellowship is facilitated by a dedicated team of three leaders who bring rigour, grace, and lived experience to every session.</p>
       <div class="facilitators-grid">
         <div class="fac-card featured">
-          <div class="fac-header" style="background:linear-gradient(135deg,var(--peach-dark) 0%,#8B4000 100%);">
+          <div class="fac-header" data-scope="light" style="background:linear-gradient(135deg,var(--peach-dark) 0%,#8B4000 100%);">
             <div class="fac-img-wrap">
-              <img src="images/facilitator-yaw-perbi.jpg" alt="Dr. Yaw Perbi">
+              <picture><source type="image/webp" srcset="images/facilitator-yaw-perbi.webp"><img src="images/facilitator-yaw-perbi.jpg" alt="Dr. Yaw Perbi" loading="lazy" decoding="async" width="500" height="500"></picture>
             </div>
           </div>
           <div class="fac-body">
@@ -412,7 +459,7 @@
         <div class="fac-card">
           <div class="fac-header">
             <div class="fac-img-wrap">
-              <img src="images/facilitator-frank-koomson.jpg" alt="Frank Koomson">
+              <picture><source type="image/webp" srcset="images/facilitator-frank-koomson.webp"><img src="images/facilitator-frank-koomson.jpg" alt="Frank Koomson" loading="lazy" decoding="async" width="832" height="1129"></picture>
             </div>
           </div>
           <div class="fac-body">
@@ -425,7 +472,7 @@
         <div class="fac-card">
           <div class="fac-header">
             <div class="fac-img-wrap">
-              <img src="images/facilitator-prince-kpendo.jpg" alt="Prince &quot;Dela&quot; Kpendo">
+              <picture><source type="image/webp" srcset="images/facilitator-prince-kpendo.webp"><img src="images/facilitator-prince-kpendo.jpg" alt="Prince &quot;Dela&quot; Kpendo" loading="lazy" decoding="async" width="720" height="900"></picture>
             </div>
           </div>
           <div class="fac-body">
@@ -448,8 +495,8 @@
       </div>
       <div class="fellows-panel active" id="panel-2026">
         <div class="cohort-gallery">
-          <div class="cohort-gallery-item"><img src="images/tsf-2026-cohort2-1.jpg" alt="The Shadrach Fellowship Cohort 2, 2026"></div>
-          <div class="cohort-gallery-item"><img src="images/tsf-2026-cohort2-2.jpg" alt="The Shadrach Fellowship Cohort 2, 2026"></div>
+          <div class="cohort-gallery-item"><picture><source type="image/webp" srcset="images/tsf-2026-cohort2-1.webp"><img src="images/tsf-2026-cohort2-1.jpg" alt="The Shadrach Fellowship Cohort 2, 2026" loading="lazy" decoding="async" width="402" height="300"></picture></div>
+          <div class="cohort-gallery-item"><img src="images/tsf-2026-cohort2-2.jpg" alt="The Shadrach Fellowship Cohort 2, 2026" loading="lazy" decoding="async" width="402" height="300"></div>
         </div>
         <div class="fellows-grid">
           <div class="fellow-card" onclick="openFellow('eugenia-boadi')"><div class="fellow-top"></div><div class="fellow-body"><div class="fellow-name">Eugenia Agyeiwaa Boadi</div><div class="fellow-country">Ghana</div><div class="fellow-snippet">Certified Coach, Speaker and Trainer. CEO of Geagle Consult. Founder of STEMSheCan. Maxwell Leadership Team member.</div><span class="fellow-more">Read bio</span></div></div>
@@ -468,8 +515,8 @@
       </div>
       <div class="fellows-panel" id="panel-2025">
         <div class="cohort-gallery" style="margin-top:48px;">
-          <div class="cohort-gallery-item"><img src="images/tsf-2025-maiden-1.jpg" alt="The Shadrach Fellowship Maiden Edition, 2025 Cohort 1"></div>
-          <div class="cohort-gallery-item"><img src="images/tsf-2025-maiden-2.jpg" alt="The Shadrach Fellowship Maiden Edition, 2025 Cohort 1"></div>
+          <div class="cohort-gallery-item"><picture><source type="image/webp" srcset="images/tsf-2025-maiden-1.webp"><img src="images/tsf-2025-maiden-1.jpg" alt="The Shadrach Fellowship Maiden Edition, 2025 Cohort 1" loading="lazy" decoding="async" width="828" height="645"></picture></div>
+          <div class="cohort-gallery-item"><picture><source type="image/webp" srcset="images/tsf-2025-maiden-2.webp"><img src="images/tsf-2025-maiden-2.jpg" alt="The Shadrach Fellowship Maiden Edition, 2025 Cohort 1" loading="lazy" decoding="async" width="1080" height="810"></picture></div>
         </div>
         <p style="font-size:15px;color:var(--text-light);line-height:1.8;max-width:760px;margin-bottom:40px;">The inaugural cohort of The Shadrach Fellowship, 9 remarkable leaders from across Africa and the diaspora, completed their year-long journey on <strong>26 December 2025</strong>. Their graduation and the induction of the 2026 cohort were celebrated in a landmark ceremony marking a historic milestone for The HuD Group Global.</p>
         <div class="graduates-grid">
@@ -492,13 +539,13 @@
       <h2 class="section-title white">The Shadrach Fellowship 2025 Awards</h2>
       <p class="section-lead" style="color:rgba(255,255,255,0.65);">At the Graduation Ceremony on 26 December 2025, outstanding fellows from Cohort 1 were recognised with special awards for their exceptional commitment and growth throughout the year.</p>
       <div class="awards-grid">
-        <div class="award-card"><img src="images/award-1.png" alt="Most Consistent Fellow Award: David Adedokun Adeoye"></div>
-        <div class="award-card"><img src="images/award-2.png" alt="Bible in One Year Award: David Adedokun Adeoye"></div>
-        <div class="award-card"><img src="images/award-3.png" alt="The Disciple-Maker Award: Amadu Dajan Kallon"></div>
-        <div class="award-card"><img src="images/award-4.png" alt="Most Interactive Fellow Award: Mercy Ama Harley"></div>
-        <div class="award-card"><img src="images/award-5.png" alt="Most Interactive Fellow Award: Eloina Baddoo"></div>
-        <div class="award-card"><img src="images/award-6.png" alt="Most Improved Fellow Award: Jacob A. Osae"></div>
-        <div class="award-card"><img src="images/award-7.png" alt="Most Inspiring Fellow Award: Nana Asantewaa Afadzinu PhD"></div>
+        <div class="award-card"><picture><source type="image/webp" srcset="images/award-1.webp"><img src="images/award-1.png" alt="Most Consistent Fellow Award: David Adedokun Adeoye" loading="lazy" decoding="async" width="1080" height="1080"></picture></div>
+        <div class="award-card"><picture><source type="image/webp" srcset="images/award-2.webp"><img src="images/award-2.png" alt="Bible in One Year Award: David Adedokun Adeoye" loading="lazy" decoding="async" width="1080" height="1080"></picture></div>
+        <div class="award-card"><picture><source type="image/webp" srcset="images/award-3.webp"><img src="images/award-3.png" alt="The Disciple-Maker Award: Amadu Dajan Kallon" loading="lazy" decoding="async" width="1080" height="1080"></picture></div>
+        <div class="award-card"><picture><source type="image/webp" srcset="images/award-4.webp"><img src="images/award-4.png" alt="Most Interactive Fellow Award: Mercy Ama Harley" loading="lazy" decoding="async" width="1080" height="1080"></picture></div>
+        <div class="award-card"><picture><source type="image/webp" srcset="images/award-5.webp"><img src="images/award-5.png" alt="Most Interactive Fellow Award: Eloina Baddoo" loading="lazy" decoding="async" width="1080" height="1080"></picture></div>
+        <div class="award-card"><picture><source type="image/webp" srcset="images/award-6.webp"><img src="images/award-6.png" alt="Most Improved Fellow Award: Jacob A. Osae" loading="lazy" decoding="async" width="1080" height="1080"></picture></div>
+        <div class="award-card"><picture><source type="image/webp" srcset="images/award-7.webp"><img src="images/award-7.png" alt="Most Inspiring Fellow Award: Nana Asantewaa Afadzinu PhD" loading="lazy" decoding="async" width="1080" height="1080"></picture></div>
       </div>
       <div class="award-note">
         <strong>Award Recipients:</strong> David Adedokun Adeoye (Most Consistent Fellow and Bible in One Year Award) &nbsp;|&nbsp; Amadu Dajan Kallon (The Disciple-Maker Award) &nbsp;|&nbsp; Mercy Ama Harley and Eloina Baddoo (Most Interactive Fellow Award) &nbsp;|&nbsp; Jacob A. Osae (Most Improved Fellow Award) &nbsp;|&nbsp; Nana Asantewaa Afadzinu (Most Inspiring Fellow Award)
@@ -519,7 +566,7 @@
             <div class="tsfx-callout-text">Dr. Yaw Perbi trains TSF 2025 graduates, who in turn mentor TSFx 2026 mentees using the same curriculum. A living, multiplying discipleship chain.</div>
           </div>
           <div class="tsfx-pairs" style="margin-top:24px;">
-            <div style="font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">2026 Mentor-Mentee Pairings</div>
+            <div style="font-family:var(--font-body);font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">2026 Mentor-Mentee Pairings</div>
             <div class="tsfx-pair"><div class="tsfx-mentee">Patience Anafo</div><div class="tsfx-arrow">to</div><div class="tsfx-mentor">Dr. Eugenia Elikem Lawoe</div></div>
             <div class="tsfx-pair"><div class="tsfx-mentee">Enock Addo</div><div class="tsfx-arrow">to</div><div class="tsfx-mentor">David Adedokun Adeoye</div></div>
             <div class="tsfx-pair"><div class="tsfx-mentee">David Adjei</div><div class="tsfx-arrow">to</div><div class="tsfx-mentor">Dr. Jeffrey Agyemang Afrifa</div></div>
@@ -527,7 +574,7 @@
           </div>
         </div>
         <div>
-          <div class="tsfx-image-wrap"><img src="images/TSFx_2026_.png" alt="TSFx 2026 members"></div>
+          <div class="tsfx-image-wrap"><picture><source type="image/webp" srcset="images/TSFx_2026_.webp"><img src="images/TSFx_2026_.png" alt="TSFx 2026 members" loading="lazy" decoding="async" width="1200" height="1200"></picture></div>
           <p style="font-size:13px;color:var(--text-light);line-height:1.7;background:var(--off-white);border-radius:var(--radius);padding:16px;border:1px solid var(--mid-grey);">Note: This image shows the original TSFx 2026 lineup. Evans Dormenyoh and Mabel Appiah-Adjei have since been promoted to the core TSF 2026 cohort. An updated TSFx image (4 members) will replace this.</p>
         </div>
       </div>
@@ -636,7 +683,7 @@
         <div>
           <div class="retreat-photos-grid">
             <!-- DEVELOPER: Replace each slot below with an img tag when retreat photos are available -->
-            <!-- Example: <img src="images/retreat-group.jpg" alt="Mamfe Retreat 2025" style="width:100%;height:100%;object-fit:cover;border-radius:10px;"> -->
+            <!-- Example: <img src="images/retreat-group.jpg" alt="Mamfe Retreat 2025" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" loading="lazy" decoding="async"> -->
             <div class="retreat-photo-slot">Add retreat group photo<br><small style="opacity:0.6;">Group or session photo from P3 Mamfe Retreat 2025</small></div>
             <div class="retreat-photo-slot">Add teaching session photo<br><small style="opacity:0.6;">Teaching session at Mamfe Retreat Centre</small></div>
             <div class="retreat-photo-slot">Add baptism photo<br><small style="opacity:0.6;">The baptism of four female fellows at the retreat pool</small></div>
@@ -649,13 +696,13 @@
   <section class="section apply-section" id="apply">
     <div class="container">
       <div class="apply-inner">
-        <div class="overline" style="justify-content:center;color:rgba(50,12,50,0.6);">2026/2027 Cohort</div>
+        <div class="overline" style="justify-content:center;color:rgba(50,12,50,0.85);">2026/2027 Cohort</div>
         <h2>Ready to Join<br>the Fellowship?</h2>
         <div class="apply-next">
           <h3>Applications for the 2026/2027 Cohort are now open</h3>
           <p>The Shadrach Fellowship welcomes deeply committed, Christ-centred young leaders between the ages of 17 and 39. The fellowship is completely free of charge. Fellows are expected to commit their time and full engagement to every session. <strong>Applications close on 20 November 2026.</strong></p>
         </div>
-        <h3 style="font-family:var(--font-h);font-size:20px;font-weight:800;color:var(--purple-dark);margin-bottom:20px;text-align:left;">Who Should Apply?</h3>
+        <h3 style="font-family:var(--font-h);font-size:20px;font-weight:800;color:var(--heading);margin-bottom:20px;text-align:left;">Who Should Apply?</h3>
         <div class="apply-criteria-grid">
           <div class="criteria-item"><div class="criteria-title">Faithful</div><div class="criteria-desc">Demonstrated commitment to follow Christ (Luke 5:4-5)</div></div>
           <div class="criteria-item"><div class="criteria-title">Available</div><div class="criteria-desc">Willingness to prioritise this journey every Friday evening</div></div>
@@ -670,7 +717,7 @@
           <a href="apply.html" class="btn btn-white">Apply Now</a>
           <a href="mailto:engage@thehudgroupglobal.org?subject=TSF Enquiry" class="btn btn-outline-purple" style="border-color:rgba(50,12,50,0.4);">Send an Enquiry</a>
         </div>
-        <p style="font-size:13px;color:rgba(50,12,50,0.55);">Applications close on 20 November 2026. Questions? Contact +233 206 634 459 or engage@thehudgroupglobal.org</p>
+        <p style="font-size:13px;color:rgba(50,12,50,0.85);">Applications close on 20 November 2026. Questions? Contact +233 206 634 459 or engage@thehudgroupglobal.org</p>
       </div>
     </div>
   </section>
@@ -689,7 +736,7 @@
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What does the fellowship cost?<div class="faq-icon">+</div></div><div class="faq-answer">The fellowship is completely free of charge. Participants are expected to commit their time and full effort to engage in all sessions and assignments. For the in-person retreat, travel and accommodation support may be available for international fellows based on need.</div></div>
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What will I gain from the fellowship?<div class="faq-icon">+</div></div><div class="faq-answer">Participants gain personalised mentorship from Dr. Yaw Perbi, deeper spiritual growth, emotional maturity through EHS, practical life skills including on marriage and finances, leadership development, a heart for global missions, and lifelong community with a network of kingdom-minded leaders across Africa and beyond.</div></div>
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Can I participate while working or studying full time?<div class="faq-icon">+</div></div><div class="faq-answer">Yes. The fellowship is designed to be flexible and accommodate participants' schedules. Weekly sessions are on Friday evenings (6 to 8 PM UTC), making it accessible for working professionals and students. Full commitment and consistent attendance are expected.</div></div>
-        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">When do applications close?<div class="faq-icon">+</div></div><div class="faq-answer">Applications for the 2026/2027 cohort close on 20 November 2026. You can complete the online application at any time before then, and save a draft to finish later. <a href="apply.html" style="color:var(--purple);font-weight:700;text-decoration:underline">Start your application</a>.</div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">When do applications close?<div class="faq-icon">+</div></div><div class="faq-answer">Applications for the 2026/2027 cohort close on 20 November 2026. You can complete the online application at any time before then, and save a draft to finish later. <a href="apply.html" style="color:var(--accent-ink);font-weight:700;text-decoration:underline">Start your application</a>.</div></div>
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What does the application process involve?<div class="faq-icon">+</div></div><div class="faq-answer">The process involves four steps: (1) Eligibility check against the criteria listed above, (2) Submitting an online application form, (3) Initial screening and shortlisting, and (4) Final interviews with Dr. Yaw Perbi and Frank Koomson before final selections are made.</div></div>
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">How can I prepare for the fellowship?<div class="faq-icon">+</div></div><div class="faq-answer">Engage in daily prayer and Bible reading, reflect on your personal vision and mission, and maintain an openness to growth in all areas of life. Familiarise yourself with discipleship concepts and begin reading books on leadership and spiritual formation.</div></div>
       </div>
@@ -719,6 +766,7 @@
           <a href="#tsfx">TSFx Annex</a>
           <a href="#awards">2025 Awards</a>
           <a href="apply.html">Apply for 2027</a>
+          <a href="portal.html">Fellows Portal</a>
           <a href="#faq">FAQs</a>
         </div>
         <div class="footer-col">
@@ -804,5 +852,6 @@
       observer.observe(el);
     });
   </script>
+  <script src="assets/enhance.js" defer></script>
 </body>
 </html>

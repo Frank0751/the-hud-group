@@ -1,0 +1,109 @@
+/* Shared enhancements for the main site pages (everything except apply.html, which is self-contained).
+   Loaded after each page's own <style>, so these rules win on equal specificity.
+   Contents: number style, page transitions, scroll progress, mobile menu fallback, motion, dark mode. */
+
+:root { color-scheme: light dark; }
+h1, h2, h3, h4, [class*="num"], [class*="stat"] { font-variant-numeric: lining-nums; }
+h1, h2, h3 { text-wrap: balance; }
+picture { display: contents; }
+@view-transition { navigation: auto; }
+
+/* ---------- scroll progress ---------- */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 1100; background: linear-gradient(90deg, var(--orange), var(--peach)); transform-origin: 0 50%; transform: scaleX(0); pointer-events: none; }
+@supports (animation-timeline: scroll()) {
+  .scroll-progress { animation: enhanceProgress linear both; animation-timeline: scroll(root); }
+  @keyframes enhanceProgress { to { transform: scaleX(1); } }
+}
+
+/* ---------- nav ---------- */
+.nav { transition: box-shadow 0.3s ease, background 0.3s ease; }
+.nav.is-scrolled { box-shadow: 0 6px 24px rgba(50, 12, 50, 0.1); }
+.nav-hamburger { display: none; margin-left: auto; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease; }
+.nav-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.active span:nth-child(2) { opacity: 0; }
+.nav-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open { display: flex; flex-direction: column; align-items: stretch; position: fixed; top: var(--nav-h); left: 0; right: 0; background: var(--surface); padding: 12px 16px 20px; box-shadow: var(--shadow-md); gap: 2px; margin-left: 0; }
+  .nav-links.open li a { font-size: 15px; padding: 13px 14px; border-radius: 10px; display: block; }
+  .nav-hamburger { display: block; }
+}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .btn { position: relative; overflow: hidden; }
+  .btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 36%, rgba(255, 255, 255, 0.35) 50%, transparent 64%); transform: translateX(-130%); transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1); pointer-events: none; }
+  .btn:hover::after { transform: translateX(130%); }
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 769px) {
+    .hero-bg { animation: enhanceHero linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+    @keyframes enhanceHero { to { transform: translateY(9%) scale(1.06); } }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .animate-on-scroll { opacity: 1 !important; transform: none !important; }
+}
+
+/* ---------- dark mode (follows the visitor's device setting) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #1d0f1f; --heading: #f8f0f8; --accent-ink: #ecc4ec; --accent-ink-2: #e2a6e2; --accent-text: #f7a24e;
+    --off-white: #140a15; --light-grey: #221224; --mid-grey: #3a283c;
+    --text: #f4edf4; --text-light: #bcabbb; --purple-pale: #2a152c; --peach-pale: #33200f;
+    --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.3); --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4); --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  .nav { background: rgba(20, 10, 21, 0.86); border-bottom-color: rgba(255, 255, 255, 0.08); }
+  .nav.is-scrolled { box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45); }
+  .nav-links a { color: #d9ccd8; }
+  .footer { border-top: 1px solid rgba(255, 255, 255, 0.07); }
+  input, textarea, select { color-scheme: dark; }
+
+  /* Areas that keep a light or orange background stay "light" inside, whatever the device setting. */
+  [data-scope="light"] {
+    --surface: #ffffff; --heading: #320c32; --accent-ink: #541854; --accent-ink-2: #7a297a; --accent-text: #8a3d04;
+    --off-white: #faf9f7; --light-grey: #f2f0ed; --mid-grey: #eaeaea;
+    --text: #1a1420; --text-light: #5c4b59; --purple-pale: #fbf4fb; --peach-pale: #fff3e5;
+  }
+}
+
+/* ---------- legibility fixes that apply in both modes ---------- */
+.section-title.white { color: #fff; }
+.formation-section p { color: rgba(255, 255, 255, 0.82); }
+.footer-bottom, .footer-bottom span, .footer-bottom a:not(.footer-cta) { color: rgba(255, 255, 255, 0.62); }
+.hbb-label, .sb-label, .ig-label { color: rgba(255, 255, 255, 0.66); }
+.fp-desc { color: rgba(255, 255, 255, 0.8); }
+.cc-status.growing { color: var(--accent-ink-2); }
+.tsfx-profile-badge { background: rgba(50, 12, 50, 0.78); }
+.report-cover .report-type { color: rgba(255, 255, 255, 0.9); }
+@media (prefers-color-scheme: dark) {
+  :where([data-scope="light"]) { color: var(--text); }
+}
+
+/* Images carry width and height attributes so the page does not jump while they load.
+   :where() keeps this at zero specificity, so any page rule that sets a height still wins. */
+:where(img[width][height]) { height: auto; }
+
+/* ---------- dark mode touches for shared components ---------- */
+@media (prefers-color-scheme: dark) {
+  .btn-purple { background: var(--purple-mid); }
+  .btn-outline-purple { border-color: rgba(236, 196, 236, 0.5); }
+  .p-num, .grad-num { color: rgba(255, 255, 255, 0.08); }
+}
+
+/* ---------- phone layout fixes ---------- */
+.retreat-inner > *, .about-grid > *, .formation-inner > *, .tsfx-inner > *, .retreat-photos-grid > * { min-width: 0; }
+@media (max-width: 640px) {
+  /* inline three-column rows (for example the Charity statistics) stack on phones */
+  [style*="grid-template-columns:1fr 1fr 1fr"], [style*="grid-template-columns: 1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 560px) {
+  .hero-facts { flex-wrap: wrap; gap: 18px 26px; }
+}
+
+/* Images that set only a height in CSS keep their natural proportions */
+.footer-logo-wrap img { width: auto; }
+/* Small contact lines inside tables read better in the body face */
+table td span { font-family: var(--font-body); }
