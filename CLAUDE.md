@@ -1,4 +1,4 @@
-# The HuD Group Global Website — Claude Code Instructions
+# The HuD Group Global Website: Claude Code Instructions
 
 ## Project Overview
 
@@ -21,8 +21,17 @@ the-hud-group/
   contact.html        ← Contact form, leadership team
   contribute.html     ← Giving / donate page
   apply.html          ← TSF 2026/2027 application form (6-step form, posts to Google Apps Script)
+  portal.html         ← TSF Fellows and Admin Portal (private, /portal), with assets/portal.js and assets/portal.css
   backend/
     tsf-applications/ ← Code.gs (Apps Script receiver) + README.md (5-minute setup)
+    tsf-portal/       ← Code.gs (portal backend), appsscript.json, README.md (setup)
+  assets/
+    enhance.css       ← Shared modern layer for the 8 main pages (dark mode, motion, phone fixes)
+    enhance.js        ← Scroll bar, phone menu fallback, staggered reveals, counters, service worker
+  sw.js               ← Service worker (offline and faster repeat visits)
+  manifest.webmanifest ← Install to home screen
+  robots.txt, sitemap.xml
+  vercel.json         ← /apply clean link, cache headers
   reports/            ← Downloadable PDFs (2025 Global Annual Report)
   images/             ← All site images (local, no CDN)
     hud-group-home-bg.jpg           ← Hero background image
@@ -59,7 +68,7 @@ the-hud-group/
 --orange:       #fc9018;  /* sampled directly from the logo mark */
 --text:         #1a1420;
 --text-light:   #6b5a68;
---font-h:       'Playfair Display', serif;  /* all headings, a distinctive serif */
+--font-h:       'Gambetta', Georgia, serif; /* all headings, a distinctive serif (Fontshare) */
 --font-body:    'Satoshi', sans-serif;      /* body text, loaded via Fontshare CDN */
 --font-accent:  'Satoshi', sans-serif;      /* labels, badges */
 ```
@@ -68,31 +77,33 @@ The purple and orange are sampled pixel-for-pixel from `images/the-hud-group-hi-
 (a deep magenta-purple and a vivid warm orange, HSL hue ~300° and ~32°). Every other
 purple/peach shade is derived from those two anchors by adjusting lightness/saturation only,
 so the whole palette stays one coherent hue family instead of the old, unrelated blue-indigo.
-Satoshi is loaded from `https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400,300` and
-Playfair Display from Google Fonts — both linked in the `<head>` of every page.
+Satoshi and Gambetta are loaded together in one Fontshare request
+(`https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=gambetta@500,501,600&display=swap`),
+linked in the `<head>` of every page. Playfair Display and Google Fonts are no longer used.
+Gambetta is for headings of roughly 17px and up; smaller labels, numbers and buttons use Satoshi.
 
 **Logo:** `images/the-hud-group-hi-res-logo.png`
 **Tagline:** "To inspire...totally"
 **Email:** engage@thehudgroupglobal.org
 **Phone:** +233 206 634 459
-**Global CEO:** Dr. Yaw Perbi — yawperbi@gmail.com — +1 (514) 699-0182
+**Global CEO:** Dr. Yaw Perbi, yawperbi@gmail.com, +1 (514) 699-0182
 
 ---
 
-## CRITICAL RULES — Read Before Any Edit
+## CRITICAL RULES: Read Before Any Edit
 
-1. **NO EM DASHES anywhere** — use commas, colons, or rewrite the sentence instead
+1. **NO EM DASHES anywhere**, use commas, colons, or rewrite the sentence instead
 2. **Hero section must be full viewport height** (min-height: 100vh) with the background image `images/hud-group-home-bg.jpg`
-3. **The hero background image must cover the full screen** — use `background-size: cover; background-position: center center;`
-4. **Never remove the original content** — Who We Are, Vision, Mission, Divisions must always be present on the homepage
-5. **The organisation is 23 years old, founded in 2003** — never show "15 years" or any other number
-6. **Active countries is 30** — never use 24 or any other number
-7. **No external CDN dependencies for images** — all images must reference the local `images/` folder
+3. **The hero background image must cover the full screen**, use `background-size: cover; background-position: center center;`
+4. **Never remove the original content**, Who We Are, Vision, Mission, Divisions must always be present on the homepage
+5. **The organisation is 23 years old, founded in 2003**, never show "15 years" or any other number
+6. **Active countries is 30**, never use 24 or any other number
+7. **No external CDN dependencies for images**, all images must reference the local `images/` folder
 8. **Kwiverr Formation Konstant section must be green** (background: #2d5a2d) not purple
 
 ---
 
-## Homepage (index.html) — Required Sections in Order
+## Homepage (index.html): Required Sections in Order
 
 ### 1. HERO SECTION (Full Viewport Height)
 - **Background:** `images/hud-group-home-bg.jpg` covering full screen
@@ -125,15 +136,15 @@ Updated from the original 6P Strategy to match the 2026-2030 "Dreaming and Visio
 plan, which expanded the framework to nine pillars. The HuD Group logo
 (`images/the-hud-group-hi-res-logo.png`) is used as a watermark/background element.
 Nine cards using the local icon images from the images/ folder:
-- 01 PREVAILING — **Prayer** — icon: cartoon-hand-drawn-red-prayer image
-- 02 INSPIRATIONAL — **People** — icon: 001-voluntary image
-- 03 EMPOWERING — **Programs** — icon: 016-charity image
-- 04 PARADIGM-SHIFTING — **Products** — icon: 020-love image
-- 05 TRANSFORMATIONAL — **Places** — icon: 022-map-location image
-- 06 IMPACTFUL — **Projects** — icon: 021-charity image
-- 07 COLLABORATIVE — **Partnerships** — icon: partnerships-icon.svg
-- 08 FAITHFUL — **Pennies** — icon: pennies-icon.svg
-- 09 ACCOUNTABLE — **Policies** — icon: policies-icon.svg
+- 01 PREVAILING, **Prayer**, icon: cartoon-hand-drawn-red-prayer image
+- 02 INSPIRATIONAL, **People**, icon: 001-voluntary image
+- 03 EMPOWERING, **Programs**, icon: 016-charity image
+- 04 PARADIGM-SHIFTING, **Products**, icon: 020-love image
+- 05 TRANSFORMATIONAL, **Places**, icon: 022-map-location image
+- 06 IMPACTFUL, **Projects**, icon: 021-charity image
+- 07 COLLABORATIVE, **Partnerships**, icon: partnerships-icon.svg
+- 08 FAITHFUL, **Pennies**, icon: pennies-icon.svg
+- 09 ACCOUNTABLE, **Policies**, icon: policies-icon.svg
 
 ### 5. DIVISIONS (white background)
 Two side-by-side cards: HuD Charity and HuD Consult
@@ -162,12 +173,12 @@ Three book cards: A2R, Disciple Ship, Other Publications
 
 ---
 
-## Community Page (community.html) — Key Rules
+## Community Page (community.html): Key Rules
 
 - **Kwiverr Formation Konstant section background must be GREEN (#2d5a2d)**
 - The section reflects the Kwiverr brand which uses green (matching the K diagram)
 - The diagram itself is the original graphic `images/kwiverr-formation-konstant.png`
-  (© 2022 Yaw Perbi) displayed as-is, not a CSS recreation — keep it original
+  (© 2022 Yaw Perbi) displayed as-is, not a CSS recreation, keep it original
 - **Applications are OPEN until 20 November 2026** (2026/2027 cohort, ages 17 to 39, free).
   The badge, hero button and Apply section all point to `apply.html`. After the deadline the
   form on `apply.html` closes itself automatically (`CONFIG.deadline`), but the community page
@@ -177,11 +188,11 @@ Three book cards: A2R, Disciple Ship, Other Publications
 - TSFx 2026 has exactly 4 mentees
 - The facilitators image to use: `images/TSF_Facilitators_2026_.png`
   showing Dr. Yaw Perbi (Main Facilitator), Frank Koomson (Coordinator), Prince "Dela" Kpendo (Associate)
-- JavaScript functions must be properly escaped — apostrophes in bio strings must use \\' not raw '
+- JavaScript functions must be properly escaped, apostrophes in bio strings must use \\' not raw '
 
 ---
 
-## Countries Page (countries.html) — Key Rules
+## Countries Page (countries.html): Key Rules
 
 Six regions only (not 12):
 1. Africa (16 countries)
@@ -192,25 +203,25 @@ Six regions only (not 12):
 6. Oceania (1 country)
 
 Key country CEOs (exact from official document):
-- Ghana: Karis Senanu-Adzosii — karissenanuadzosi@gmail.com — +233 24 911 0618
-- Sierra Leone: Amadu Dajan Kallon — amadudajankallon@gmail.com — +232 79 587139
-- Liberia: Albert Philip Bundoo — albund2007@gmail.com — +231 777 339 156
-- Cameroon: Dieudonne Lobuin Ngwa — ngwadieudonnelobuin@gmail.com — +237 679 245 713
-- Uganda: Hirwa G. Israel — hirwagisrael@gmail.com — +256 756 155527
-- Cote d'Ivoire: Timothee Ouattara — timotheeouattara31@gmail.com — +225 09 00 01 88
-- Switzerland: Silvana Koenig — Koenig.silvana3@gmail.com — +41 78 707 60 16
-- Netherlands: Nana Addae-Mensah — +31 6 11153615
-- Egypt: Maged Milad Megally — maged.milad.megally@gmail.com — +20 122 372 2005
-- Australia: Stephen Scott — steve.scott@ismc.ca
+- Ghana: Karis Senanu-Adzosii, karissenanuadzosi@gmail.com, +233 24 911 0618
+- Sierra Leone: Amadu Dajan Kallon, amadudajankallon@gmail.com, +232 79 587139
+- Liberia: Albert Philip Bundoo, albund2007@gmail.com, +231 777 339 156
+- Cameroon: Dieudonne Lobuin Ngwa, ngwadieudonnelobuin@gmail.com, +237 679 245 713
+- Uganda: Hirwa G. Israel, hirwagisrael@gmail.com, +256 756 155527
+- Cote d'Ivoire: Timothee Ouattara, timotheeouattara31@gmail.com, +225 09 00 01 88
+- Switzerland: Silvana Koenig, Koenig.silvana3@gmail.com, +41 78 707 60 16
+- Netherlands: Nana Addae-Mensah, +31 6 11153615
+- Egypt: Maged Milad Megally, maged.milad.megally@gmail.com, +20 122 372 2005
+- Australia: Stephen Scott, steve.scott@ismc.ca
 
 ---
 
-## Contact Page (contact.html) — Key Rules
+## Contact Page (contact.html): Key Rules
 
 Section order (STRICT):
 1. Contact form + office info
 2. **Global Board and Advisory Council FIRST** (15 placeholder cards)
-3. Senior Leadership (Dr. Yaw Perbi + Jillian Chong only — NOT Frank Koomson)
+3. Senior Leadership (Dr. Yaw Perbi + Jillian Chong only, NOT Frank Koomson)
 4. Regional CEOs (table format with all 6 regions)
 5. Global Operations Team (Frank Koomson, Carol Palacios, Nathan Akoamah, Diborah, Prince Kpendo)
 
@@ -218,7 +229,7 @@ Dr. Yaw Perbi contact: yawperbi@gmail.com / +1 (514) 699-0182
 
 ---
 
-## Content Page (content.html) — Key Rules
+## Content Page (content.html): Key Rules
 
 The Training Library uses accordion-style expandable categories.
 Categories must reflect exactly what is in the Google Drive TRAINING folder:
@@ -319,7 +330,7 @@ After local image extraction (no base64 embedding):
 - All others: 20 to 80KB each
 - images/ folder: ~2.9MB total
 
-Total project: ~4.5MB uncompressed — well within normal site limits.
+Total project: ~4.5MB uncompressed, well within normal site limits.
 
 ---
 
@@ -336,11 +347,93 @@ Total project: ~4.5MB uncompressed — well within normal site limits.
   in `apply.html`, and `validate_` and `columns_` in `backend/tsf-applications/Code.gs`.
   The age range (17 to 39), 200 word limit and 5 MB file limit are enforced in both.
 - Drafts are kept in the visitor's browser (localStorage), never the uploaded files or the consent box.
-- **Typography on apply.html (pilot for a sitewide refresh):** headings use **Gambetta** (Fontshare serif,
-  weights 500/600) and everything else uses **Satoshi**, loaded in one Fontshare request. Nav, buttons,
-  numbers and labels are Satoshi with lining figures. The other pages still use Playfair Display until the
-  refresh is rolled out.
+- **Typography on apply.html:** headings use **Gambetta** (Fontshare serif, weights 500/600) and everything
+  else uses **Satoshi**, loaded in one Fontshare request. Nav, buttons, numbers and labels are Satoshi with
+  lining figures. The other eight pages now use the same pair.
 - **apply.html photos** live in `images/apply/` (local web-sized JPGs, converted from the Cloudinary originals):
   tsf-table-discipleship (hero), tsf-teaching-mission, tsf-life-story-map, tsf-prayer, tsf-hybrid-session,
   tsf-disciples-shirt, tsf-cohort-group, tsf-community-meal, tsf-reflection, tsf-joy-selfie.
+- **Dark mode on apply.html** follows the device setting (`prefers-color-scheme`). Neutral tokens flip inside one
+  `@media(prefers-color-scheme:dark)` block near the end of the styles. Surfaces use `--surface`, never `--white`
+  (`--white` is only for text on dark bands). Small orange text uses `--accent-text`, links `--link`. The nav logo
+  swaps to `images/the-hud-group-logo-dark.png` through a `<picture>` element.
+- **Motion on apply.html** is CSS first: scroll progress bar, hero entrance, staggered reveals (`.reveal.stagger`),
+  photo parallax via `animation-timeline: view()` on desktop, and a live countdown in the closing banner that reads
+  `window.__tsfDeadline` (set from `CONFIG.deadline`). All of it is disabled under `prefers-reduced-motion`.
+- **Sharing and search:** Open Graph and X card tags point at `images/og-apply.jpg` (1200 x 630); JSON-LD describes the
+  organisation and the programme. Absolute URLs use `https://the-hud-group.vercel.app`: change them, plus
+  `robots.txt` and `sitemap.xml`, when the site moves to thehudgroupglobal.org.
+- **Installable and offline:** `manifest.webmanifest` (icons in `images/icons/`) and `sw.js`. The service worker is
+  network first for pages, cache first for images and fonts, and never touches POST requests, so form submissions
+  always go to the live server. Bump `VERSION` in `sw.js` to force everyone onto fresh copies.
+- **Photos** are served as WebP through `<picture>` with `srcset` (640 and 1200 wide in `images/apply/`), with the JPG
+  as fallback. Regenerate both sizes if a photo is replaced.
 - Do not publish applicant names or answers anywhere on the site. Applicant data is private.
+
+---
+
+## Shared Modern Layer (the 8 main pages)
+
+Every page except `apply.html` links `assets/enhance.css` after its own inline styles and loads
+`assets/enhance.js` with `defer` just before `</body>`. `apply.html` carries its own copy of these
+features inline so the application form never depends on a second file.
+
+- **Dark mode** follows the device setting. Each page's `:root` has semantic tokens next to the brand
+  colours: `--surface` (card and section backgrounds, never `--white`), `--heading`, `--accent-ink`,
+  `--accent-ink-2`, `--accent-text` (small orange text) and `--link`. The dark values live in one
+  `@media (prefers-color-scheme: dark)` block in `enhance.css`. The brand colours themselves never change.
+- **Light scopes:** anything with a peach, orange or other light background keeps dark text in dark mode.
+  Inline cases carry `data-scope="light"`; class based ones are listed in the small generated `<style>`
+  block near the top of each page. Add `data-scope="light"` to any new light coloured block.
+- **Motion:** scroll progress bar, staggered `.animate-on-scroll` reveals, counters, button shine, hero
+  parallax and cross page view transitions. All of it is off under `prefers-reduced-motion`. Counters skip
+  any element that already has `data-count` (the homepage runs its own).
+- **Phone menu:** Community and Content had no hamburger, so `enhance.js` adds one when a page has none.
+- **Images:** photos over 30 KB are served as WebP through `<picture>` with the original as fallback, are
+  lazy loaded below the fold, and carry `width` and `height` so the page does not jump while loading.
+  When a photo is replaced, regenerate its `.webp` twin.
+- **Search and sharing:** the 8 pages carry `<meta name="robots" content="noindex">` under a
+  `<!-- LAUNCH: ... -->` comment because they are still being built. Remove that line on each page at
+  launch and add the pages to `sitemap.xml`. Share cards use `images/og-site.jpg`.
+- **Install:** `manifest.webmanifest` opens `/apply` while applications are open. Change `start_url` to `/`
+  at launch.
+
+---
+
+## TSF Fellows and Admin Portal (portal.html)
+
+- A private single-page app at `/portal` for the 2026/2027 cohort and every cohort after it. Files: `portal.html`,
+  `assets/portal.js` (all screens), `assets/portal.css`, and the backend in `backend/tsf-portal/` (setup in its README).
+- **Backend:** one Apps Script web app bound to the "TSF Portal" sheet owned by **engage@thehudgroupglobal.org**
+  (`setup` refuses any other account). One tab per table; uploads and report PDFs go to the private "TSF Portal Files"
+  Drive folder; all email goes out from engage@. Paste the web app URL into `CONFIG.endpoint` in `assets/portal.js`.
+- **Sign in:** one-time 6-digit code emailed to an address on the People tab. No passwords. Roles: `fellow` and
+  `admin`. The server takes the person from the sign-in token, never from the request: a fellow can only read and
+  change their own records. Admins see everything and can open any fellow's portal read only ("view as").
+- **What fellows do there:** weekly reflection per session (review and notes, questions, then next steps: "I will"
+  statement, Scripture, who they will share with, plus an optional private concern), Bible in One Year (365 ticks),
+  three disciples with a meeting log, Hi 5 prayer group with an adopted unreached people group and prayer log,
+  assignments and assessments (progress, results, file uploads), Q1 to Q4 self reports, resources, concerns and
+  prayer requests (can be anonymous), profile, calendar download.
+- **What admins do there:** cohort overview with flags (two unexcused absences in a row, no reflection in three
+  weeks, Bible plan more than 21 days behind, overdue assignments), attendance (Present, Late, Absent with excuse,
+  Absent without excuse, Dropped off), DBS reflections with replies, assignment reviews, quarterly evaluations
+  (hidden from the fellow until released), concerns inbox, roster, roadmap, announcements, resources, settings,
+  CSV exports.
+- **Reports** download as PDFs (made on the server, a copy kept in the fellow's folder) and can be shared with a
+  link that opens one report, read only, for 30 days, and can be withdrawn. The API field for a link is `shareToken`,
+  never `token` (that is the sign-in token).
+- **The question lists live in Code.gs** (`REPORT_QUESTIONS`, `SELF_RATINGS`, `EVAL_CRITERIA`, `QUARTERS`) and reach
+  the app through `settings`, so change them there only. Table columns are defined once in `SCHEMA`.
+- **Sheet views:** "Attendance Grid" and "DBS Action Points" are rebuilt automatically and mirror the team's old
+  sheets. Never edit them by hand.
+- **Reminders** (after running `setupTriggers`): Thursday session reminder, Saturday reflection nudge, Monday team
+  digest. Turn them off with the `remindersOn` setting.
+- **Starter roadmap:** 2027 sessions carried over from the 2025/2026 roadmap, with Making Ends Meet (Compass) after
+  MLM and before the Discovery Bible Community review. Dates and passages are a draft for the team to confirm.
+- **Security:** `vercel.json` serves `/portal` with noindex, no framing and a strict Content-Security-Policy
+  (scripts only from the site itself, connections only to script.google.com and script.googleusercontent.com).
+  Keep all portal code in `assets/portal.js` (no inline scripts) and escape everything with `esc()` before it goes
+  into HTML. Values that start with `= + - @` are stored with a leading apostrophe so they never run as formulas.
+- Never put a real fellow's data, name or answers anywhere on the public site, and never use real applicant or
+  fellow data for demos or tests.

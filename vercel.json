@@ -1,8 +1,39 @@
 {
   "redirects": [
-    { "source": "/apply/", "destination": "/apply", "permanent": true }
+    { "source": "/apply/", "destination": "/apply", "permanent": true },
+    { "source": "/portal/", "destination": "/portal", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/apply", "destination": "/apply.html" }
+    { "source": "/apply", "destination": "/apply.html" },
+    { "source": "/portal", "destination": "/portal.html" }
+  ],
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=2592000" }]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+    },
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [{ "key": "Content-Type", "value": "application/manifest+json" }]
+    },
+    {
+      "source": "/portal(.html)?",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "no-referrer" },
+        { "key": "Cache-Control", "value": "no-cache" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://api.fontshare.com; font-src 'self' https://cdn.fontshare.com data:; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-ancestors 'none'; base-uri 'none'; form-action 'none'" }
+      ]
+    },
+    {
+      "source": "/assets/portal.(js|css)",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+    }
   ]
 }
