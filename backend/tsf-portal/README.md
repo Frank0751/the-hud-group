@@ -58,8 +58,9 @@ To remove someone's access, use **Remove access**: they are signed out at once a
 ## 5. Check the roadmap and settings
 
 - **Roadmap**: the 2027 sessions were carried over from the 2025/2026 roadmap, with this year's change
-  (Making Ends Meet by Compass Financial Ministry after MLM, before the Discovery Bible Community review).
-  Check every date, title and passage. Making Ends Meet is given two Fridays as a starting point.
+  (four weeks of Making Ends Meet by Compass Financial Ministry after MLM, before the Discovery Bible Community review).
+  Because that adds two Fridays, the last two sessions fall in early January 2028. Add, edit or delete sessions,
+  and use **Move sessions** to push a stretch of the year later or earlier.
 - **Content and Settings**: the meeting link, cohort WhatsApp group, session time, the Bible plan start date
   and the welcome note. Add Drive links to the resources (share each file with the fellows first).
   Set "Reminder emails" to `no` to pause all reminders.
@@ -87,6 +88,21 @@ Work through this in order. The fellows' first impression is the welcome email, 
 **Email limits:** Google Workspace accounts can send about 1,500 emails a day, which is plenty. If engage@ were
 ever moved to a free Gmail account, the limit drops to about 100 a day, so send welcome emails in small batches.
 
+## 7. Updating the backend after a change
+
+When `Code.gs` changes (for example when new features are added), update the live script in three steps,
+signed in as engage@thehudgroupglobal.org:
+
+1. In the TSF Portal sheet, **Extensions > Apps Script**. Select everything in `Code.gs`, paste in the new
+   version and save.
+2. Choose **upgradePortal** in the function list and click **Run**. It adds any new columns and tabs without
+   touching existing data. While nobody has attendance or reflections yet, it also rebuilds the starter roadmap.
+   The log says what it did.
+3. **Deploy > Manage deployments**, click the pencil (Edit), set **Version** to **New version** and click
+   **Deploy**. The web app URL stays the same.
+
+Only then publish the matching website files, so the portal never calls something the backend does not know yet.
+
 ## What lives where in the sheet
 
 | Tab | What it holds |
@@ -97,7 +113,10 @@ ever moved to a free Gmail account, the limit drops to about 100 a day, so send 
 | Reflections | Weekly review, questions, "I will" statement, Scripture, who they will share with, facilitator reply |
 | Tasks / Progress | The year's assignments and each fellow's progress, results, uploads and reviews |
 | Bible | Bible in One Year: 365 ticks per fellow |
-| Mentees / Hi5 | Each fellow's three disciples (with meeting log) and Hi 5 prayer group (with prayer log) |
+| Mentees / Hi5 | Each fellow's disciples (stage of growth and a log of every update) and Hi 5 prayer group (members, prayer log and updates) |
+| Formation | Purpose, mission and family mission statements, core values, and the days each fellow prayed through their prayer calendar |
+| Prayers | Prayer calendar: each person a fellow prays for, their day of the month (1 to 31), request and whether it was answered |
+| Goals | Each fellow's goals with area, target date, progress and dated updates |
 | Reports | Quarterly self reports and facilitator evaluations |
 | Concerns | Concerns, complaints, questions, suggestions and prayer requests, with replies |
 | Announcements / Resources / Settings | Home page notices, the library, cohort settings |

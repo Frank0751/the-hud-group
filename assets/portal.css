@@ -603,3 +603,80 @@ table.t td.wrap { min-width: 220px; max-width: 360px; }
   .tabs a, .tabs button { padding: 8px 18px; }
   .card form > .eyebrow { text-align: center; }
 }
+
+/* ------------------------------------------------------------ photos */
+img.avatar { object-fit: cover; padding: 0; background: var(--surface-2); }
+.avatar.xl { width: 112px; height: 112px; font-size: 36px; }
+.person img.avatar { width: 32px; height: 32px; }
+.person .avatar.lg, .person img.avatar.lg { width: 64px; height: 64px; }
+.me-card img.avatar { width: 38px; height: 38px; }
+.photo-field { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+.photo-field label.btn { cursor: pointer; }
+
+/* ------------------------------------------------------------ profile */
+.profile-card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); }
+.profile-cover { height: 132px; background: radial-gradient(120% 160% at 100% 0%, #7a297a 0%, transparent 55%), linear-gradient(135deg, #320c32, #541854 70%, #6a226a); position: relative; }
+.profile-cover::after { content: ''; position: absolute; right: 8%; top: -40px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 184, 102, .32), transparent 70%); }
+.profile-main { display: flex; align-items: flex-end; gap: 22px; padding: 0 28px 22px; margin-top: -56px; flex-wrap: wrap; position: relative; }
+.profile-photo { position: relative; flex: none; }
+.profile-photo .avatar { border: 5px solid var(--surface); box-shadow: var(--shadow); }
+.photo-btn { position: absolute; right: 2px; bottom: 4px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--peach); color: var(--purple-dark); cursor: pointer; border: 3px solid var(--surface); }
+.photo-btn svg { width: 17px; height: 17px; }
+.photo-btn:hover { background: #ffc683; }
+.profile-id { flex: 1; min-width: 220px; padding-bottom: 4px; }
+.profile-id h1 { margin-top: 64px; }
+.profile-headline { color: var(--text-light); font-weight: 500; margin-top: 4px; }
+.profile-actions { display: flex; gap: 8px; flex-wrap: wrap; padding-bottom: 6px; }
+.profile-body { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; padding: 22px 28px 28px; border-top: 1px solid var(--line); }
+.profile-body h3 { font-size: 15px; font-family: var(--font-body); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 10px; }
+.profile-bio { line-height: 1.7; margin: 0; }
+.contact-list { list-style: none; margin: 0; padding: 0; }
+.contact-list li { display: grid; grid-template-columns: 20px 80px 1fr; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.contact-list li:last-child { border-bottom: 0; }
+.contact-list svg { width: 17px; height: 17px; color: var(--accent-ink); }
+.contact-list a, .contact-list span:last-child { overflow-wrap: anywhere; }
+.chip svg { margin-right: 2px; }
+
+/* ------------------------------------------------------------ timelines (disciples, Hi 5, goals) */
+.timeline { list-style: none; margin: 10px 0 0; padding: 0 0 0 14px; border-left: 2px solid var(--line); text-align: left; }
+.timeline li { position: relative; padding: 0 0 12px 10px; font-size: 13.5px; }
+.timeline li::before { content: ''; position: absolute; left: -20px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--peach); border: 2px solid var(--surface); }
+.timeline li:last-child { padding-bottom: 0; }
+.tl-date { font-size: 12px; font-weight: 700; color: var(--text-light); letter-spacing: .02em; }
+.tl-body { margin-top: 2px; line-height: 1.5; }
+.tl-body .chip { font-size: 11px; padding: 1px 8px; }
+.stage { text-align: left; }
+.stage-top { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+.stage-top b { color: var(--accent-ink); }
+
+/* ------------------------------------------------------------ prayer calendar */
+.pgrid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.pday { min-height: 86px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); padding: 6px 7px; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 2px; overflow: hidden; font: inherit; color: inherit; }
+.pday:hover { border-color: var(--purple-light); }
+.pday.has { background: var(--purple-pale); }
+.pday.today { box-shadow: 0 0 0 2px var(--orange); }
+.pnum { font-weight: 700; font-size: 13px; color: var(--heading); }
+.pname { font-size: 11.5px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--accent-ink); }
+.pmore { font-size: 11px; color: var(--text-light); }
+.prayer-today { border-color: var(--peach); background: linear-gradient(180deg, var(--peach-pale), var(--surface) 70%); }
+.value-num { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--purple-pale); color: var(--accent-ink); font-weight: 700; font-size: 13px; }
+.report-photo { float: right; width: 84px; height: 84px; border: 3px solid var(--peach); margin-left: 16px; }
+
+@media (max-width: 900px) {
+  .profile-body { grid-template-columns: 1fr; gap: 20px; }
+}
+@media (max-width: 640px) {
+  .profile-main { flex-direction: column; align-items: center; text-align: center; padding: 0 18px 20px; gap: 10px; }
+  .profile-id { min-width: 0; }
+  .profile-id h1 { margin-top: 4px; }
+  .profile-id .chips, .profile-actions { justify-content: center; }
+  .profile-body { padding: 20px 18px 22px; text-align: center; }
+  .contact-list { text-align: left; }
+  .contact-list li { grid-template-columns: 20px 72px 1fr; }
+  .pgrid { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+  .pday { min-height: 54px; padding: 4px; align-items: center; }
+  .pname, .pmore { display: none; }
+  .pday.has::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--orange); margin-top: 4px; }
+  .report-photo { float: none; display: block; margin: 0 auto 12px; }
+  .photo-field { justify-content: center; text-align: center; }
+}

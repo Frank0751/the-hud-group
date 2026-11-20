@@ -412,9 +412,12 @@ features inline so the application form never depends on a second file.
   change their own records. Admins see everything and can open any fellow's portal read only ("view as").
 - **What fellows do there:** weekly reflection per session (review and notes, questions, then next steps: "I will"
   statement, Scripture, who they will share with, plus an optional private concern), Bible in One Year (365 ticks),
-  three disciples with a meeting log, Hi 5 prayer group with an adopted unreached people group and prayer log,
-  assignments and assessments (progress, results, file uploads), Q1 to Q4 self reports, resources, concerns and
-  prayer requests (can be anonymous), profile, calendar download.
+  a 31-day prayer calendar (each person they pray for gets a day of the month, with requests and answered prayers),
+  purpose, mission and family mission statements, core values and goals with dated progress updates,
+  three disciples with a stage of growth and a log of every update, Hi 5 prayer group with an adopted unreached
+  people group, prayer log and updates, assignments and assessments (progress, results, file uploads), Q1 to Q4
+  self reports, resources, concerns and prayer requests (can be anonymous), a professional profile with photo,
+  and a calendar download.
 - **What admins do there:** cohort overview with flags (two unexcused absences in a row, no reflection in three
   weeks, Bible plan more than 21 days behind, overdue assignments), attendance (Present, Late, Absent with excuse,
   Absent without excuse, Dropped off), DBS reflections with replies, assignment reviews, quarterly evaluations
@@ -429,8 +432,15 @@ features inline so the application form never depends on a second file.
   sheets. Never edit them by hand.
 - **Reminders** (after running `setupTriggers`): Thursday session reminder, Saturday reflection nudge, Monday team
   digest. Turn them off with the `remindersOn` setting.
-- **Starter roadmap:** 2027 sessions carried over from the 2025/2026 roadmap, with Making Ends Meet (Compass) after
-  MLM and before the Discovery Bible Community review. Dates and passages are a draft for the team to confirm.
+- **Starter roadmap:** 2027 sessions carried over from the 2025/2026 roadmap, with four weeks of Making Ends Meet
+  (Compass) after MLM and before the Discovery Bible Community review. Admins add, edit and delete sessions and use
+  Move sessions to shift a stretch of the year. Sessions after the programme year still count in Q4.
+- **Profile photos** are cropped to a square and shrunk to under 60 KB in the browser, then stored as text in the
+  People tab (no Drive link, so the strict security policy still holds). Admins can upload a photo for any fellow.
+- **Automatic assignments:** kinds `bible`, `mentees`, `hi5`, `prayercal` (28 or more days filled), `purpose`
+  (purpose or mission statement written), `goals` (three or more goals) and `report` complete themselves.
+- **Changing the backend:** new SCHEMA columns always go at the END of a table's list. After pasting a new Code.gs,
+  run `upgradePortal` and deploy a new version BEFORE publishing the matching website files.
 - **Security:** `vercel.json` serves `/portal` with noindex, no framing and a strict Content-Security-Policy
   (scripts only from the site itself, connections only to script.google.com and script.googleusercontent.com).
   Keep all portal code in `assets/portal.js` (no inline scripts) and escape everything with `esc()` before it goes

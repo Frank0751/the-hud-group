@@ -71,6 +71,13 @@ var EVAL_CRITERIA = [
   { k: 'growth', l: 'Character and spiritual growth' }
 ];
 
+var DISCIPLE_STAGES = ['praying', 'invited', 'meeting', 'studying', 'obeying', 'sharing', 'multiplying'];
+var MEETING_KINDS = ['met', 'call', 'bible', 'prayer', 'gospel', 'other'];
+var PRAYER_CATEGORIES = ['family', 'friends', 'disciples', 'church', 'work', 'leaders', 'nations', 'unreached', 'other'];
+var GOAL_AREAS = ['spiritual', 'family', 'health', 'education', 'career', 'financial', 'ministry', 'relationships', 'personal'];
+
+var STAGE_LABEL = { praying: 'Praying for them', invited: 'Invited', meeting: 'Meeting regularly', studying: 'Studying the Bible together', obeying: 'Growing in obedience', sharing: 'Sharing their faith', multiplying: 'Discipling others' };
+
 var ATTENDANCE = ['present', 'late', 'excused', 'absent', 'dropped'];
 var ATTENDANCE_LABEL = { present: 'Present', late: 'Late', excused: 'Absent with excuse', absent: 'Absent without excuse', dropped: 'Dropped off' };
 
@@ -78,20 +85,23 @@ var ATTENDANCE_LABEL = { present: 'Present', late: 'Late', excused: 'Absent with
 
 // type hints: j = JSON, n = number, b = boolean. Everything else is text.
 var SCHEMA = {
-  People: { key: 'id', cols: ['id', 'email', 'name', 'role', 'status', 'country', 'city', 'phone', 'whatsapp', 'cohort', 'bio', 'folderId', 'createdAt', 'updatedAt'] },
+  People: { key: 'id', cols: ['id', 'email', 'name', 'role', 'status', 'country', 'city', 'phone', 'whatsapp', 'cohort', 'bio', 'folderId', 'createdAt', 'updatedAt', 'photo', 'occupation', 'church', 'linkedin'] },
   Sessions: { key: 'id', cols: ['id', 'week', 'date', 'title', 'kind', 'passage', 'facilitator', 'link', 'resources', 'notes'], types: { week: 'n' } },
   Attendance: { key: 'id', cols: ['id', 'sessionId', 'personId', 'status', 'note', 'markedBy', 'updatedAt'] },
   Reflections: { key: 'id', cols: ['id', 'personId', 'sessionId', 'review', 'questions', 'iWill', 'scripture', 'shareWith', 'shared', 'feedback', 'feedbackBy', 'createdAt', 'updatedAt'], types: { shared: 'b' } },
   Tasks: { key: 'id', cols: ['id', 'kind', 'title', 'description', 'quarter', 'due', 'resourceId', 'required', 'order'], types: { required: 'b', order: 'n' } },
   Progress: { key: 'id', cols: ['id', 'personId', 'taskId', 'status', 'percent', 'note', 'result', 'fileId', 'fileName', 'feedback', 'reviewedBy', 'updatedAt'], types: { percent: 'n' } },
   Bible: { key: 'personId', cols: ['personId', 'days', 'updatedAt'] },
-  Mentees: { key: 'id', cols: ['id', 'personId', 'name', 'contact', 'relationship', 'startedOn', 'status', 'meetings', 'notes', 'updatedAt'], types: { meetings: 'j' } },
-  Hi5: { key: 'personId', cols: ['personId', 'groupName', 'members', 'peopleGroup', 'peopleCountry', 'prayerDay', 'prayerLog', 'notes', 'updatedAt'], types: { members: 'j', prayerLog: 'j' } },
+  Mentees: { key: 'id', cols: ['id', 'personId', 'name', 'contact', 'relationship', 'startedOn', 'status', 'meetings', 'notes', 'updatedAt', 'stage'], types: { meetings: 'j' } },
+  Hi5: { key: 'personId', cols: ['personId', 'groupName', 'members', 'peopleGroup', 'peopleCountry', 'prayerDay', 'prayerLog', 'notes', 'updatedAt', 'updates'], types: { members: 'j', prayerLog: 'j', updates: 'j' } },
   Reports: { key: 'id', cols: ['id', 'personId', 'quarter', 'answers', 'status', 'submittedAt', 'evaluation', 'evaluatedBy', 'evaluatedAt', 'updatedAt'], types: { answers: 'j', evaluation: 'j' } },
   Concerns: { key: 'id', cols: ['id', 'personId', 'ownerHash', 'category', 'subject', 'message', 'anonymous', 'status', 'response', 'respondedBy', 'createdAt', 'updatedAt'], types: { anonymous: 'b' } },
   Announcements: { key: 'id', cols: ['id', 'title', 'body', 'pinned', 'createdAt', 'by'], types: { pinned: 'b' } },
   Resources: { key: 'id', cols: ['id', 'title', 'author', 'kind', 'link', 'description', 'quarter', 'order', 'gift'], types: { order: 'n', gift: 'b' } },
   Settings: { key: 'key', cols: ['key', 'value'] },
+  Formation: { key: 'personId', cols: ['personId', 'purpose', 'mission', 'familyMission', 'values', 'prayerLog', 'updatedAt'], types: { values: 'j', prayerLog: 'j' } },
+  Prayers: { key: 'id', cols: ['id', 'personId', 'name', 'day', 'category', 'request', 'answered', 'answeredNote', 'createdAt', 'updatedAt'], types: { day: 'n', answered: 'b' } },
+  Goals: { key: 'id', cols: ['id', 'personId', 'title', 'area', 'target', 'measure', 'steps', 'status', 'progress', 'updates', 'createdAt', 'updatedAt'], types: { progress: 'n', updates: 'j' } },
   Shares: { key: 'token', cols: ['token', 'personId', 'quarter', 'createdBy', 'createdAt', 'expiresAt', 'revoked'], types: { revoked: 'b' } },
   Auth: { key: 'tokenHash', cols: ['tokenHash', 'personId', 'createdAt', 'expiresAt'] },
   Log: { key: 'at', cols: ['at', 'actor', 'action', 'detail'] }
@@ -99,7 +109,7 @@ var SCHEMA = {
 
 // What admins may create or edit through adminSave, and which fields.
 var ADMIN_EDITABLE = {
-  People: ['id', 'email', 'name', 'role', 'status', 'country', 'city', 'phone', 'whatsapp', 'cohort', 'bio'],
+  People: ['id', 'email', 'name', 'role', 'status', 'country', 'city', 'phone', 'whatsapp', 'cohort', 'bio', 'photo', 'occupation', 'church', 'linkedin'],
   Sessions: ['id', 'week', 'date', 'title', 'kind', 'passage', 'facilitator', 'link', 'resources', 'notes'],
   Tasks: ['id', 'kind', 'title', 'description', 'quarter', 'due', 'resourceId', 'required', 'order'],
   Resources: ['id', 'title', 'author', 'kind', 'link', 'description', 'quarter', 'order', 'gift'],
@@ -282,8 +292,8 @@ function json_(o) {
 }
 
 var PUBLIC_ACTIONS = { ping: 1, requestCode: 1, verifyCode: 1, sharedReport: 1 };
-var FELLOW_ACTIONS = { saveReflection: 1, saveBible: 1, saveMentee: 1, deleteMentee: 1, saveHi5: 1, prayHi5: 1, saveProgress: 1, saveReport: 1, submitConcern: 1, saveProfile: 1 };
-var ADMIN_ACTIONS = { markAttendance: 1, adminSave: 1, adminDelete: 1, bulkAddPeople: 1, sendWelcome: 1, feedbackReflection: 1, reviewProgress: 1, evaluateReport: 1, respondConcern: 1, refreshViews: 1 };
+var FELLOW_ACTIONS = { saveReflection: 1, saveBible: 1, saveMentee: 1, deleteMentee: 1, saveHi5: 1, prayHi5: 1, saveProgress: 1, saveReport: 1, submitConcern: 1, saveProfile: 1, saveFormation: 1, prayCalendar: 1, savePrayer: 1, deletePrayer: 1, saveGoal: 1, deleteGoal: 1, goalUpdate: 1, hi5Update: 1 };
+var ADMIN_ACTIONS = { markAttendance: 1, adminSave: 1, adminDelete: 1, bulkAddPeople: 1, sendWelcome: 1, feedbackReflection: 1, reviewProgress: 1, evaluateReport: 1, respondConcern: 1, refreshViews: 1, shiftSessions: 1 };
 var SHARED_ACTIONS = { bootstrap: 1, signOut: 1, getFile: 1, reportData: 1, reportPdf: 1, shareReport: 1, revokeShare: 1 };
 
 function route_(b) {
@@ -403,7 +413,21 @@ function publicSettings_() {
 }
 
 function publicPerson_(p) {
-  return { id: p.id, email: p.email, name: p.name, role: p.role, status: p.status, country: p.country, city: p.city, phone: p.phone, whatsapp: p.whatsapp, cohort: p.cohort, bio: p.bio };
+  return { id: p.id, email: p.email, name: p.name, role: p.role, status: p.status, country: p.country, city: p.city, phone: p.phone, whatsapp: p.whatsapp, cohort: p.cohort, bio: p.bio, photo: p.photo || '', occupation: p.occupation || '', church: p.church || '', linkedin: p.linkedin || '' };
+}
+
+// Profile photos are small square JPEGs made in the browser and kept in the sheet as text (under 60 KB).
+function photo_(v) {
+  var p = String(v || '');
+  if (!p) return '';
+  if (p.length > 60000 || !/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(p)) fail_('That photo could not be used. Please try a different picture.');
+  return p;
+}
+
+function link_(v) {
+  var u = text_(v, 300);
+  if (u && !/^https:\/\/[^\s]+$/.test(u)) fail_('Links must start with https://');
+  return u;
 }
 
 function fellowBundle_(person) {
@@ -433,6 +457,9 @@ function fellowBundle_(person) {
     bible: bible ? strip_(bible) : { personId: id, days: '' },
     mentees: mine('Mentees'),
     hi5: hi5 ? strip_(hi5) : null,
+    formation: find_('Formation', id) ? strip_(find_('Formation', id)) : { personId: id, values: [], prayerLog: [] },
+    prayers: mine('Prayers'),
+    goals: mine('Goals'),
     reports: reports,
     concerns: concerns,
     shares: shares,
@@ -483,6 +510,9 @@ function adminBundle_(person) {
     bible: stripAll_(readAll_('Bible')),
     mentees: stripAll_(readAll_('Mentees')),
     hi5: stripAll_(readAll_('Hi5')),
+    formation: stripAll_(readAll_('Formation')),
+    prayers: stripAll_(readAll_('Prayers')),
+    goals: stripAll_(readAll_('Goals')),
     reports: stripAll_(readAll_('Reports')),
     concerns: concerns,
     shares: stripAll_(readAll_('Shares').filter(function (s) { return !s.revoked && s.expiresAt > now_(); })),
@@ -546,12 +576,13 @@ ACTIONS.saveMentee = function (b, me) {
   var name = text_(b.name, 120);
   if (!name) fail_('Please add your disciple\'s name.');
   var meetings = Array.isArray(b.meetings) ? b.meetings.slice(-200).map(function (m) {
-    return { date: isDate_(m.date) ? m.date : today_(), note: text_(m.note, 600) };
+    return { date: isDate_(m.date) ? m.date : today_(), kind: oneOf_(m.kind, MEETING_KINDS, 'met'), note: text_(m.note, 600) };
   }) : (existing ? existing.meetings : []);
   var saved = save_('Mentees', {
     id: existing ? existing.id : uid_('M'), personId: me.id, name: name, contact: text_(b.contact, 160),
     relationship: text_(b.relationship, 160), startedOn: isDate_(b.startedOn) ? b.startedOn : (existing ? existing.startedOn : today_()),
-    status: oneOf_(b.status, ['active', 'paused', 'ended'], 'active'), meetings: meetings, notes: text_(b.notes, 2000), updatedAt: now_()
+    status: oneOf_(b.status, ['active', 'paused', 'ended'], 'active'), meetings: meetings, notes: text_(b.notes, 2000), updatedAt: now_(),
+    stage: oneOf_(b.stage, DISCIPLE_STAGES, existing && existing.stage ? existing.stage : DISCIPLE_STAGES[0])
   });
   return { ok: true, mentee: strip_(saved) };
 };
@@ -587,6 +618,106 @@ ACTIONS.prayHi5 = function (b, me) {
   log.sort();
   var saved = save_('Hi5', { personId: me.id, prayerLog: log.slice(-800), updatedAt: now_() });
   return { ok: true, hi5: strip_(saved) };
+};
+
+ACTIONS.hi5Update = function (b, me) {
+  var existing = find_('Hi5', me.id);
+  if (!existing) fail_('Set up your Hi 5 group first.');
+  var note = text_(b.note, 1000);
+  if (!note) fail_('Please write how it is going.');
+  var updates = (existing.updates || []).concat([{ date: isDate_(b.date) ? b.date : today_(), note: note }]).slice(-200);
+  var saved = save_('Hi5', { personId: me.id, updates: updates, updatedAt: now_() });
+  return { ok: true, hi5: strip_(saved) };
+};
+
+/* ---------- purpose, values, goals and prayer calendar ---------- */
+
+function formation_(id) {
+  return find_('Formation', id) || { personId: id, purpose: '', mission: '', familyMission: '', values: [], prayerLog: [] };
+}
+
+ACTIONS.saveFormation = function (b, me) {
+  var values = Array.isArray(b.values) ? b.values.slice(0, 20).map(function (v) {
+    return { value: text_(v && v.value, 80), meaning: text_(v && v.meaning, 400) };
+  }).filter(function (v) { return v.value; }) : formation_(me.id).values || [];
+  var saved = save_('Formation', {
+    personId: me.id, purpose: text_(b.purpose, 2000), mission: text_(b.mission, 2000), familyMission: text_(b.familyMission, 2000),
+    values: values, updatedAt: now_()
+  });
+  return { ok: true, formation: strip_(saved) };
+};
+
+ACTIONS.prayCalendar = function (b, me) {
+  var f = formation_(me.id);
+  var log = (f.prayerLog || []).slice();
+  var day = isDate_(b.date) ? b.date : today_();
+  var i = log.indexOf(day);
+  if (b.undo) { if (i >= 0) log.splice(i, 1); } else if (i < 0) log.push(day);
+  log.sort();
+  var saved = save_('Formation', { personId: me.id, prayerLog: log.slice(-800), updatedAt: now_() });
+  return { ok: true, formation: strip_(saved) };
+};
+
+ACTIONS.savePrayer = function (b, me) {
+  var id = String(b.id || '');
+  var existing = id ? find_('Prayers', id) : null;
+  if (existing && existing.personId !== me.id) fail_('That record could not be found.');
+  if (!existing && where_('Prayers', 'personId', me.id).length >= 300) fail_('Your prayer calendar is full (300 people).');
+  var name = text_(b.name, 120);
+  if (!name) fail_('Please write who you are praying for.');
+  var day = Number(b.day);
+  if (!(day >= 1 && day <= 31)) fail_('Please choose a day of the month from 1 to 31.');
+  var saved = save_('Prayers', {
+    id: existing ? existing.id : uid_('Y'), personId: me.id, name: name, day: Math.floor(day),
+    category: oneOf_(b.category, PRAYER_CATEGORIES, 'other'), request: text_(b.request, 1000),
+    answered: !!b.answered, answeredNote: text_(b.answeredNote, 1000),
+    createdAt: existing ? existing.createdAt : now_(), updatedAt: now_()
+  });
+  return { ok: true, prayer: strip_(saved) };
+};
+
+ACTIONS.deletePrayer = function (b, me) {
+  var p = find_('Prayers', String(b.id || ''));
+  if (!p || p.personId !== me.id) fail_('That record could not be found.');
+  remove_('Prayers', p.id);
+  return { ok: true };
+};
+
+ACTIONS.saveGoal = function (b, me) {
+  var id = String(b.id || '');
+  var existing = id ? find_('Goals', id) : null;
+  if (existing && existing.personId !== me.id) fail_('That record could not be found.');
+  if (!existing && where_('Goals', 'personId', me.id).length >= 40) fail_('You already have 40 goals.');
+  var title = text_(b.title, 200);
+  if (!title) fail_('Please name your goal.');
+  if (b.target && !isDate_(b.target)) fail_('Please use a date like 2027-06-30.');
+  var progress = Math.max(0, Math.min(100, Number(b.progress) || 0));
+  var status = oneOf_(b.status, ['not-started', 'in-progress', 'done', 'paused'], progress >= 100 ? 'done' : progress > 0 ? 'in-progress' : 'not-started');
+  var saved = save_('Goals', {
+    id: existing ? existing.id : uid_('G'), personId: me.id, title: title, area: oneOf_(b.area, GOAL_AREAS, 'personal'),
+    target: b.target || '', measure: text_(b.measure, 600), steps: text_(b.steps, 2000), status: status,
+    progress: status === 'done' ? 100 : progress, updates: existing ? existing.updates || [] : [],
+    createdAt: existing ? existing.createdAt : now_(), updatedAt: now_()
+  });
+  return { ok: true, goal: strip_(saved) };
+};
+
+ACTIONS.deleteGoal = function (b, me) {
+  var g = find_('Goals', String(b.id || ''));
+  if (!g || g.personId !== me.id) fail_('That record could not be found.');
+  remove_('Goals', g.id);
+  return { ok: true };
+};
+
+ACTIONS.goalUpdate = function (b, me) {
+  var g = find_('Goals', String(b.id || ''));
+  if (!g || g.personId !== me.id) fail_('That record could not be found.');
+  var note = text_(b.note, 1000);
+  if (!note) fail_('Please write a short update.');
+  var progress = b.progress === undefined || b.progress === '' || b.progress === null ? g.progress : Math.max(0, Math.min(100, Number(b.progress) || 0));
+  var updates = (g.updates || []).concat([{ date: isDate_(b.date) ? b.date : today_(), note: note, progress: progress }]).slice(-100);
+  var saved = save_('Goals', { id: g.id, updates: updates, progress: progress, status: progress >= 100 ? 'done' : progress > 0 ? 'in-progress' : g.status, updatedAt: now_() });
+  return { ok: true, goal: strip_(saved) };
 };
 
 function fellowFolder_(person) {
@@ -686,11 +817,14 @@ ACTIONS.submitConcern = function (b, me) {
   return { ok: true, concern: out };
 };
 
+// Only the fields that are sent are changed, so saving a new photo never clears the rest of the profile.
 ACTIONS.saveProfile = function (b, me) {
-  var saved = save_('People', {
-    id: me.id, phone: text_(b.phone, 40), whatsapp: text_(b.whatsapp, 40), city: text_(b.city, 80),
-    country: text_(b.country, 80), bio: text_(b.bio, 1000), updatedAt: now_()
-  });
+  var rec = { id: me.id, updatedAt: now_() };
+  var limits = { phone: 40, whatsapp: 40, city: 80, country: 80, bio: 1500, occupation: 120, church: 120 };
+  Object.keys(limits).forEach(function (k) { if (k in b) rec[k] = text_(b[k], limits[k]); });
+  if ('linkedin' in b) rec.linkedin = link_(b.linkedin);
+  if ('photo' in b) rec.photo = photo_(b.photo);
+  var saved = save_('People', rec);
   return { ok: true, me: publicPerson_(saved) };
 };
 
@@ -710,11 +844,23 @@ function quarterOf_(date) {
   return QUARTERS[0];
 }
 
+// The programme quarter of a date: anything after the programme year counts in Q4, anything before it in Q1.
+function progQuarter_(date) {
+  var py = String(settings_().programmeYear || '');
+  var y = String(date).slice(0, 4);
+  if (py && y > py) return 'Q4';
+  if (py && y < py) return 'Q1';
+  return quarterOf_(date).q;
+}
+
+// Shared rules for assignments that the portal tracks by itself.
+function prayerDaysFilled_(prayers) { var d = {}; prayers.forEach(function (p) { d[p.day] = 1; }); return Object.keys(d).length; }
+
 function metrics_(personId, quarter) {
   var q = QUARTERS.filter(function (x) { return x.q === quarter; })[0];
   var today = today_();
   var inQ = function (date) { return date && quarterOf_(date).q === quarter && String(date).slice(0, 4) === (settings_().programmeYear || String(date).slice(0, 4)); };
-  var sessions = readAll_('Sessions').filter(function (s) { return s.kind !== 'break' && inQ(s.date); });
+  var sessions = readAll_('Sessions').filter(function (s) { return s.kind !== 'break' && s.kind !== 'induction' && progQuarter_(s.date) === quarter; });
   var held = sessions.filter(function (s) { return s.date < today; });
   var heldIds = {}; held.forEach(function (s) { heldIds[s.id] = 1; });
   var att = where_('Attendance', 'personId', personId).filter(function (a) { return heldIds[a.sessionId]; });
@@ -729,11 +875,18 @@ function metrics_(personId, quarter) {
   var mentees = where_('Mentees', 'personId', personId).filter(function (m) { return m.status !== 'ended'; });
   var meetingsInQ = 0; mentees.forEach(function (m) { (m.meetings || []).forEach(function (x) { if (inQ(x.date)) meetingsInQ++; }); });
   var hi5 = find_('Hi5', personId);
+  var form = find_('Formation', personId) || {};
+  var prayerList = where_('Prayers', 'personId', personId);
+  var daysFilled = prayerDaysFilled_(prayerList);
+  var goals = where_('Goals', 'personId', personId);
   // Some assignments are tracked automatically from other parts of the portal, the same way the app shows them.
   var statusOf = function (t) {
     if (t.kind === 'bible') return done >= 365 ? 'done' : done ? 'in-progress' : 'not-started';
     if (t.kind === 'mentees') return mentees.length >= 3 ? 'done' : mentees.length ? 'in-progress' : 'not-started';
     if (t.kind === 'hi5') return hi5 && hi5.members && hi5.members.length >= 5 && hi5.peopleGroup ? 'done' : hi5 ? 'in-progress' : 'not-started';
+    if (t.kind === 'prayercal') return daysFilled >= 28 ? 'done' : prayerList.length ? 'in-progress' : 'not-started';
+    if (t.kind === 'purpose') return form.purpose || form.mission ? 'done' : (form.values || []).length ? 'in-progress' : 'not-started';
+    if (t.kind === 'goals') return goals.length >= 3 ? 'done' : goals.length ? 'in-progress' : 'not-started';
     return prog[t.id] ? prog[t.id].status : 'not-started';
   };
   var tasksDone = tasks.filter(function (t) { var s = statusOf(t); return s === 'done' || s === 'approved' || s === 'submitted'; }).length;
@@ -748,7 +901,14 @@ function metrics_(personId, quarter) {
     tasksTotal: tasks.length, tasksDone: tasksDone,
     tasks: tasks.map(function (t) { var p = prog[t.id]; return { title: t.title, status: statusOf(t), result: p ? p.result : '' }; }),
     disciples: mentees.length, meetings: meetingsInQ,
-    hi5Members: hi5 && hi5.members ? hi5.members.length : 0, peopleGroup: hi5 ? hi5.peopleGroup : '', prayers: prayers
+    hi5Members: hi5 && hi5.members ? hi5.members.length : 0, peopleGroup: hi5 ? hi5.peopleGroup : '', prayers: prayers,
+    hi5Updates: hi5 && hi5.updates ? hi5.updates.filter(function (u) { return inQ(u.date); }).length : 0,
+    stages: mentees.map(function (m) { return { name: m.name, stage: m.stage || 'praying' }; }),
+    prayerPeople: prayerList.length, prayerDays: daysFilled, answered: prayerList.filter(function (p) { return p.answered; }).length,
+    calendarPrayed: (form.prayerLog || []).filter(inQ).length,
+    purpose: form.purpose || '', mission: form.mission || '', values: (form.values || []).map(function (v) { return v.value; }),
+    goals: goals.map(function (g) { return { title: g.title, area: g.area, progress: g.progress || 0, status: g.status }; }),
+    goalsDone: goals.filter(function (g) { return g.status === 'done'; }).length
   };
 }
 
@@ -757,7 +917,7 @@ function reportData_(personId, quarter, withEvaluation) {
   if (!person) fail_('That fellow could not be found.');
   var r = find_('Reports', personId + '-' + quarter);
   return {
-    fellow: { name: person.name, country: person.country, city: person.city, cohort: person.cohort || settings_().cohortName || '' },
+    fellow: { name: person.name, country: person.country, city: person.city, cohort: person.cohort || settings_().cohortName || '', photo: person.photo || '', occupation: person.occupation || '' },
     quarter: quarter,
     cohortName: settings_().cohortName || 'The Shadrach Fellowship',
     metrics: metrics_(personId, quarter),
@@ -835,7 +995,7 @@ function reportHtml_(d) {
   };
   var h = [];
   h.push('<!DOCTYPE html><html><head><meta charset="utf-8"><style>body,table,td,p,div{font-family:Arial,sans-serif;font-size:12px}</style></head><body style="font-family:Arial,sans-serif;color:#1a1420;font-size:12px;line-height:1.5">');
-  h.push('<table width="100%" style="border-collapse:collapse;background:#320c32;color:#ffffff"><tr><td style="padding:22px 24px">');
+  h.push('<table width="100%" style="border-collapse:collapse;background:#320c32;color:#ffffff"><tr>' + (d.fellow.photo ? '<td style="padding:22px 0 22px 24px;width:84px"><img src="' + esc_(d.fellow.photo) + '" width="72" height="72" style="border-radius:36px;border:3px solid #ffb866"></td>' : '') + '<td style="padding:22px 24px">');
   h.push('<div style="font:bold 10px Arial,sans-serif;letter-spacing:2px;color:#ffb866;text-transform:uppercase">' + esc_(d.cohortName) + ' &middot; ' + esc_(d.quarter) + ' report</div>');
   h.push('<div style="font:bold 26px Georgia,serif;margin-top:6px">' + esc_(d.fellow.name) + '</div>');
   h.push('<div style="font:13px Arial,sans-serif;color:#e9d6e9;margin-top:4px">' + esc_(m.name) + ': ' + esc_(m.field) + (d.fellow.country ? ' &middot; ' + esc_([d.fellow.city, d.fellow.country].filter(String).join(', ')) : '') + '</div>');
@@ -853,7 +1013,20 @@ function reportHtml_(d) {
   h.push(stat('Days prayed (Hi 5)', m.prayers));
   h.push(stat('Excused absences', m.excused));
   h.push('</tr></table>');
-  if (m.peopleGroup) h.push('<p style="margin:10px 0 0;color:#6b5a68">Hi 5 adopted people group: <b style="color:#1a1420">' + esc_(m.peopleGroup) + '</b></p>');
+  if (m.peopleGroup) h.push('<p style="margin:10px 0 0;color:#6b5a68">Hi 5 adopted people group: <b style="color:#1a1420">' + esc_(m.peopleGroup) + '</b>' + (m.hi5Updates ? ' &middot; ' + m.hi5Updates + ' group updates this quarter' : '') + '</p>');
+  h.push('<p style="margin:6px 0 0;color:#6b5a68">Prayer calendar: <b style="color:#1a1420">' + m.prayerPeople + ' people</b> across ' + m.prayerDays + ' of 31 days, ' + m.answered + ' answered prayers, prayed through it on ' + m.calendarPrayed + ' days this quarter</p>');
+  if (m.stages.length) h.push('<p style="margin:6px 0 0;color:#6b5a68">Disciples: ' + m.stages.map(function (x) { return '<b style="color:#1a1420">' + esc_(x.name) + '</b> (' + esc_(STAGE_LABEL[x.stage] || x.stage) + ')'; }).join(', ') + '</p>');
+  if (m.purpose || m.mission || m.values.length) {
+    h.push('<div style="font:bold 15px Georgia,serif;color:#541854;margin:22px 0 8px;border-bottom:2px solid #ffb866;padding-bottom:4px">Purpose and values</div>');
+    if (m.purpose) h.push('<p style="margin:0 0 6px"><b>Purpose statement:</b> ' + para_(m.purpose) + '</p>');
+    if (m.mission) h.push('<p style="margin:0 0 6px"><b>Mission statement:</b> ' + para_(m.mission) + '</p>');
+    if (m.values.length) h.push('<p style="margin:0"><b>Values:</b> ' + m.values.map(esc_).join(', ') + '</p>');
+  }
+  if (m.goals.length) {
+    h.push('<div style="font:bold 15px Georgia,serif;color:#541854;margin:22px 0 8px;border-bottom:2px solid #ffb866;padding-bottom:4px">Goals (' + m.goalsDone + ' of ' + m.goals.length + ' done)</div><table width="100%" style="border-collapse:collapse">');
+    m.goals.forEach(function (g) { h.push('<tr><td style="padding:5px 8px;border-bottom:1px solid #eee">' + esc_(g.title) + ' <span style="color:#6b5a68">(' + esc_(g.area) + ')</span></td><td style="padding:5px 8px;border-bottom:1px solid #eee;text-align:right;color:#6b5a68">' + g.progress + '%</td></tr>'); });
+    h.push('</table>');
+  }
   var heading = function (t) { h.push('<div style="font:bold 15px Georgia,serif;color:#541854;margin:22px 0 8px;border-bottom:2px solid #ffb866;padding-bottom:4px">' + esc_(t) + '</div>'); };
   if (m.tasks.length) {
     heading('Assignments this quarter');
@@ -936,7 +1109,9 @@ ACTIONS.adminSave = function (b, me) {
       var type = def.types && def.types[k];
       if (type === 'n') rec[k] = rec[k] === '' || rec[k] === null ? '' : Number(rec[k]);
       else if (type === 'b') rec[k] = !!rec[k];
-      else rec[k] = text_(rec[k], k === 'body' || k === 'description' || k === 'notes' ? 6000 : 600);
+      else if (k === 'photo') rec[k] = photo_(rec[k]);
+      else if (k === 'linkedin') rec[k] = link_(rec[k]);
+      else rec[k] = text_(rec[k], k === 'body' || k === 'description' || k === 'notes' || k === 'bio' ? 6000 : 600);
     });
     if (!rec[key]) rec[key] = uid_(table.charAt(0));
   }
@@ -1082,6 +1257,24 @@ ACTIONS.respondConcern = function (b, me) {
 };
 
 ACTIONS.refreshViews = function () { refreshViews_(); return { ok: true }; };
+
+// Move every session from a date onwards by a number of weeks (forwards or back), optionally renumbering the weeks.
+ACTIONS.shiftSessions = function (b, me) {
+  var from = String(b.fromDate || '');
+  if (!isDate_(from)) fail_('Please choose the first session to move.');
+  var weeks = Math.round(Number(b.weeks) || 0);
+  if (!weeks || Math.abs(weeks) > 12) fail_('Choose between 1 and 12 weeks.');
+  var moved = 0;
+  readAll_('Sessions').filter(function (s) { return s.date >= from; }).forEach(function (s) {
+    var rec = { id: s.id, date: addDays_(s.date, weeks * 7) };
+    if (b.renumber && s.week !== null && s.week !== '' && s.kind !== 'break') rec.week = Math.max(1, Number(s.week) + weeks);
+    save_('Sessions', rec);
+    moved++;
+  });
+  log_(me.email, 'shiftSessions', from + ' by ' + weeks + ' weeks (' + moved + ')');
+  tryViews_();
+  return { ok: true, moved: moved, sessions: stripAll_(readAll_('Sessions')) };
+};
 
 /* ------------------------------------------------------------------ readable views in the sheet */
 
@@ -1292,6 +1485,7 @@ function seedSessions_() {
     ['MLM 1: Millennium Leaders Mandate', ''], ['MLM 2', ''], ['MLM 3', 'Exodus 3:1-21'], ['MLM 4', 'Philippians 3:1-14'],
     ['MLM 5', 'Hebrews 11:1-20'], ['MLM 6', ''],
     ['Making Ends Meet 1 (Compass Financial Ministry)', ''], ['Making Ends Meet 2 (Compass Financial Ministry)', ''],
+    ['Making Ends Meet 3 (Compass Financial Ministry)', ''], ['Making Ends Meet 4 (Compass Financial Ministry)', ''],
     ['Discovery Bible Community review', 'Luke 10:25-37'], ['Singleness and Marriage', ''], ['Marriage 101: "I Do" or "No Clue"? (Emotional Needs)', ''],
     ['A2R 1: Africa to the Rest', ''], ['A2R 2', ''], ['A2R 3', ''], ['A2R 4', ''], ['A2R 5', ''], ['A2R 6', ''], ['A2R 7', ''],
     ['Kairos overview, review and evaluation', ''], ['Graduation and next cohort launch', '', 'graduation']
@@ -1328,11 +1522,11 @@ function seedTasks_() {
   [
     ['bible', 'Bible in One Year', 'Read through the whole Bible this year. Tick each day as you finish it.', 'Q1', '2027-12-31', 'R09'],
     ['activity', '21-day fast', 'Join the cohort in the 21-day fast that opens the year. Write what God showed you.', 'Q1', '2027-01-22', ''],
-    ['activity', 'Personal prayer calendar', 'Set up your prayer calendar for the year and share it with your facilitator.', 'Q1', '2027-01-29', ''],
+    ['prayercal', 'Personal prayer calendar', 'Fill your 31-day prayer calendar with the people you are praying for.', 'Q1', '2027-01-29', ''],
     ['mentees', 'Choose your three disciples', 'Pick the three people you will disciple this year and start meeting with them.', 'Q1', '2027-01-29', ''],
     ['hi5', 'Form your Hi 5 prayer group', 'Gather your Hi 5 group and adopt an unreached people group to pray for together.', 'Q1', '2027-02-26', ''],
-    ['submission', 'Personal purpose statement', 'Write and upload your personal purpose statement.', 'Q1', '2027-02-12', ''],
-    ['submission', 'Goals for the year', 'Set your goals for the year and upload them before Goal Sharing.', 'Q1', '2027-02-19', ''],
+    ['purpose', 'Personal purpose statement', 'Write your purpose and mission statements and your core values on the Purpose and Goals page.', 'Q1', '2027-02-12', ''],
+    ['goals', 'Goals for the year', 'Set at least three goals for the year on the Purpose and Goals page before Goal Sharing.', 'Q1', '2027-02-19', ''],
     ['assessment', 'DISC assessment', 'Take the DISC assessment, record your style and upload your results.', 'Q1', '2027-03-19', 'R04'],
     ['assessment', 'Spiritual gifts assessment', 'Take the spiritual gifts assessment and record your top gifts.', 'Q2', '2027-04-09', ''],
     ['reading', 'Read: Disciple Ship', 'Read the whole book alongside the Disciple Ship sessions and write a short reflection.', 'Q2', '2027-06-04', 'R01'],
@@ -1340,9 +1534,9 @@ function seedTasks_() {
     ['reading', 'Read: Emotionally Healthy Spirituality', 'Read EHS across the EHS sessions and write a short reflection.', 'Q3', '2027-07-23', 'R05'],
     ['course', 'DeepLEAD', 'Complete the DeepLEAD sessions and exercises.', 'Q3', '2027-08-13', ''],
     ['course', 'Millennium Leaders Mandate (MLM)', 'Complete the MLM course and its exercises.', 'Q3', '2027-09-24', 'R07'],
-    ['course', 'Making Ends Meet (Compass Financial Ministry)', 'Complete the Making Ends Meet coursework.', 'Q4', '2027-10-08', 'R08'],
-    ['activity', 'Discovery Bible Community review', 'Review your Discovery Bible Community and share what you are learning.', 'Q4', '2027-10-15', ''],
-    ['reading', 'Read: Africa to the Rest', 'Read A2R alongside the A2R sessions and write a short reflection.', 'Q4', '2027-12-17', 'R06'],
+    ['course', 'Making Ends Meet (Compass Financial Ministry)', 'Complete the four weeks of Making Ends Meet coursework.', 'Q4', '2027-10-22', 'R08'],
+    ['activity', 'Discovery Bible Community review', 'Review your Discovery Bible Community and share what you are learning.', 'Q4', '2027-10-29', ''],
+    ['reading', 'Read: Africa to the Rest', 'Read A2R alongside the A2R sessions and write a short reflection.', 'Q4', '2027-12-24', 'R06'],
     ['report', 'Q1 report', 'Your quarterly self report for Spiritual Formation.', 'Q1', '2027-03-31', ''],
     ['report', 'Q2 report', 'Your quarterly self report for Missional Formation.', 'Q2', '2027-06-30', ''],
     ['report', 'Q3 report', 'Your quarterly self report for Leadership Formation.', 'Q3', '2027-09-30', ''],
@@ -1350,6 +1544,35 @@ function seedTasks_() {
   ].forEach(function (t, i) {
     save_('Tasks', { id: 'T' + (i + 1 < 10 ? '0' : '') + (i + 1), kind: t[0], title: t[1], description: t[2], quarter: t[3], due: t[4], resourceId: t[5], required: true, order: i + 1 });
   });
+}
+
+// Run once from the editor after pasting a newer Code.gs over an existing setup.
+// It adds any new columns and tabs, switches three assignments to automatic tracking and, as long as
+// no attendance or reflections exist yet, rebuilds the starter roadmap (Making Ends Meet now takes four Fridays).
+function upgradePortal() {
+  MEMO = {};
+  var added = [];
+  Object.keys(SCHEMA).forEach(function (name) {
+    var sh = sheet_(name), cols = SCHEMA[name].cols;
+    var head = sh.getRange(1, 1, 1, cols.length).getValues()[0];
+    cols.forEach(function (c, i) { if (head[i] !== c) { sh.getRange(1, i + 1).setValue(c); added.push(name + '.' + c); } });
+  });
+  MEMO = {};
+  var tasks = { T03: ['prayercal', 'Fill your 31-day prayer calendar with the people you are praying for.'], T06: ['purpose', 'Write your purpose and mission statements and your core values on the Purpose and Goals page.'], T07: ['goals', 'Set at least three goals for the year on the Purpose and Goals page before Goal Sharing.'] };
+  Object.keys(tasks).forEach(function (id) { if (find_('Tasks', id)) save_('Tasks', { id: id, kind: tasks[id][0], description: tasks[id][1] }); });
+  var rebuilt = false;
+  if (!readAll_('Attendance').length && !readAll_('Reflections').length) {
+    var sh = sheet_('Sessions');
+    if (sh.getLastRow() > 1) sh.deleteRows(2, sh.getLastRow() - 1);
+    MEMO = {};
+    seedSessions_();
+    [['T15', '2027-10-22', 'Complete the four weeks of Making Ends Meet coursework.'], ['T16', '2027-10-29', ''], ['T17', '2027-12-24', '']].forEach(function (t) {
+      if (find_('Tasks', t[0])) { var rec = { id: t[0], due: t[1] }; if (t[2]) rec.description = t[2]; save_('Tasks', rec); }
+    });
+    rebuilt = true;
+  }
+  refreshViews_();
+  Logger.log('Upgrade complete. New columns: ' + (added.length ? added.join(', ') : 'none') + '. Roadmap ' + (rebuilt ? 'rebuilt with four weeks of Making Ends Meet.' : 'left as it is because attendance or reflections already exist. Adjust it in the portal under Roadmap.'));
 }
 
 // Quick check you can run from the editor after setup.

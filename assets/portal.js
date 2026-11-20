@@ -107,12 +107,28 @@
       '<text x="50%" y="50%" text-anchor="middle" dominant-baseline="central">' + Math.round(v) + '%</text></svg>';
   }
 
+  function av(p, cls) {
+    p = p || {};
+    if (p.photo && /^data:image\/(jpeg|png|webp);base64,/.test(p.photo)) return '<img class="avatar photo ' + (cls || '') + '" src="' + esc(p.photo) + '" alt="" width="38" height="38">';
+    return '<div class="avatar ' + (cls || '') + '">' + esc(initials(p.name)) + '</div>';
+  }
+
   function chip(text, tone) { return '<span class="chip ' + (tone || '') + '">' + esc(text) + '</span>'; }
   function empty(ic, text) { return '<div class="empty">' + icon(ic) + '<div>' + text + '</div></div>'; }
 
   var ATT = { present: ['Present', 'green'], late: ['Late', 'green'], excused: ['Excused', 'amber'], absent: ['Absent', 'red'], dropped: ['Dropped off', ''] };
   var STATUS = { 'not-started': ['Not started', ''], 'in-progress': ['In progress', 'amber'], submitted: ['Submitted', 'blue'], done: ['Done', 'green'], approved: ['Approved', 'green'], returned: ['Needs work', 'red'], draft: ['Draft', 'amber'], evaluated: ['Evaluated', 'green'], 'not-submitted': ['Not submitted', ''] };
-  var KIND = { bible: 'Bible plan', activity: 'Activity', mentees: 'Disciple making', hi5: 'Hi 5 prayer', submission: 'Submission', assessment: 'Assessment', reading: 'Reading', course: 'Course', report: 'Quarterly report' };
+  var STAGES = [['praying', 'Praying for them'], ['invited', 'Invited'], ['meeting', 'Meeting regularly'], ['studying', 'Studying the Bible together'], ['obeying', 'Growing in obedience'], ['sharing', 'Sharing their faith'], ['multiplying', 'Discipling others']];
+  var STAGE_LABEL = {}; STAGES.forEach(function (x) { STAGE_LABEL[x[0]] = x[1]; });
+  var MEET_KINDS = { met: 'Met in person', call: 'Call or chat', bible: 'Bible study', prayer: 'Prayed together', gospel: 'Shared the Gospel', other: 'Other' };
+  var PRAYER_CATS = { family: 'Family', friends: 'Friends', disciples: 'My disciples', church: 'Church', work: 'Work or school', leaders: 'Leaders', nations: 'Nations', unreached: 'Unreached peoples', other: 'Other' };
+  var GOAL_AREAS = { spiritual: 'Spiritual', family: 'Family', health: 'Health', education: 'Education', career: 'Career', financial: 'Financial', ministry: 'Ministry', relationships: 'Relationships', personal: 'Personal growth' };
+  var GOAL_STATUS = { 'not-started': ['Not started', ''], 'in-progress': ['In progress', 'amber'], done: ['Done', 'green'], paused: ['Paused', ''] };
+  function stageIndex(k) { for (var i = 0; i < STAGES.length; i++) if (STAGES[i][0] === k) return i; return 0; }
+  function daysFilled(list) { var o = {}; (list || []).forEach(function (p) { o[p.day] = 1; }); return Object.keys(o).length; }
+  function opts(map, v) { return Object.keys(map).map(function (k) { return '<option value="' + k + '"' + (v === k ? ' selected' : '') + '>' + esc(map[k]) + '</option>'; }).join(''); }
+  function progQuarter(date) { var py = String((F() || S.data).settings.programmeYear || ''), y = String(date).slice(0, 4); return py && y > py ? 'Q4' : py && y < py ? 'Q1' : quarterOf(date); }
+  var KIND = { bible: 'Bible plan', activity: 'Activity', mentees: 'Disciple making', hi5: 'Hi 5 prayer', submission: 'Submission', assessment: 'Assessment', reading: 'Reading', course: 'Course', report: 'Quarterly report', prayercal: 'Prayer calendar', purpose: 'Purpose and values', goals: 'Goal setting' };
 
   /* ================================================================ toast and modal */
   function toast(msg, bad) {
@@ -219,6 +235,7 @@
       marked: marked.length, present: present, attRate: marked.length ? pct(present, marked.length) : null,
       reflCount: reflCount, bibleDays: bdays, bibleStart: bstart, bibleExpected: expected, bibleDone: bdone, bibleBehind: Math.max(0, expected - bdone), bibleStreak: streak,
       prog: prog, tasks: tasks, mentees: mentees, hi5: hi5, reports: reports,
+      prayers: d.prayers || [], goals: d.goals || [], formation: d.formation || {},
       totalWeeks: real.reduce(function (m, s) { return Math.max(m, s.week || 0); }, 0)
     };
     model.week = next ? (next.week || 0) : (last ? last.week : 0);
@@ -235,6 +252,9 @@
     if (t.kind === 'bible') { var pc = pct(m.bibleDone, 365); return { status: pc >= 100 ? 'done' : m.bibleDone ? 'in-progress' : 'not-started', percent: pc, done: pc >= 100, auto: true }; }
     if (t.kind === 'mentees') { var n = m.mentees.length; return { status: n >= 3 ? 'done' : n ? 'in-progress' : 'not-started', percent: pct(Math.min(n, 3), 3), done: n >= 3, auto: true, note: plural(n, 'disciple') }; }
     if (t.kind === 'hi5') { var h = m.hi5, k = h && h.members ? h.members.length : 0, ok = k >= 5 && h.peopleGroup; return { status: ok ? 'done' : (h ? 'in-progress' : 'not-started'), percent: pct(Math.min(k, 5) + (h && h.peopleGroup ? 1 : 0), 6), done: !!ok, auto: true, note: k + ' of 5 members' }; }
+    if (t.kind === 'prayercal') { var pl = m.prayers || [], df = daysFilled(pl); return { status: df >= 28 ? 'done' : pl.length ? 'in-progress' : 'not-started', percent: pct(Math.min(df, 28), 28), done: df >= 28, auto: true, note: df + ' of 31 days filled' }; }
+    if (t.kind === 'purpose') { var fo = m.formation || {}, parts = (fo.purpose ? 1 : 0) + (fo.mission ? 1 : 0) + ((fo.values || []).length ? 1 : 0), ok2 = !!(fo.purpose || fo.mission); return { status: ok2 ? 'done' : parts ? 'in-progress' : 'not-started', percent: ok2 ? 100 : pct(parts, 3), done: ok2, auto: true, note: ok2 ? 'Statement written' : '' }; }
+    if (t.kind === 'goals') { var gl = (m.goals || []).length; return { status: gl >= 3 ? 'done' : gl ? 'in-progress' : 'not-started', percent: pct(Math.min(gl, 3), 3), done: gl >= 3, auto: true, note: plural(gl, 'goal') }; }
     if (t.kind === 'report') {
       var q = String(t.title).slice(0, 2); var r = m.reports[q];
       var st = !r ? 'not-started' : r.evaluation && r.evaluation.released ? 'evaluated' : r.status === 'submitted' ? 'submitted' : 'draft';
@@ -243,6 +263,11 @@
     if (!p) return { status: 'not-started', percent: 0, done: false };
     var done = p.status === 'done' || p.status === 'approved' || p.status === 'submitted';
     return { status: p.status, percent: done ? 100 : (p.percent || (p.status === 'in-progress' ? 10 : 0)), done: done, p: p };
+  }
+
+  function fellowModel(d, fid, bibleDone) {
+    var byP = function (list) { return (list || []).filter(function (x) { return x.personId === fid; }); };
+    return { bibleDone: bibleDone, mentees: byP(d.mentees).filter(function (x) { return x.status !== 'ended'; }), hi5: byP(d.hi5)[0] || null, prog: mapBy(byP(d.progress), 'taskId'), reports: mapBy(byP(d.reports), 'quarter'), prayers: byP(d.prayers), goals: byP(d.goals), formation: byP(d.formation)[0] || {} };
   }
 
   function am(d) {
@@ -267,7 +292,7 @@
       var present = marked.filter(function (s) { var a = att[f.id + '|' + s.id].status; return a === 'present' || a === 'late'; }).length;
       var rc = held.filter(function (s) { return refl[f.id + '|' + s.id]; }).length;
       var bd = count1(bible[f.id] && bible[f.id].days);
-      var model = { bibleDone: bd, mentees: d.mentees.filter(function (x) { return x.personId === f.id && x.status !== 'ended'; }), hi5: hi5[f.id] || null, prog: progBy[f.id] || {}, reports: mapBy(d.reports.filter(function (r) { return r.personId === f.id; }), 'quarter') };
+      var model = fellowModel(d, f.id, bd);
       var dueTasks = d.tasks.filter(function (t) { return t.due && t.due <= today; });
       var tdone = d.tasks.filter(function (t) { return taskState(t, model).done; }).length;
       var overdue = dueTasks.filter(function (t) { return !taskState(t, model).done; }).length;
@@ -329,6 +354,28 @@
     return new Blob([lines.join('\r\n')], { type: 'text/calendar' });
   }
 
+  function makePhoto(file) {
+    return new Promise(function (resolve, reject) {
+      if (!/^image\//.test(file.type)) return reject(new Error('Please choose a photo (JPG or PNG).'));
+      if (file.size > 15 * 1024 * 1024) return reject(new Error('That photo is too large. Please choose one under 15 MB.'));
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        var side = Math.min(img.naturalWidth, img.naturalHeight), size = Math.min(320, side);
+        var c = document.createElement('canvas'); c.width = size; c.height = size;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, size, size);
+        ctx.drawImage(img, (img.naturalWidth - side) / 2, (img.naturalHeight - side) / 2, side, side, 0, 0, size, size);
+        URL.revokeObjectURL(url);
+        var q = 0.86, out = c.toDataURL('image/jpeg', q);
+        while (out.length > 58000 && q > 0.4) { q -= 0.08; out = c.toDataURL('image/jpeg', q); }
+        if (out.length > 58000) return reject(new Error('That photo could not be made small enough. Please try another.'));
+        resolve(out);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('That photo could not be opened. Please try a JPG or PNG.')); };
+      img.src = url;
+    });
+  }
+
   /* ================================================================ routing */
   function route() {
     var h = (location.hash || '').replace(/^#\/?/, '');
@@ -360,8 +407,8 @@
 
   /* ================================================================ shell */
   var FELLOW_NAV = [
-    ['home', 'Home', 'home'], ['journey', 'Journey', 'map'], ['bible', 'Bible in One Year', 'book'], ['disciples', 'My Disciples and Hi 5', 'users'],
-    ['assignments', 'Assignments', 'clipboard'], ['reports', 'Quarterly Reports', 'chart'], ['resources', 'Resources', 'library'],
+    ['home', 'Home', 'home'], ['journey', 'Journey', 'map'], ['bible', 'Bible in One Year', 'book'], ['prayer', 'Prayer Calendar', 'heart'], ['disciples', 'My Disciples and Hi 5', 'users'],
+    ['purpose', 'Purpose and Goals', 'star'], ['assignments', 'Assignments', 'clipboard'], ['reports', 'Quarterly Reports', 'chart'], ['resources', 'Resources', 'library'],
     ['voice', 'Concerns and Prayer', 'message'], ['profile', 'My Profile', 'user']
   ];
   var ADMIN_NAV = [
@@ -390,7 +437,7 @@
     return '<div class="shell">' +
       '<aside class="side" aria-label="Sidebar"><a class="brand" href="' + (admin ? '#/admin' : '#/home') + '"><img src="images/the-hud-group-logo-dark.png" alt="The HuD Group" width="119" height="40"><span><small>' + (admin ? 'Admin' : 'Fellows') + ' portal</small><b>Shadrach Fellowship</b></span></a>' +
       '<nav class="nav" aria-label="Main">' + nav + '</nav>' +
-      '<div class="side-foot"><div class="me-card"><div class="avatar">' + esc(initials(me.name)) + '</div><div class="who"><b>' + esc(me.name) + '</b><small>' + esc(me.role === 'admin' ? 'Admin' : (S.data.settings.cohortName || 'Fellow')) + '</small></div><button class="icon-btn" data-act="sign-out" title="Sign out" aria-label="Sign out">' + icon('logout') + '</button></div></div></aside>' +
+      '<div class="side-foot"><div class="me-card">' + av(me) + '<div class="who"><b>' + esc(me.name) + '</b><small>' + esc(me.role === 'admin' ? 'Admin' : (S.data.settings.cohortName || 'Fellow')) + '</small></div><button class="icon-btn" data-act="sign-out" title="Sign out" aria-label="Sign out">' + icon('logout') + '</button></div></div></aside>' +
       '<div class="main">' + banner +
       '<header class="topbar no-print"><a class="mobile-brand" href="' + (admin ? '#/admin' : '#/home') + '"><picture><source srcset="images/the-hud-group-logo-dark.png" media="(prefers-color-scheme: dark)"><img src="images/the-hud-group-logo.png" alt="The HuD Group" width="101" height="34"></picture></a>' +
       '<span class="crumb">' + esc(S.data.settings.cohortName || 'The Shadrach Fellowship') + (S.viewAs ? ' &middot; ' + esc(person.name) : '') + '</span><span class="spacer"></span>' +
@@ -472,6 +519,9 @@
     if (dayIdx >= 0 && dayIdx < 365) todos.push(todo(m.bibleDays.charAt(dayIdx) === '1', 'Bible in One Year: day ' + (dayIdx + 1), m.bibleBehind > 1 ? plural(m.bibleBehind, 'day') + ' to catch up' : 'Keep the rhythm going', '#/bible', canEdit() ? 'bible-today' : ''));
     if (m.hi5) todos.push(todo((m.hi5.prayerLog || []).indexOf(m.today) >= 0, 'Pray for ' + (m.hi5.peopleGroup || 'your people group'), 'With your Hi 5 group' + (m.hi5.prayerDay ? ' (' + m.hi5.prayerDay + 's)' : ''), '#/disciples', canEdit() ? 'pray-today' : ''));
     else todos.push(todo(false, 'Form your Hi 5 prayer group', 'Adopt an unreached people group', '#/disciples'));
+    var todayNames = m.prayers.filter(function (p) { return p.day === parse(m.today).getDate(); }).map(function (p) { return p.name; });
+    if (m.prayers.length) todos.push(todo(((m.formation.prayerLog) || []).indexOf(m.today) >= 0, todayNames.length ? 'Pray for ' + todayNames.slice(0, 3).join(', ') + (todayNames.length > 3 ? ' and ' + (todayNames.length - 3) + ' more' : '') : 'Prayer calendar: nobody on today\'s date', 'Day ' + parse(m.today).getDate() + ' of your prayer calendar', '#/prayer', canEdit() && todayNames.length ? 'pray-cal-today' : ''));
+    else todos.push(todo(false, 'Fill your prayer calendar', 'List the people you are praying for', '#/prayer'));
     var weekAgo = addDays(m.today, -7);
     var met = m.mentees.some(function (x) { return (x.meetings || []).some(function (mt) { return mt.date >= weekAgo; }); });
     todos.push(todo(met, m.mentees.length ? 'Meet with one of your disciples' : 'Choose your three disciples', m.mentees.length ? plural(m.mentees.length, 'disciple') + ' on your list' : 'Start with prayer, then invite them', '#/disciples'));
@@ -513,8 +563,7 @@
     var q = /^Q[1-4]$/.test(r.a) ? r.a : currentQuarter();
     var info = quarterInfo(q);
     var tabs = '<div class="tabs" role="tablist">' + ['Q1', 'Q2', 'Q3', 'Q4'].map(function (x) { return '<a href="#/journey/' + x + '" class="' + (x === q ? 'active' : '') + '">' + x + '<span class="tab-long"> ' + esc(quarterInfo(x).name.split(' ')[0]) + '</span>' + '</a>'; }).join('') + '</div>';
-    var list = m.sessions.filter(function (s) { return quarterOf(s.date) === q && s.date.slice(0, 4) === (d.settings.programmeYear || s.date.slice(0, 4)); });
-    if (q === 'Q1') list = m.sessions.filter(function (s) { return s.kind === 'induction'; }).concat(list);
+    var list = m.sessions.filter(function (s) { return progQuarter(s.date) === q; });
     var rows = list.map(function (s) {
       var a = m.att[s.id], rf = m.refl[s.id], isNext = m.next && m.next.id === s.id, past = s.date < m.today;
       var chips = [];
@@ -622,17 +671,33 @@
   }
 
   /* ================================================================ fellow: disciples and Hi 5 */
+  function updatesList(list, max, kinds) {
+    var u = (list || []).slice().sort(by('date')).reverse().slice(0, max || 5);
+    if (!u.length) return '';
+    return '<ul class="timeline">' + u.map(function (x) {
+      return '<li><div class="tl-date">' + esc(fmt(x.date)) + '</div><div class="tl-body">' + (kinds && x.kind ? '<span class="chip">' + esc(MEET_KINDS[x.kind] || x.kind) + '</span> ' : '') + (x.progress !== undefined && x.progress !== null && !kinds ? '<span class="chip purple">' + x.progress + '%</span> ' : '') + '<span>' + nl(x.note || '') + '</span></div></li>';
+    }).join('') + '</ul>';
+  }
+
+  function stageBar(stage) {
+    var i = stageIndex(stage);
+    return '<div class="stage"><div class="stage-top"><span class="small muted">Stage ' + (i + 1) + ' of ' + STAGES.length + '</span><b class="small">' + esc(STAGES[i][1]) + '</b></div><div class="bar"><i style="width:' + pct(i + 1, STAGES.length) + '%"></i></div></div>';
+  }
+
+  function discipleCard(x, editable) {
+    var meetings = (x.meetings || []).slice().sort(by('date'));
+    return '<div class="card person-card"><div class="top"><div class="avatar purple">' + esc(initials(x.name)) + '</div><div class="grow"><b>' + esc(x.name) + '</b><span class="small muted">' + esc(x.relationship || x.contact || 'Since ' + fmt(x.startedOn)) + '</span></div>' + chip(x.status === 'active' ? 'Active' : x.status === 'paused' ? 'Paused' : 'Ended', x.status === 'active' ? 'green' : 'amber') + '</div>' +
+      stageBar(x.stage) +
+      '<div class="small"><b>' + plural(meetings.length, 'update') + '</b>' + (meetings.length ? ' &middot; latest ' + esc(fmt(meetings[meetings.length - 1].date)) : ' yet') + '</div>' +
+      updatesList(meetings, editable ? 2 : 6, true) +
+      (editable ? '<div class="form-actions"><button class="btn btn-soft btn-sm" data-act="log-meeting" data-id="' + esc(x.id) + '">' + icon('plus') + 'Add an update</button><button class="btn btn-ghost btn-sm" data-act="edit-mentee" data-id="' + esc(x.id) + '">' + icon('edit') + 'Edit</button></div>'
+        : (S.viewAs ? '<button class="btn btn-ghost btn-sm" data-act="edit-mentee" data-id="' + esc(x.id) + '">' + icon('eye') + 'All updates</button>' : '')) + '</div>';
+  }
+
   FELLOW_VIEWS.disciples = function () {
     var d = F(), m = fm(d), ed = canEdit();
     var list = (d.mentees || []).slice().sort(function (a, b) { return (a.status === 'ended') - (b.status === 'ended') || (a.startedOn < b.startedOn ? -1 : 1); });
-    var cards = list.map(function (x) {
-      var meetings = (x.meetings || []).slice().sort(by('date'));
-      var lastMeet = meetings[meetings.length - 1];
-      return '<div class="card person-card"><div class="top"><div class="avatar purple">' + esc(initials(x.name)) + '</div><div class="grow"><b>' + esc(x.name) + '</b><span class="small muted">' + esc(x.relationship || x.contact || 'Since ' + fmt(x.startedOn)) + '</span></div>' + chip(x.status === 'active' ? 'Active' : x.status === 'paused' ? 'Paused' : 'Ended', x.status === 'active' ? 'green' : 'amber') + '</div>' +
-        '<div class="small"><b>' + plural(meetings.length, 'meeting') + '</b>' + (lastMeet ? ' &middot; last on ' + esc(fmt(lastMeet.date)) : ' yet') + '</div>' +
-        (lastMeet && lastMeet.note ? '<div class="small muted">' + nl(lastMeet.note) + '</div>' : '') +
-        (ed ? '<div class="form-actions"><button class="btn btn-soft btn-sm" data-act="log-meeting" data-id="' + esc(x.id) + '">' + icon('plus') + 'Log a meeting</button><button class="btn btn-ghost btn-sm" data-act="edit-mentee" data-id="' + esc(x.id) + '">' + icon('edit') + 'Edit</button></div>' : '<button class="btn btn-ghost btn-sm" data-act="edit-mentee" data-id="' + esc(x.id) + '">' + icon('eye') + 'Details</button>') + '</div>';
-    });
+    var cards = list.map(function (x) { return discipleCard(x, ed); });
     var active = list.filter(function (x) { return x.status !== 'ended'; }).length;
     for (var k = active; k < 3 && ed; k++) cards.push('<button class="slot" data-act="edit-mentee">' + icon('plus') + '<span>Add disciple ' + (k + 1) + ' of 3</span></button>');
     var h = m.hi5;
@@ -650,10 +715,12 @@
       (h ? '<div class="members" style="margin-bottom:18px">' + memberHtml + '</div>' +
         '<div class="grid g2"><div><div class="label">Adopted people group</div>' + (h.peopleGroup ? '<div style="font:600 19px var(--font-h);color:var(--heading)">' + esc(h.peopleGroup) + '</div><div class="small muted">' + esc(h.peopleCountry || '') + '</div><a class="small" target="_blank" rel="noopener" href="https://joshuaproject.net/search?q=' + encodeURIComponent(h.peopleGroup) + '">Learn about them on Joshua Project</a>' : '<span class="muted">Not chosen yet. <a target="_blank" rel="noopener" href="https://joshuaproject.net/pray/unreachedoftheday">Find an unreached people group</a></span>') + '</div>' +
         '<div><div class="label">Prayer in the last four weeks</div><div class="dots" style="margin:6px 0 10px">' + dots + '</div><div class="small muted">' + plural(log.length, 'day') + ' of prayer logged' + (h.prayerDay ? ' &middot; you meet on ' + esc(h.prayerDay) + 's' : '') + '</div>' +
-        (ed ? '<button class="btn ' + (prayedToday ? 'btn-ghost' : 'btn-peach') + ' btn-sm" style="margin-top:10px" data-act="pray-today">' + icon('heart') + (prayedToday ? 'Prayed today (undo)' : 'We prayed today') + '</button>' : '') + '</div></div>'
+        (ed ? '<button class="btn ' + (prayedToday ? 'btn-ghost' : 'btn-peach') + ' btn-sm" style="margin-top:10px" data-act="pray-today">' + icon('heart') + (prayedToday ? 'Prayed today (undo)' : 'We prayed today') + '</button>' : '') + '</div></div>' +
+        '<div class="divider"></div><div class="card-head" style="margin-bottom:6px"><h3>How it is going</h3>' + (ed ? '<button class="btn btn-soft btn-sm" data-act="hi5-update">' + icon('plus') + 'Add an update</button>' : '') + '</div>' +
+        (updatesList(h.updates, 6) || '<p class="small muted">No updates yet. Share how your group is doing: who joined, what you prayed for, answers you have seen.</p>')
         : '<p class="muted">Gather five people to pray regularly for an unreached people group you adopt together. Set up your group to start tracking your prayer.</p>') + '</div>';
     return {
-      html: head('My disciples and Hi 5', 'Pick your three, walk with them and log each time you meet. Pray with your Hi 5 group for the unreached.', '', '2 Timothy 2:2') +
+      html: head('My disciples and Hi 5', 'List your three disciples and keep a record of each step: every meeting, call, Bible study and prayer. Give updates on your Hi 5 group as you pray for the unreached.', '', '2 Timothy 2:2') +
         '<div class="qhead"><h2>My three</h2><span class="muted">' + plural(active, 'active disciple') + '</span></div>' +
         '<div class="grid g3">' + (cards.join('') || '<div class="card">' + empty('users', 'No disciples listed yet.') + '</div>') + '</div>' +
         '<div class="qhead" style="margin-top:30px"><h2>Hi 5</h2><span class="muted">Praying for the unreached</span></div>' + hi5Card
@@ -661,17 +728,17 @@
   };
 
   function menteeModal(id) {
-    var d = F(), x = (d.mentees || []).filter(function (y) { return y.id === id; })[0] || { status: 'active', startedOn: todayISO(), meetings: [] };
+    var d = F(), x = (d.mentees || []).filter(function (y) { return y.id === id; })[0] || { status: 'active', startedOn: todayISO(), meetings: [], stage: 'praying' };
     var ro = !canEdit(), dis = ro ? ' disabled' : '';
-    var meetings = (x.meetings || []).slice().sort(by('date')).reverse();
     openModal(x.id ? x.name : 'Add a disciple', '<form data-form="mentee" data-id="' + esc(x.id || '') + '">' +
       '<div class="field"><label for="m-name">Name</label><input class="input" id="m-name" name="name" required value="' + esc(x.name || '') + '"' + dis + '></div>' +
       '<div class="row2"><div class="field"><label for="m-contact">Phone or email</label><input class="input" id="m-contact" name="contact" value="' + esc(x.contact || '') + '"' + dis + '></div>' +
       '<div class="field"><label for="m-rel">How you know them</label><input class="input" id="m-rel" name="relationship" value="' + esc(x.relationship || '') + '" placeholder="e.g. church, campus, work"' + dis + '></div></div>' +
-      '<div class="row2"><div class="field"><label for="m-start">Started on</label><input class="input" type="date" id="m-start" name="startedOn" value="' + esc(x.startedOn || '') + '"' + dis + '></div>' +
-      '<div class="field"><label for="m-status">Status</label><select class="input" id="m-status" name="status"' + dis + '>' + ['active', 'paused', 'ended'].map(function (s) { return '<option value="' + s + '"' + (x.status === s ? ' selected' : '') + '>' + s.charAt(0).toUpperCase() + s.slice(1) + '</option>'; }).join('') + '</select></div></div>' +
+      '<div class="row3"><div class="field"><label for="m-start">Started on</label><input class="input" type="date" id="m-start" name="startedOn" value="' + esc(x.startedOn || '') + '"' + dis + '></div>' +
+      '<div class="field"><label for="m-stage">Where they are</label><select class="input" id="m-stage" name="stage"' + dis + '>' + STAGES.map(function (st) { return '<option value="' + st[0] + '"' + ((x.stage || 'praying') === st[0] ? ' selected' : '') + '>' + st[1] + '</option>'; }).join('') + '</select></div>' +
+      '<div class="field"><label for="m-status">Status</label><select class="input" id="m-status" name="status"' + dis + '>' + ['active', 'paused', 'ended'].map(function (s2) { return '<option value="' + s2 + '"' + (x.status === s2 ? ' selected' : '') + '>' + s2.charAt(0).toUpperCase() + s2.slice(1) + '</option>'; }).join('') + '</select></div></div>' +
       '<div class="field"><label for="m-notes">Notes and prayer points</label><textarea class="input" id="m-notes" name="notes" rows="3"' + dis + '>' + esc(x.notes || '') + '</textarea></div>' +
-      (meetings.length ? '<div class="label">Meetings</div><ul class="list" style="margin-bottom:14px">' + meetings.map(function (mt) { return '<li><div class="grow"><div class="title small">' + esc(fmt(mt.date, true)) + '</div>' + (mt.note ? '<div class="meta">' + nl(mt.note) + '</div>' : '') + '</div></li>'; }).join('') + '</ul>' : '') +
+      ((x.meetings || []).length ? '<div class="label">All updates</div>' + updatesList(x.meetings, 200, true) : '') +
       (ro ? '' : '<div class="form-actions"><button class="btn" type="submit">Save</button>' + (x.id ? '<button class="btn btn-danger" type="button" data-act="delete-mentee" data-id="' + esc(x.id) + '">' + icon('trash') + 'Remove</button>' : '') + '</div>') + '</form>');
   }
 
@@ -693,6 +760,110 @@
       '<div class="form-actions"><button class="btn" type="submit">Save group</button></div></form>');
   }
 
+  /* ================================================================ fellow: prayer calendar */
+  FELLOW_VIEWS.prayer = function () {
+    var d = F(), m = fm(d), ed = canEdit();
+    var list = (d.prayers || []).slice().sort(function (a, b) { return a.day - b.day || (a.name < b.name ? -1 : 1); });
+    var byDay = {}; list.forEach(function (p) { (byDay[p.day] = byDay[p.day] || []).push(p); });
+    var todayDay = parse(m.today).getDate();
+    var log = (d.formation && d.formation.prayerLog) || [];
+    var prayed = log.indexOf(m.today) >= 0;
+    var todays = byDay[todayDay] || [];
+    var monthStart = m.today.slice(0, 8) + '01';
+    var monthPrayed = log.filter(function (x) { return x >= monthStart && x <= m.today; }).length;
+    var today = '<div class="card prayer-today"><div class="eyebrow">Today &middot; day ' + todayDay + ' of your calendar</div><h2 style="margin:6px 0 12px">' + (todays.length ? 'Pray for' : 'Nobody on today\'s date') + '</h2>' +
+      (todays.length ? '<ul class="list">' + todays.map(function (p) { return '<li><div class="avatar">' + esc(initials(p.name)) + '</div><div class="grow"><div class="title">' + esc(p.name) + '</div><div class="meta">' + esc(PRAYER_CATS[p.category] || '') + (p.request ? ' &middot; ' + esc(p.request) : '') + '</div></div>' + (p.answered ? chip('Answered', 'green') : '') + '</li>'; }).join('') + '</ul>' : '<p class="muted">Use today to pray for anyone on your heart, or add someone to day ' + todayDay + '.</p>') +
+      '<div class="form-actions" style="margin-top:12px">' + (ed && todays.length ? '<button class="btn ' + (prayed ? 'btn-ghost' : 'btn-peach') + '" data-act="pray-cal-today">' + icon('heart') + (prayed ? 'Prayed today (undo)' : 'I prayed today') + '</button>' : '') + (ed ? '<button class="btn btn-ghost" data-act="edit-prayer" data-day="' + todayDay + '">' + icon('plus') + 'Add someone' + '</button>' : '') + '</div>' +
+      '<p class="small muted" style="margin-top:10px">' + plural(monthPrayed, 'day') + ' of prayer this month</p></div>';
+    var cells = '';
+    for (var dd = 1; dd <= 31; dd++) {
+      var ppl = byDay[dd] || [];
+      cells += '<button type="button" class="pday' + (dd === todayDay ? ' today' : '') + (ppl.length ? ' has' : '') + '" data-act="prayer-day" data-day="' + dd + '" aria-label="Day ' + dd + ', ' + plural(ppl.length, 'person', 'people') + '"><span class="pnum">' + dd + '</span>' +
+        ppl.slice(0, 3).map(function (p) { return '<span class="pname">' + esc(p.name) + '</span>'; }).join('') + (ppl.length > 3 ? '<span class="pmore">+' + (ppl.length - 3) + ' more</span>' : '') + '</button>';
+    }
+    var answered = list.filter(function (p) { return p.answered; });
+    var filled = daysFilled(list);
+    var stats = '<div class="grid g4" style="margin-bottom:16px">' + kpi(list.length, 'People on your calendar') + kpi(filled + '/31', 'Days with someone') + kpi(answered.length, 'Answered prayers') + kpi(log.length, 'Days prayed through it') + '</div>';
+    var answeredCard = answered.length ? '<div class="card" style="margin-top:16px"><div class="card-head"><h3>Answered prayers</h3><span class="sub">Remember what God has done</span></div><ul class="list">' + answered.map(function (p) { return '<li><div class="grow"><div class="title">' + esc(p.name) + '</div><div class="meta">' + esc(p.request || '') + '</div>' + (p.answeredNote ? '<div class="small" style="margin-top:4px">' + nl(p.answeredNote) + '</div>' : '') + '</div>' + chip('Day ' + p.day, 'purple') + '</li>'; }).join('') + '</ul></div>' : '';
+    return {
+      html: head('Prayer calendar', 'List the people you are praying for and give each one a day of the month. Every day the portal shows you who to pray for.', ed ? '<button class="btn" data-act="edit-prayer">' + icon('plus') + 'Add someone</button>' : '', 'Pray without ceasing') +
+        stats + '<div class="grid g-main" style="align-items:start"><div><div class="card"><div class="card-head"><h3>Your 31 days</h3><span class="sub">Tap a day to see or add people</span></div><div class="pgrid">' + cells + '</div></div>' + answeredCard + '</div><div>' + today + '</div></div>'
+    };
+  };
+
+  function prayerDayModal(day) {
+    var d = F(), ed = canEdit();
+    var ppl = (d.prayers || []).filter(function (p) { return p.day === day; });
+    openModal('Day ' + day, (ppl.length ? '<ul class="list">' + ppl.map(function (p) { return '<li><div class="grow"><div class="title">' + esc(p.name) + (p.answered ? ' ' + chip('Answered', 'green') : '') + '</div><div class="meta">' + esc(PRAYER_CATS[p.category] || '') + (p.request ? ' &middot; ' + esc(p.request) : '') + '</div></div>' + (ed ? '<button class="icon-btn" data-act="edit-prayer" data-id="' + esc(p.id) + '" aria-label="Edit ' + esc(p.name) + '">' + icon('edit') + '</button>' : '') + '</li>'; }).join('') + '</ul>' : '<p class="muted">Nobody on this day yet.</p>') +
+      (ed ? '<div class="form-actions" style="margin-top:12px"><button class="btn" data-act="edit-prayer" data-day="' + day + '">' + icon('plus') + 'Add someone to day ' + day + '</button></div>' : ''));
+  }
+
+  function prayerModal(id, day) {
+    var p = (F().prayers || []).filter(function (x) { return x.id === id; })[0] || { day: day || parse(todayISO()).getDate(), category: 'family' };
+    var days = ''; for (var i = 1; i <= 31; i++) days += '<option value="' + i + '"' + (Number(p.day) === i ? ' selected' : '') + '>' + i + '</option>';
+    openModal(p.id ? 'Edit ' + p.name : 'Add someone to pray for', '<form data-form="prayer" data-id="' + esc(p.id || '') + '">' +
+      '<div class="field"><label for="pr-name">Who are you praying for?</label><input class="input" id="pr-name" name="name" required value="' + esc(p.name || '') + '" placeholder="A name, a family or a group"></div>' +
+      '<div class="row2"><div class="field"><label for="pr-day">Day of the month</label><select class="input" id="pr-day" name="day">' + days + '</select></div>' +
+      '<div class="field"><label for="pr-cat">Who they are to you</label><select class="input" id="pr-cat" name="category">' + opts(PRAYER_CATS, p.category) + '</select></div></div>' +
+      '<div class="field"><label for="pr-req">Prayer request</label><textarea class="input" id="pr-req" name="request" rows="3" placeholder="What are you asking God for?">' + esc(p.request || '') + '</textarea></div>' +
+      '<div class="field"><label class="check"><input type="checkbox" name="answered"' + (p.answered ? ' checked' : '') + '> God has answered this prayer</label></div>' +
+      '<div class="field"><label for="pr-ans">How did God answer? <span class="muted" style="font-weight:400">(optional)</span></label><textarea class="input" id="pr-ans" name="answeredNote" rows="2">' + esc(p.answeredNote || '') + '</textarea></div>' +
+      '<div class="form-actions"><button class="btn" type="submit">Save</button>' + (p.id ? '<button class="btn btn-danger" type="button" data-act="delete-prayer" data-id="' + esc(p.id) + '">' + icon('trash') + 'Remove</button>' : '') + '</div></form>');
+  }
+
+  /* ================================================================ fellow: purpose, values and goals */
+  function goalCard(g, editable) {
+    var st = GOAL_STATUS[g.status] || [g.status, ''];
+    var overdue = g.target && g.target < todayISO() && g.status !== 'done';
+    return '<div class="card goal"><div class="card-head" style="margin-bottom:8px"><span class="eyebrow">' + esc(GOAL_AREAS[g.area] || g.area) + '</span><div class="chips">' + (overdue ? chip('Past target date', 'red') : '') + chip(st[0], st[1]) + '</div></div>' +
+      '<h3 style="margin-bottom:6px">' + esc(g.title) + '</h3>' + (g.measure ? '<p class="small muted">' + esc(g.measure) + '</p>' : '') +
+      '<div class="bar' + (g.status === 'done' ? '' : ' peach') + '" style="margin:10px 0 6px"><i style="width:' + (g.progress || 0) + '%"></i></div>' +
+      '<div class="small muted" style="display:flex;justify-content:space-between;gap:10px"><span>' + (g.target ? 'By ' + esc(fmt(g.target, true)) : 'No target date') + '</span><b>' + (g.progress || 0) + '%</b></div>' +
+      (g.steps ? '<div class="qa" style="margin-top:10px"><div class="q small">Steps</div><div class="a small">' + esc(g.steps) + '</div></div>' : '') +
+      updatesList(g.updates, editable ? 2 : 6) +
+      (editable ? '<div class="form-actions" style="margin-top:12px"><button class="btn btn-soft btn-sm" data-act="goal-update" data-id="' + esc(g.id) + '">' + icon('plus') + 'Add an update</button><button class="btn btn-ghost btn-sm" data-act="edit-goal" data-id="' + esc(g.id) + '">' + icon('edit') + 'Edit</button></div>' : '') + '</div>';
+  }
+
+  FELLOW_VIEWS.purpose = function () {
+    var d = F(), ed = canEdit(), f = d.formation || {}, dis = ed ? '' : ' disabled';
+    var values = f.values || [];
+    var goals = (d.goals || []).slice().sort(function (a, b) { return (a.status === 'done') - (b.status === 'done') || ((a.target || '9') < (b.target || '9') ? -1 : 1); });
+    var statements = '<div class="card"><div class="card-head"><h2>Purpose and mission</h2>' + (f.updatedAt ? '<span class="sub">Saved ' + esc(fmtStamp(f.updatedAt)) + '</span>' : '') + '</div>' +
+      (f.purpose ? '<div class="iwill" style="margin-bottom:16px"><div class="eyebrow" style="margin-bottom:8px">My purpose</div><q>' + nl(f.purpose) + '</q></div>' : '') +
+      '<form data-form="formation">' +
+      '<div class="field"><label for="fo-p">Personal purpose statement</label><textarea class="input" id="fo-p" name="purpose" rows="3" placeholder="Why God made me and what I live for"' + dis + '>' + esc(f.purpose || '') + '</textarea></div>' +
+      '<div class="field"><label for="fo-m">Personal mission statement</label><textarea class="input" id="fo-m" name="mission" rows="3" placeholder="What I will do, for whom, and how"' + dis + '>' + esc(f.mission || '') + '</textarea></div>' +
+      '<div class="field"><label for="fo-f">Family mission statement <span class="muted" style="font-weight:400">(optional)</span></label><textarea class="input" id="fo-f" name="familyMission" rows="2"' + dis + '>' + esc(f.familyMission || '') + '</textarea></div>' +
+      (ed ? '<div class="form-actions"><button class="btn" type="submit">Save my statements</button></div>' : '') + '</form></div>';
+    var valuesCard = '<div class="card"><div class="card-head"><h2>My core values</h2>' + (ed ? '<button class="btn btn-soft btn-sm" data-act="add-value">' + icon('plus') + 'Add a value</button>' : '') + '</div>' +
+      (values.length ? '<ul class="list">' + values.map(function (v, i) { return '<li><span class="value-num">' + (i + 1) + '</span><div class="grow"><div class="title">' + esc(v.value) + '</div>' + (v.meaning ? '<div class="meta">' + esc(v.meaning) + '</div>' : '') + '</div>' + (ed ? '<button class="icon-btn" data-act="remove-value" data-i="' + i + '" aria-label="Remove ' + esc(v.value) + '">' + icon('x') + '</button>' : '') + '</li>'; }).join('') + '</ul>'
+        : empty('star', 'Name the few values you want to live by, and what each one means to you.')) + '</div>';
+    var done = goals.filter(function (g) { return g.status === 'done'; }).length;
+    return {
+      html: head('Purpose and goals', 'Your purpose and mission statements, the values you live by and the goals you are working towards this year. Update each goal as you make progress.', ed ? '<button class="btn" data-act="edit-goal">' + icon('plus') + 'Add a goal</button>' : '', 'Know why, then go') +
+        '<div class="grid g2" style="align-items:start">' + statements + valuesCard + '</div>' +
+        '<div class="qhead" style="margin-top:28px"><h2>My goals</h2><span class="muted">' + done + ' of ' + goals.length + ' done</span></div>' +
+        '<div class="grid g2">' + (goals.length ? goals.map(function (g) { return goalCard(g, ed); }).join('') : '<div class="card">' + empty('star', 'No goals yet. Set at least three for the year: spiritual, personal and ministry.') + '</div>') + '</div>'
+    };
+  };
+
+  function goalModal(id) {
+    var g = (F().goals || []).filter(function (x) { return x.id === id; })[0] || { area: 'spiritual', status: 'not-started', progress: 0 };
+    openModal(g.id ? 'Edit goal' : 'Add a goal', '<form data-form="goal" data-id="' + esc(g.id || '') + '">' +
+      '<div class="field"><label for="g-title">Goal</label><input class="input" id="g-title" name="title" required value="' + esc(g.title || '') + '" placeholder="e.g. Read through the New Testament with my disciples"></div>' +
+      '<div class="row3"><div class="field"><label for="g-area">Area of life</label><select class="input" id="g-area" name="area">' + opts(GOAL_AREAS, g.area) + '</select></div>' +
+      '<div class="field"><label for="g-target">Target date</label><input class="input" type="date" id="g-target" name="target" value="' + esc(g.target || '') + '"></div>' +
+      '<div class="field"><label for="g-status">Status</label><select class="input" id="g-status" name="status">' + Object.keys(GOAL_STATUS).map(function (k) { return '<option value="' + k + '"' + (g.status === k ? ' selected' : '') + '>' + GOAL_STATUS[k][0] + '</option>'; }).join('') + '</select></div></div>' +
+      '<div class="field"><label for="g-measure">How you will know it is done</label><input class="input" id="g-measure" name="measure" value="' + esc(g.measure || '') + '"></div>' +
+      '<div class="field"><label for="g-steps">Steps</label><textarea class="input" id="g-steps" name="steps" rows="3" placeholder="The first few things you will do">' + esc(g.steps || '') + '</textarea></div>' +
+      '<div class="field"><label for="g-prog">Progress <b id="g-prog-v">' + (g.progress || 0) + '%</b></label><input type="range" id="g-prog" name="progress" min="0" max="100" step="5" value="' + (g.progress || 0) + '" style="width:100%;accent-color:var(--purple)"></div>' +
+      ((g.updates || []).length ? '<div class="label">Updates</div>' + updatesList(g.updates, 100) : '') +
+      '<div class="form-actions"><button class="btn" type="submit">Save goal</button>' + (g.id ? '<button class="btn btn-danger" type="button" data-act="delete-goal" data-id="' + esc(g.id) + '">' + icon('trash') + 'Delete</button>' : '') + '</div></form>');
+    rangeLabel('g-prog');
+  }
+
+  function rangeLabel(id) { var r = document.getElementById(id); if (r) r.oninput = function () { document.getElementById(id + '-v').textContent = r.value + '%'; }; }
+
   /* ================================================================ fellow: assignments */
   FELLOW_VIEWS.assignments = function () {
     var d = F(), m = fm(d);
@@ -709,7 +880,7 @@
   function taskCard(t, m) {
     var s = m.tState(t);
     var overdue = t.due && t.due < m.today && !s.done;
-    var href = t.kind === 'bible' ? '#/bible' : t.kind === 'mentees' || t.kind === 'hi5' ? '#/disciples' : t.kind === 'report' ? '#/reports/' + s.quarter : '';
+    var href = t.kind === 'bible' ? '#/bible' : t.kind === 'prayercal' ? '#/prayer' : t.kind === 'purpose' || t.kind === 'goals' ? '#/purpose' : t.kind === 'mentees' || t.kind === 'hi5' ? '#/disciples' : t.kind === 'report' ? '#/reports/' + s.quarter : '';
     var res = t.resourceId ? (F().resources || []).filter(function (r) { return r.id === t.resourceId; })[0] : null;
     var st = STATUS[s.status] || [s.status, ''];
     return '<div class="card"><div class="card-head" style="margin-bottom:8px"><span class="eyebrow">' + esc(KIND[t.kind] || t.kind) + '</span><div class="chips">' + (overdue ? chip('Overdue', 'red') : '') + chip(st[0], st[1]) + '</div></div>' +
@@ -823,11 +994,15 @@
   function reportView(d) {
     var m = d.metrics, a = d.answers, ev = d.evaluation;
     var stat = function (v, l) { return '<div><b>' + esc(v) + '</b><span>' + esc(l) + '</span></div>'; };
-    return '<article class="report"><div class="report-top"><div class="eyebrow">' + esc(d.cohortName) + ' &middot; ' + esc(d.quarter) + ' report</div><h1>' + esc(d.fellow.name) + '</h1><p>' + esc(m.name) + ': ' + esc(m.field) + (d.fellow.country ? ' &middot; ' + esc([d.fellow.city, d.fellow.country].filter(String).join(', ')) : '') + '</p></div>' +
+    return '<article class="report"><div class="report-top">' + (d.fellow.photo ? av({ photo: d.fellow.photo, name: d.fellow.name }, 'xl report-photo') : '') + '<div class="eyebrow">' + esc(d.cohortName) + ' &middot; ' + esc(d.quarter) + ' report</div><h1>' + esc(d.fellow.name) + '</h1><p>' + esc(m.name) + ': ' + esc(m.field) + (d.fellow.country ? ' &middot; ' + esc([d.fellow.city, d.fellow.country].filter(String).join(', ')) : '') + '</p></div>' +
       '<div class="report-body"><div class="report-stats">' +
       stat(m.attendanceRate === null ? 'n/a' : m.attendanceRate + '%', 'Attendance') + stat(m.present + '/' + m.sessionsHeld, 'Sessions attended') + stat(m.reflections, 'Reflections') + stat(m.biblePercent + '%', 'Bible in a year') + stat(m.tasksDone + '/' + m.tasksTotal, 'Assignments') +
       stat(m.disciples, 'Disciples') + stat(m.meetings, 'Discipleship meetings') + stat(m.hi5Members, 'Hi 5 members') + stat(m.prayers, 'Days prayed') + stat(m.excused, 'Excused absences') + '</div>' +
-      (m.peopleGroup ? '<p class="muted" style="margin-top:12px">Hi 5 adopted people group: <b style="color:var(--text)">' + esc(m.peopleGroup) + '</b></p>' : '') +
+      (m.peopleGroup ? '<p class="muted" style="margin-top:12px">Hi 5 adopted people group: <b style="color:var(--text)">' + esc(m.peopleGroup) + '</b>' + (m.hi5Updates ? ' &middot; ' + plural(m.hi5Updates, 'group update') + ' this quarter' : '') + '</p>' : '') +
+      (m.prayerPeople !== undefined ? '<p class="muted" style="margin-top:6px">Prayer calendar: <b style="color:var(--text)">' + plural(m.prayerPeople, 'person', 'people') + '</b> across ' + m.prayerDays + ' of 31 days, ' + plural(m.answered, 'answered prayer') + ', prayed through it on ' + plural(m.calendarPrayed, 'day') + ' this quarter</p>' : '') +
+      (m.stages && m.stages.length ? '<p class="muted" style="margin-top:6px">Disciples: ' + m.stages.map(function (x) { return '<b style="color:var(--text)">' + esc(x.name) + '</b> (' + esc(STAGE_LABEL[x.stage] || x.stage) + ')'; }).join(', ') + '</p>' : '') +
+      (m.purpose || m.mission || (m.values && m.values.length) ? '<h3>Purpose and values</h3>' + (m.purpose ? '<div class="qa"><div class="q">Purpose statement</div><div class="a">' + esc(m.purpose) + '</div></div>' : '') + (m.mission ? '<div class="qa"><div class="q">Mission statement</div><div class="a">' + esc(m.mission) + '</div></div>' : '') + (m.values && m.values.length ? '<div class="chips">' + m.values.map(function (v) { return chip(v, 'purple'); }).join('') + '</div>' : '') : '') +
+      (m.goals && m.goals.length ? '<h3>Goals (' + m.goalsDone + ' of ' + m.goals.length + ' done)</h3><ul class="list">' + m.goals.map(function (g) { return '<li><div class="grow"><div class="title">' + esc(g.title) + '</div><div class="meta">' + esc(GOAL_AREAS[g.area] || g.area) + '</div><div class="bar" style="margin-top:6px"><i style="width:' + (g.progress || 0) + '%"></i></div></div><b>' + (g.progress || 0) + '%</b></li>'; }).join('') + '</ul>' : '') +
       (m.tasks.length ? '<h3>Assignments this quarter</h3><ul class="list">' + m.tasks.map(function (t) { var s = STATUS[t.status] || [t.status, '']; return '<li><div class="grow">' + esc(t.title) + (t.result ? ' <span class="muted">(' + esc(t.result) + ')</span>' : '') + '</div>' + chip(s[0], s[1]) + '</li>'; }).join('') + '</ul>' : '') +
       (m.iWills.length ? '<h3>Recent "I will" statements</h3>' + m.iWills.map(function (w) { return '<div class="iwill" style="margin-bottom:8px;padding:14px 16px 14px 20px"><q style="font-size:16px">' + nl(w) + '</q></div>'; }).join('') : '') +
       '<h3>Self report</h3>' + (!a ? '<p class="muted">Not written yet.</p>' : d.questions.map(function (x) { return '<div class="qa"><div class="q">' + esc(x.q) + '</div><div class="a">' + (a[x.k] ? esc(a[x.k]) : '<span class="muted">No answer</span>') + '</div></div>'; }).join('') +
@@ -879,17 +1054,33 @@
 
   FELLOW_VIEWS.profile = function () {
     var d = F(), me = d.me, ro = !canEdit(), dis = ro ? ' disabled' : '';
-    return {
-      html: head('My profile', 'Keep your contact details up to date so your facilitators can reach you.') +
-        '<div class="grid g-main"><div class="card"><div class="person" style="margin-bottom:18px"><div class="avatar lg">' + esc(initials(me.name)) + '</div><div><b style="font:600 22px var(--font-h);color:var(--heading)">' + esc(me.name) + '</b><small>' + esc(me.email) + '</small></div></div>' +
-        '<form data-form="profile"><div class="row2"><div class="field"><label for="p-phone">Phone</label><input class="input" id="p-phone" name="phone" value="' + esc(me.phone || '') + '"' + dis + '></div><div class="field"><label for="p-wa">WhatsApp</label><input class="input" id="p-wa" name="whatsapp" value="' + esc(me.whatsapp || '') + '"' + dis + '></div></div>' +
-        '<div class="row2"><div class="field"><label for="p-city">City</label><input class="input" id="p-city" name="city" value="' + esc(me.city || '') + '"' + dis + '></div><div class="field"><label for="p-country">Country</label><input class="input" id="p-country" name="country" value="' + esc(me.country || '') + '"' + dis + '></div></div>' +
-        '<div class="field"><label for="p-bio">A little about you</label><textarea class="input" id="p-bio" name="bio" rows="4"' + dis + '>' + esc(me.bio || '') + '</textarea></div>' +
-        (ro ? '' : '<div class="form-actions"><button class="btn" type="submit">Save my details</button></div>') + '</form></div>' +
-        '<div class="stack"><div class="card"><h3>Calendar</h3><p class="small muted" style="margin-top:6px">Add every Friday session to your phone or computer calendar.</p><button class="btn btn-soft btn-sm" data-act="ics-all">' + icon('calendar') + 'Download the calendar</button></div>' +
-        (d.settings.whatsappGroup ? '<div class="card"><h3>Cohort WhatsApp</h3><p class="small muted" style="margin-top:6px">Stay connected with your cohort between sessions.</p><a class="btn btn-soft btn-sm" target="_blank" rel="noopener" href="' + esc(d.settings.whatsappGroup) + '">Open the group</a></div>' : '') +
-        '<div class="card"><h3>Your privacy</h3><p class="small muted" style="margin-top:6px">Only you and the fellowship admins can see your portal. Reports leave the portal only when you download them or create a share link, and you can withdraw a link at any time.</p>' + (ro ? '' : '<button class="btn btn-ghost btn-sm" data-act="sign-out">' + icon('logout') + 'Sign out</button>') + '</div></div></div>'
-    };
+    var place = [me.city, me.country].filter(String).join(', ');
+    var headline = [me.occupation, me.church].filter(String).join(' · ');
+    var contact = [
+      ['mail', 'Email', me.email, 'mailto:' + me.email],
+      ['message', 'Phone', me.phone, me.phone ? 'tel:' + me.phone.replace(/[^\d+]/g, '') : ''],
+      ['message', 'WhatsApp', me.whatsapp, me.whatsapp ? 'https://wa.me/' + me.whatsapp.replace(/\D/g, '') : ''],
+      ['link', 'LinkedIn', me.linkedin ? me.linkedin.replace(/^https:\/\/(www\.)?/, '') : '', me.linkedin]
+    ].filter(function (x) { return x[2]; });
+    var card = '<section class="profile-card"><div class="profile-cover"></div><div class="profile-main">' +
+      '<div class="profile-photo">' + av(me, 'xl') + (ro ? '' : '<label class="photo-btn" title="Change photo">' + icon('upload') + '<span class="sr">Change photo</span><input type="file" accept="image/*" data-photo-input hidden></label>') + '</div>' +
+      '<div class="profile-id"><h1>' + esc(me.name) + '</h1>' + (headline ? '<div class="profile-headline">' + esc(headline) + '</div>' : '') +
+      '<div class="chips" style="margin-top:10px">' + (place ? '<span class="chip">' + icon('pin').replace('<svg', '<svg style="width:13px;height:13px"') + esc(place) + '</span>' : '') + '<span class="chip purple">' + esc(me.cohort || d.settings.cohortName || 'Shadrach Fellow') + '</span>' + '<span class="chip amber">' + (me.role === 'admin' ? 'Facilitator' : 'Fellow') + '</span></div></div>' +
+      (ro ? '' : '<div class="profile-actions"><a class="btn btn-ghost btn-sm" href="#profile-edit">' + icon('edit') + 'Edit profile</a>' + (me.photo ? '<button class="btn btn-ghost btn-sm" data-act="remove-photo">Remove photo</button>' : '') + '</div>') + '</div>' +
+      '<div class="profile-body"><div><h3>About</h3><p class="profile-bio">' + (me.bio ? nl(me.bio) : '<span class="muted">' + (ro ? 'No bio yet.' : 'Add a short bio: where you serve, what you do and what God is doing in your life.') + '</span>') + '</p></div>' +
+      '<div><h3>Contact</h3><ul class="contact-list">' + contact.map(function (c) { return '<li>' + icon(c[0]) + '<span class="small muted">' + c[1] + '</span>' + (c[3] ? '<a href="' + esc(c[3]) + '" target="_blank" rel="noopener">' + esc(c[2]) + '</a>' : '<span>' + esc(c[2]) + '</span>') + '</li>'; }).join('') + '</ul></div></div></section>';
+    var form = '<div class="card" id="profile-edit"><div class="card-head"><h2>Edit my profile</h2></div>' +
+      '<form data-form="profile">' +
+      '<div class="row2"><div class="field"><label for="p-occ">What you do</label><input class="input" id="p-occ" name="occupation" value="' + esc(me.occupation || '') + '" placeholder="e.g. Nurse, student, software engineer"' + dis + '></div><div class="field"><label for="p-church">Church or fellowship</label><input class="input" id="p-church" name="church" value="' + esc(me.church || '') + '"' + dis + '></div></div>' +
+      '<div class="row2"><div class="field"><label for="p-city">City</label><input class="input" id="p-city" name="city" value="' + esc(me.city || '') + '"' + dis + '></div><div class="field"><label for="p-country">Country</label><input class="input" id="p-country" name="country" value="' + esc(me.country || '') + '"' + dis + '></div></div>' +
+      '<div class="row2"><div class="field"><label for="p-phone">Phone</label><input class="input" id="p-phone" name="phone" type="tel" value="' + esc(me.phone || '') + '"' + dis + '></div><div class="field"><label for="p-wa">WhatsApp</label><input class="input" id="p-wa" name="whatsapp" type="tel" value="' + esc(me.whatsapp || '') + '"' + dis + '></div></div>' +
+      '<div class="field"><label for="p-li">LinkedIn <span class="muted" style="font-weight:400">(optional)</span></label><input class="input" id="p-li" name="linkedin" type="url" value="' + esc(me.linkedin || '') + '" placeholder="https://www.linkedin.com/in/..."' + dis + '></div>' +
+      '<div class="field"><label for="p-bio">Bio</label><textarea class="input" id="p-bio" name="bio" rows="5" maxlength="1500"' + dis + '>' + esc(me.bio || '') + '</textarea><div class="hint">Two or three sentences in your own words.</div></div>' +
+      (ro ? '' : '<div class="form-actions"><button class="btn" type="submit">Save my profile</button></div>') + '</form></div>';
+    var side = '<div class="stack"><div class="card"><h3>Calendar</h3><p class="small muted" style="margin-top:6px">Add every Friday session to your phone or computer calendar.</p><button class="btn btn-soft btn-sm" data-act="ics-all">' + icon('calendar') + 'Download the calendar</button></div>' +
+      (d.settings.whatsappGroup ? '<div class="card"><h3>Cohort WhatsApp</h3><p class="small muted" style="margin-top:6px">Stay connected with your cohort between sessions.</p><a class="btn btn-soft btn-sm" target="_blank" rel="noopener" href="' + esc(d.settings.whatsappGroup) + '">Open the group</a></div>' : '') +
+      '<div class="card"><h3>Your privacy</h3><p class="small muted" style="margin-top:6px">Only you and the fellowship admins can see your portal and profile. Reports leave the portal only when you download them or create a share link, and you can withdraw a link at any time.</p>' + (ro ? '' : '<button class="btn btn-ghost btn-sm" data-act="sign-out">' + icon('logout') + 'Sign out</button>') + '</div></div>';
+    return { html: card + '<div class="grid g-main" style="margin-top:16px;align-items:start">' + form + side + '</div>' };
   };
 
   /* ================================================================ admin */
@@ -908,7 +1099,7 @@
       kpi(active.length, 'Active fellows') + kpi(avgAtt === null ? 'n/a' : avgAtt + '%', 'Average attendance') +
       kpi(lh ? reflLast + '/' + active.length : 'n/a', 'Reflections, last session') + kpi(counts.voice + counts.assignments + counts.reports, 'Waiting on you', counts.voice + counts.assignments + counts.reports > 0) + '</div>';
     var attention = '<div class="card"><div class="card-head"><h2>Needs attention</h2><span class="sub">' + plural(flagged.length, 'fellow') + '</span></div>' + (flagged.length ? '<ul class="list">' + flagged.map(function (f) {
-      return '<li><a class="rowlink" href="#/admin/fellow/' + esc(f.id) + '"><div class="avatar">' + esc(initials(f.name)) + '</div><div class="grow"><div class="title">' + esc(f.name) + '</div><div class="chips" style="margin-top:4px">' + a.stats[f.id].flags.map(function (x) { return chip(x, 'red'); }).join('') + '</div></div>' + icon('chevron') + '</a></li>';
+      return '<li><a class="rowlink" href="#/admin/fellow/' + esc(f.id) + '">' + av(f) + '<div class="grow"><div class="title">' + esc(f.name) + '</div><div class="chips" style="margin-top:4px">' + a.stats[f.id].flags.map(function (x) { return chip(x, 'red'); }).join('') + '</div></div>' + icon('chevron') + '</a></li>';
     }).join('') + '</ul>' : empty('check', 'Everyone is on track. Thank God.')) + '</div>';
     var queue = '<div class="card"><div class="card-head"><h2>Your queue</h2></div>' +
       '<a class="todo" href="#/admin/voice"><span class="tick">' + (counts.voice ? '' : icon('check')) + '</span><span><span class="t">' + plural(counts.voice, 'open concern') + '</span><br><span class="s">Concerns, complaints, questions and prayer</span></span><span class="go">' + icon('chevron') + '</span></a>' +
@@ -931,7 +1122,7 @@
     return '<div class="table-wrap"><table class="t"><thead><tr><th>Fellow</th><th class="num">Attendance</th><th class="num">Reflections</th><th class="num">Bible</th><th class="num">Assignments</th><th class="num">Disciples</th><th class="num">Hi 5</th><th>Flags</th></tr></thead><tbody>' +
       list.map(function (f) {
         var s = a.stats[f.id];
-        return '<tr class="click" data-act="go" data-href="#/admin/fellow/' + esc(f.id) + '"><td><div class="person"><div class="avatar">' + esc(initials(f.name)) + '</div><div><b>' + esc(f.name) + '</b><small>' + esc([f.city, f.country].filter(String).join(', ') || f.email) + '</small></div></div></td>' +
+        return '<tr class="click" data-act="go" data-href="#/admin/fellow/' + esc(f.id) + '"><td><div class="person">' + av(f) + '<div><b>' + esc(f.name) + '</b><small>' + esc([f.city, f.country].filter(String).join(', ') || f.email) + '</small></div></div></td>' +
           '<td class="num">' + (s.attRate === null ? '<span class="muted">n/a</span>' : s.attRate + '%') + '</td><td class="num">' + s.refl + '/' + a.held.length + '</td><td class="num">' + pct(s.bibleDone, 365) + '%' + (s.bibleBehind > 21 ? ' <span class="chip red">-' + s.bibleBehind + 'd</span>' : '') + '</td><td class="num">' + s.tasksDone + '/' + S.data.tasks.length + '</td><td class="num">' + s.mentees + '</td><td class="num">' + s.hi5 + '</td>' +
           '<td>' + (s.flags.length ? chip(plural(s.flags.length, 'flag'), 'red') : chip(f.status === 'active' ? 'On track' : f.status, f.status === 'active' ? 'green' : '')) + '</td></tr>';
       }).join('') + '</tbody></table></div>';
@@ -941,10 +1132,10 @@
     var d = S.data, a = am(d);
     var admins = d.people.filter(function (p) { return p.role === 'admin'; }).sort(by('name'));
     var fellowsRows = a.fellows.map(function (f) {
-      return '<tr><td><div class="person"><div class="avatar">' + esc(initials(f.name)) + '</div><div><b>' + esc(f.name) + '</b><small>' + esc(f.email) + '</small></div></div></td><td>' + esc([f.city, f.country].filter(String).join(', ')) + '</td><td>' + chip(f.status, f.status === 'active' ? 'green' : f.status === 'graduated' ? 'purple' : 'amber') + '</td>' +
+      return '<tr><td><div class="person">' + av(f) + '<div><b>' + esc(f.name) + '</b><small>' + esc(f.email) + '</small></div></div></td><td>' + esc([f.city, f.country].filter(String).join(', ')) + '</td><td>' + chip(f.status, f.status === 'active' ? 'green' : f.status === 'graduated' ? 'purple' : 'amber') + '</td>' +
         '<td style="white-space:nowrap"><a class="btn btn-soft btn-sm" href="#/admin/fellow/' + esc(f.id) + '">Open</a> <button class="btn btn-ghost btn-sm" data-act="view-as" data-id="' + esc(f.id) + '">' + icon('eye') + 'Their portal</button> <button class="icon-btn" data-act="edit-person" data-id="' + esc(f.id) + '" aria-label="Edit ' + esc(f.name) + '">' + icon('edit') + '</button></td></tr>';
     }).join('');
-    var adminRows = admins.map(function (p) { return '<li><div class="avatar purple">' + esc(initials(p.name)) + '</div><div class="grow"><div class="title">' + esc(p.name) + (p.id === d.me.id ? ' <span class="chip">You</span>' : '') + '</div><div class="meta">' + esc(p.email) + '</div></div><button class="icon-btn" data-act="edit-person" data-id="' + esc(p.id) + '" aria-label="Edit">' + icon('edit') + '</button></li>'; }).join('');
+    var adminRows = admins.map(function (p) { return '<li>' + av(p, 'purple') + '<div class="grow"><div class="title">' + esc(p.name) + (p.id === d.me.id ? ' <span class="chip">You</span>' : '') + '</div><div class="meta">' + esc(p.email) + '</div></div><button class="icon-btn" data-act="edit-person" data-id="' + esc(p.id) + '" aria-label="Edit">' + icon('edit') + '</button></li>'; }).join('');
     return {
       html: head('Fellows and admins', 'Everyone on this list can sign in with their email. Fellows see only their own portal; admins see everything.',
         '<button class="btn btn-ghost btn-sm" data-act="bulk-add">' + icon('users') + 'Add many</button><button class="btn btn-ghost btn-sm" data-act="send-welcome">' + icon('mail') + 'Send welcome emails</button><button class="btn btn-sm" data-act="edit-person">' + icon('plus') + 'Add a person</button>') +
@@ -957,9 +1148,11 @@
     var p = S.data.people.filter(function (x) { return x.id === id; })[0] || { role: 'fellow', status: 'active', cohort: S.data.settings.cohortName };
     var opt = function (list, v) { return list.map(function (x) { return '<option value="' + x[0] + '"' + (v === x[0] ? ' selected' : '') + '>' + x[1] + '</option>'; }).join(''); };
     openModal(p.id ? 'Edit ' + p.name : 'Add a person', '<form data-form="person" data-id="' + esc(p.id || '') + '">' +
+      '<div class="photo-field"><div id="pp-photo-preview">' + av(p, 'xl') + '</div><div><label class="btn btn-soft btn-sm">' + icon('upload') + 'Upload a photo<input type="file" accept="image/*" data-photo-input data-admin hidden></label>' + (p.photo ? ' <button type="button" class="btn btn-ghost btn-sm" data-act="clear-admin-photo">Remove</button>' : '') + '<div class="hint">A clear head and shoulders photo works best. It is cropped to a square.</div></div><input type="hidden" id="pp-photo" name="photo" value="' + esc(p.photo || '') + '"></div>' +
       '<div class="row2"><div class="field"><label for="pp-name">Full name</label><input class="input" id="pp-name" name="name" required value="' + esc(p.name || '') + '"></div><div class="field"><label for="pp-email">Email (used to sign in)</label><input class="input" id="pp-email" name="email" type="email" required value="' + esc(p.email || '') + '"></div></div>' +
       '<div class="row3"><div class="field"><label for="pp-role">Role</label><select class="input" id="pp-role" name="role">' + opt([['fellow', 'Fellow'], ['admin', 'Admin']], p.role) + '</select></div><div class="field"><label for="pp-status">Status</label><select class="input" id="pp-status" name="status">' + opt([['active', 'Active'], ['paused', 'Paused'], ['dropped', 'Dropped off'], ['graduated', 'Graduated']], p.status) + '</select></div><div class="field"><label for="pp-cohort">Cohort</label><input class="input" id="pp-cohort" name="cohort" value="' + esc(p.cohort || '') + '"></div></div>' +
       '<div class="row2"><div class="field"><label for="pp-city">City</label><input class="input" id="pp-city" name="city" value="' + esc(p.city || '') + '"></div><div class="field"><label for="pp-country">Country</label><input class="input" id="pp-country" name="country" value="' + esc(p.country || '') + '"></div></div>' +
+      '<div class="row2"><div class="field"><label for="pp-occ">What they do</label><input class="input" id="pp-occ" name="occupation" value="' + esc(p.occupation || '') + '"></div><div class="field"><label for="pp-church">Church or fellowship</label><input class="input" id="pp-church" name="church" value="' + esc(p.church || '') + '"></div></div>' +
       '<div class="row2"><div class="field"><label for="pp-phone">Phone</label><input class="input" id="pp-phone" name="phone" value="' + esc(p.phone || '') + '"></div><div class="field"><label for="pp-wa">WhatsApp</label><input class="input" id="pp-wa" name="whatsapp" value="' + esc(p.whatsapp || '') + '"></div></div>' +
       '<div class="form-actions"><button class="btn" type="submit">Save</button>' + (p.id && p.id !== S.data.me.id ? '<button class="btn btn-danger" type="button" data-act="remove-person" data-id="' + esc(p.id) + '">' + icon('trash') + 'Remove access</button>' : '') + '</div></form>');
   }
@@ -969,7 +1162,7 @@
     if (!f) return { html: head('Fellow not found') + '<a class="btn" href="#/admin/fellows">Back</a>' };
     var s = a.stats[f.id] || {};
     var tab = r.c || 'attendance';
-    var tabs = '<div class="tabs">' + [['attendance', 'Attendance'], ['reflections', 'Reflections'], ['assignments', 'Assignments'], ['disciples', 'Disciples and Hi 5'], ['reports', 'Reports'], ['concerns', 'Concerns']].map(function (t) { return '<a href="#/admin/fellow/' + esc(f.id) + '/' + t[0] + '" class="' + (tab === t[0] ? 'active' : '') + '">' + t[1] + '</a>'; }).join('') + '</div>';
+    var tabs = '<div class="tabs">' + [['attendance', 'Attendance'], ['reflections', 'Reflections'], ['assignments', 'Assignments'], ['disciples', 'Disciples and Hi 5'], ['formation', 'Purpose, goals, prayer'], ['reports', 'Reports'], ['concerns', 'Concerns']].map(function (t) { return '<a href="#/admin/fellow/' + esc(f.id) + '/' + t[0] + '" class="' + (tab === t[0] ? 'active' : '') + '">' + t[1] + '</a>'; }).join('') + '</div>';
     var body = '';
     var sessById = mapBy(d.sessions, 'id');
     if (tab === 'attendance') {
@@ -978,7 +1171,7 @@
       var rs = d.reflections.filter(function (x) { return x.personId === f.id; }).sort(function (x, y) { return ((sessById[x.sessionId] || {}).date || '') < ((sessById[y.sessionId] || {}).date || '') ? 1 : -1; });
       body = rs.length ? rs.map(function (x) { return reflectionCard(x, sessById[x.sessionId]); }).join('') : '<div class="card">' + empty('book', 'No reflections yet.') + '</div>';
     } else if (tab === 'assignments') {
-      var model = { bibleDone: s.bibleDone, mentees: d.mentees.filter(function (x) { return x.personId === f.id && x.status !== 'ended'; }), hi5: d.hi5.filter(function (x) { return x.personId === f.id; })[0], prog: mapBy(d.progress.filter(function (p) { return p.personId === f.id; }), 'taskId'), reports: mapBy(d.reports.filter(function (x) { return x.personId === f.id; }), 'quarter') };
+      var model = fellowModel(d, f.id, s.bibleDone);
       body = '<div class="table-wrap"><table class="t"><thead><tr><th>Assignment</th><th>Due</th><th>Status</th><th>Result or note</th><th></th></tr></thead><tbody>' + d.tasks.slice().sort(function (x, y) { return (x.order || 0) - (y.order || 0); }).map(function (t) {
         var ts = taskState(t, model), stt = STATUS[ts.status] || [ts.status, ''];
         return '<tr><td><b>' + esc(t.title) + '</b><br><small class="muted">' + esc(KIND[t.kind] || t.kind) + '</small></td><td>' + esc(fmt(t.due)) + '</td><td>' + chip(stt[0], stt[1]) + '</td><td class="wrap small">' + esc((ts.p && (ts.p.result || ts.p.note)) || ts.note || '') + '</td><td>' + (ts.p && !ts.auto ? '<button class="btn btn-soft btn-sm" data-act="review-progress" data-id="' + esc(ts.p.id) + '">Review</button>' : '') + '</td></tr>';
@@ -986,8 +1179,19 @@
     } else if (tab === 'disciples') {
       var ms = d.mentees.filter(function (x) { return x.personId === f.id; });
       var h = d.hi5.filter(function (x) { return x.personId === f.id; })[0];
-      body = '<div class="grid g2"><div class="card"><h3>Disciples</h3>' + (ms.length ? '<ul class="list">' + ms.map(function (x) { return '<li><div class="grow"><div class="title">' + esc(x.name) + '</div><div class="meta">' + esc(x.relationship || '') + ' &middot; ' + plural((x.meetings || []).length, 'meeting') + ' &middot; ' + esc(x.status) + '</div></div></li>'; }).join('') + '</ul>' : empty('users', 'None listed yet.')) + '</div>' +
-        '<div class="card"><h3>Hi 5 group</h3>' + (h ? '<p style="margin-top:8px"><b>' + esc(h.groupName || 'Hi 5') + '</b>: ' + esc((h.members || []).map(function (x) { return x.name; }).join(', ') || 'no members yet') + '</p><p>People group: <b>' + esc(h.peopleGroup || 'not chosen') + '</b>' + (h.peopleCountry ? ', ' + esc(h.peopleCountry) : '') + '</p><p class="small muted">' + plural((h.prayerLog || []).length, 'day') + ' of prayer logged</p>' : empty('heart', 'Not set up yet.')) + '</div></div>';
+      body = '<div class="qhead"><h2>Disciples</h2><span class="muted">' + plural(ms.length, 'person', 'people') + '</span></div><div class="grid g2">' + (ms.length ? ms.map(function (x) { return discipleCard(x, false); }).join('') : '<div class="card">' + empty('users', 'None listed yet.') + '</div>') + '</div>' +
+        '<div class="qhead" style="margin-top:26px"><h2>Hi 5 group</h2></div><div class="card">' + (h ? '<p><b>' + esc(h.groupName || 'Hi 5') + '</b>: ' + esc((h.members || []).map(function (x) { return x.name; }).join(', ') || 'no members yet') + '</p><p>People group: <b>' + esc(h.peopleGroup || 'not chosen') + '</b>' + (h.peopleCountry ? ', ' + esc(h.peopleCountry) : '') + ' &middot; ' + plural((h.prayerLog || []).length, 'day') + ' of prayer logged</p>' + updatesList(h.updates, 8) : empty('heart', 'Not set up yet.')) + '</div>';
+    } else if (tab === 'formation') {
+      var fo = (d.formation || []).filter(function (x) { return x.personId === f.id; })[0] || {};
+      var gs = (d.goals || []).filter(function (x) { return x.personId === f.id; });
+      var ps = (d.prayers || []).filter(function (x) { return x.personId === f.id; }).sort(function (x, y) { return x.day - y.day; });
+      body = '<div class="grid g2" style="align-items:start"><div class="card"><h3>Purpose and values</h3>' + (fo.purpose || fo.mission || fo.familyMission || (fo.values || []).length ?
+          [['Purpose statement', fo.purpose], ['Mission statement', fo.mission], ['Family mission statement', fo.familyMission]].filter(function (x) { return x[1]; }).map(function (x) { return '<div class="qa" style="margin-top:12px"><div class="q">' + x[0] + '</div><div class="a">' + esc(x[1]) + '</div></div>'; }).join('') +
+          ((fo.values || []).length ? '<div class="label" style="margin-top:12px">Values</div><div class="chips">' + fo.values.map(function (v) { return '<span class="chip purple" title="' + esc(v.meaning || '') + '">' + esc(v.value) + '</span>'; }).join('') + '</div>' : '')
+          : empty('star', 'Not written yet.')) + '</div>' +
+        '<div class="card"><h3>Prayer calendar</h3><p class="small muted" style="margin-top:6px">' + plural(ps.length, 'person', 'people') + ' across ' + daysFilled(ps) + ' of 31 days &middot; ' + plural(ps.filter(function (p) { return p.answered; }).length, 'answered prayer') + ' &middot; prayed through it on ' + plural((fo.prayerLog || []).length, 'day') + '</p>' +
+          (ps.length ? '<ul class="list">' + ps.slice(0, 40).map(function (p) { return '<li><span class="chip purple">Day ' + p.day + '</span><div class="grow"><div class="title">' + esc(p.name) + '</div><div class="meta">' + esc(PRAYER_CATS[p.category] || '') + (p.request ? ' &middot; ' + esc(p.request) : '') + '</div></div>' + (p.answered ? chip('Answered', 'green') : '') + '</li>'; }).join('') + '</ul>' : '') + '</div></div>' +
+        '<div class="qhead" style="margin-top:26px"><h2>Goals</h2><span class="muted">' + gs.filter(function (g) { return g.status === 'done'; }).length + ' of ' + gs.length + ' done</span></div><div class="grid g2">' + (gs.length ? gs.map(function (g) { return goalCard(g, false); }).join('') : '<div class="card">' + empty('star', 'No goals yet.') + '</div>') + '</div>';
     } else if (tab === 'reports') {
       body = '<div class="grid g2">' + ['Q1', 'Q2', 'Q3', 'Q4'].map(function (q) { return adminReportCard(f, q); }).join('') + '</div>';
     } else if (tab === 'concerns') {
@@ -996,7 +1200,7 @@
     }
     return {
       html: '<a href="#/admin/fellows" class="small" style="text-decoration:none">' + icon('back').replace('<svg', '<svg style="width:15px;height:15px;vertical-align:-3px"') + ' Fellows</a>' +
-        '<div class="page-head" style="margin-top:10px"><div class="person"><div class="avatar lg">' + esc(initials(f.name)) + '</div><div><h1>' + esc(f.name) + '</h1><small class="muted">' + [f.email, f.phone, [f.city, f.country].filter(String).join(', ')].filter(String).map(esc).join(' &middot; ') + '</small></div></div>' +
+        '<div class="page-head" style="margin-top:10px"><div class="person">' + av(f, 'lg') + '<div><h1>' + esc(f.name) + '</h1><small class="muted">' + [f.email, f.phone, [f.city, f.country].filter(String).join(', ')].filter(String).map(esc).join(' &middot; ') + '</small></div></div>' +
         '<div class="actions"><button class="btn btn-ghost btn-sm" data-act="edit-person" data-id="' + esc(f.id) + '">' + icon('edit') + 'Edit</button><button class="btn btn-sm" data-act="view-as" data-id="' + esc(f.id) + '">' + icon('eye') + 'Open their portal</button></div></div>' +
         (s.flags && s.flags.length ? '<div class="chips" style="margin:-6px 0 16px">' + s.flags.map(function (x) { return chip(x, 'red'); }).join('') + '</div>' : '') +
         '<div class="grid g4" style="margin-bottom:18px">' + statCard(s.attRate || 0, 'var(--green)', s.attRate === null ? 'n/a' : s.present + '/' + s.marked, 'Attendance') + statCard(pct(s.bibleDone, 365), 'var(--purple-mid)', s.bibleDone + '/365', 'Bible in One Year') + statCard(pct(s.refl, a.held.length || 1), 'var(--orange)', s.refl + '/' + a.held.length, 'Reflections') + statCard(pct(s.tasksDone, d.tasks.length), 'var(--blue)', s.tasksDone + '/' + d.tasks.length, 'Assignments') + '</div>' +
@@ -1037,7 +1241,7 @@
     var list = a.fellows.filter(function (f) { return f.status === 'active' || a.att[f.id + '|' + s.id]; });
     var rows = list.map(function (f) {
       var cur = a.att[f.id + '|' + s.id];
-      return '<div class="mark-row" data-pid="' + esc(f.id) + '"><div class="person"><div class="avatar">' + esc(initials(f.name)) + '</div><div><b>' + esc(f.name) + '</b><small>' + (cur ? 'Marked by ' + esc(cur.markedBy || '') : 'Not marked yet') + '</small></div></div><div class="seg" role="group" aria-label="Attendance for ' + esc(f.name) + '">' +
+      return '<div class="mark-row" data-pid="' + esc(f.id) + '"><div class="person">' + av(f) + '<div><b>' + esc(f.name) + '</b><small>' + (cur ? 'Marked by ' + esc(cur.markedBy || '') : 'Not marked yet') + '</small></div></div><div class="seg" role="group" aria-label="Attendance for ' + esc(f.name) + '">' +
         Object.keys(ATT).map(function (k) { return '<button type="button" data-act="mark" data-v="' + k + '" class="' + (cur && cur.status === k ? 'on' : '') + '" aria-pressed="' + (cur && cur.status === k ? 'true' : 'false') + '">' + (k === 'dropped' ? 'Dropped' : ATT[k][0]) + '</button>'; }).join('') + '</div></div>';
     }).join('');
     return {
@@ -1072,12 +1276,12 @@
     var d = S.data, a = am(d), people = mapBy(d.people, 'id'), tasks = mapBy(d.tasks, 'id');
     var queue = d.progress.filter(function (p) { return p.status === 'submitted'; });
     var queueHtml = '<div class="card"><div class="card-head"><h2>Waiting for review</h2><span class="sub">' + plural(queue.length, 'submission') + '</span></div>' + (queue.length ? '<ul class="list">' + queue.map(function (p) {
-      return '<li><div class="avatar">' + esc(initials((people[p.personId] || {}).name)) + '</div><div class="grow"><div class="title">' + esc((tasks[p.taskId] || {}).title || '') + '</div><div class="meta">' + esc((people[p.personId] || {}).name || '') + ' &middot; ' + esc(fmtStamp(p.updatedAt)) + (p.fileName ? ' &middot; file attached' : '') + '</div></div><button class="btn btn-soft btn-sm" data-act="review-progress" data-id="' + esc(p.id) + '">Review</button></li>';
+      return '<li>' + av(people[p.personId] || {}) + '<div class="grow"><div class="title">' + esc((tasks[p.taskId] || {}).title || '') + '</div><div class="meta">' + esc((people[p.personId] || {}).name || '') + ' &middot; ' + esc(fmtStamp(p.updatedAt)) + (p.fileName ? ' &middot; file attached' : '') + '</div></div><button class="btn btn-soft btn-sm" data-act="review-progress" data-id="' + esc(p.id) + '">Review</button></li>';
     }).join('') + '</ul>' : empty('check', 'Nothing waiting. All caught up.')) + '</div>';
     var sorted = d.tasks.slice().sort(function (x, y) { return (x.order || 0) - (y.order || 0); });
     var matrix = '<div class="table-wrap" style="margin-top:16px"><table class="t matrix"><thead><tr><th>Fellow</th>' + sorted.map(function (t) { return '<th title="' + esc(t.title) + '" style="max-width:70px;white-space:normal;font-size:10px">' + esc(t.title.replace(/^Read: /, '').slice(0, 18)) + '</th>'; }).join('') + '</tr></thead><tbody>' +
       a.fellows.map(function (f) {
-        var model = { bibleDone: a.stats[f.id].bibleDone, mentees: d.mentees.filter(function (x) { return x.personId === f.id && x.status !== 'ended'; }), hi5: d.hi5.filter(function (x) { return x.personId === f.id; })[0], prog: mapBy(d.progress.filter(function (p) { return p.personId === f.id; }), 'taskId'), reports: mapBy(d.reports.filter(function (x) { return x.personId === f.id; }), 'quarter') };
+        var model = fellowModel(d, f.id, a.stats[f.id].bibleDone);
         return '<tr><td><a href="#/admin/fellow/' + esc(f.id) + '/assignments"><b>' + esc(f.name) + '</b></a></td>' + sorted.map(function (t) { var st = taskState(t, model); return '<td><span class="cell ' + (st.done && st.status !== 'submitted' ? 'done' : st.status) + '" title="' + esc(t.title + ': ' + (STATUS[st.status] || [st.status])[0]) + '"></span></td>'; }).join('') + '</tr>';
       }).join('') + '</tbody></table></div>';
     var manage = '<div class="card" style="margin-top:16px"><div class="card-head"><h2>Assignments for the year</h2><button class="btn btn-sm" data-act="edit-task">' + icon('plus') + 'Add assignment</button></div><ul class="list">' + sorted.map(function (t) {
@@ -1127,7 +1331,7 @@
     var rows = a.fellows.map(function (f) {
       var rep = d.reports.filter(function (x) { return x.personId === f.id && x.quarter === q; })[0];
       var ev = rep && rep.evaluation, st = !rep || rep.status === 'not-submitted' ? 'not-started' : rep.status;
-      return '<tr><td><div class="person"><div class="avatar">' + esc(initials(f.name)) + '</div><div><b>' + esc(f.name) + '</b><small>' + esc(f.country || '') + '</small></div></div></td><td>' + chip((STATUS[st] || [st])[0], st === 'submitted' ? 'blue' : st === 'draft' ? 'amber' : '') + (rep && rep.submittedAt ? '<br><small class="muted">' + esc(fmtStamp(rep.submittedAt)) + '</small>' : '') + '</td><td>' + chip(ev ? (ev.released ? 'Released' : 'Draft') : 'Not started', ev && ev.released ? 'green' : ev ? 'amber' : '') + '</td>' +
+      return '<tr><td><div class="person">' + av(f) + '<div><b>' + esc(f.name) + '</b><small>' + esc(f.country || '') + '</small></div></div></td><td>' + chip((STATUS[st] || [st])[0], st === 'submitted' ? 'blue' : st === 'draft' ? 'amber' : '') + (rep && rep.submittedAt ? '<br><small class="muted">' + esc(fmtStamp(rep.submittedAt)) + '</small>' : '') + '</td><td>' + chip(ev ? (ev.released ? 'Released' : 'Draft') : 'Not started', ev && ev.released ? 'green' : ev ? 'amber' : '') + '</td>' +
         '<td style="white-space:nowrap"><a class="btn btn-sm ' + (ev && ev.released ? 'btn-ghost' : '') + '" href="#/admin/report/' + esc(f.id) + '/' + q + '">' + (ev ? 'Open' : 'Evaluate') + '</a> ' + reportActions(q, f.id) + '</td></tr>';
     }).join('');
     return { html: head('Quarterly reports', 'Read each self report, write your evaluation and release it to the fellow when it is ready. Every report downloads as a PDF and can be shared with a private link.', '<button class="btn btn-ghost btn-sm" data-act="export-reports" data-q="' + q + '">' + icon('download') + 'Export ' + q + ' (CSV)</button>') + tabs + '<div class="qhead"><span class="q">' + q + '</span><h2>' + esc(quarterInfo(q).name) + '</h2><span class="muted">' + esc(quarterInfo(q).field) + '</span></div>' +
@@ -1178,9 +1382,18 @@
     var rows = a.sessions.map(function (s) {
       return '<tr class="click" data-act="edit-session" data-id="' + esc(s.id) + '"' + (s.kind === 'break' ? ' style="opacity:.6"' : '') + '><td style="white-space:nowrap">' + esc(fmt(s.date, true)) + '</td><td class="num">' + esc(s.week || '') + '</td><td><b>' + esc(s.title) + '</b>' + (s.kind !== 'session' ? ' ' + chip(s.kind) : '') + '</td><td>' + esc(s.passage || '') + '</td><td>' + esc(s.facilitator || '') + '</td></tr>';
     }).join('');
-    return { html: head('Roadmap', 'The year\'s sessions. Fellows see this as their journey, and the Thursday reminder emails use it. This starter roadmap was carried over from 2025/2026 with Making Ends Meet moved after MLM: check the dates and passages.', '<button class="btn btn-ghost btn-sm" data-act="ics-all">' + icon('calendar') + 'Calendar file</button><button class="btn btn-sm" data-act="edit-session">' + icon('plus') + 'Add session</button>') +
+    return { html: head('Roadmap', 'The year\'s sessions. Fellows see this as their journey, and the Thursday reminder emails use it. This starter roadmap was carried over from 2025/2026, with four weeks of Making Ends Meet after MLM. Add, edit or delete any session, and use Move sessions to push a stretch of the year later or earlier to make room.', '<button class="btn btn-ghost btn-sm" data-act="ics-all">' + icon('calendar') + 'Calendar file</button><button class="btn btn-ghost btn-sm" data-act="shift-sessions">' + icon('calendar') + 'Move sessions</button><button class="btn btn-sm" data-act="edit-session">' + icon('plus') + 'Add session</button>') +
       '<div class="table-wrap"><table class="t"><thead><tr><th>Date</th><th class="num">Week</th><th>Session</th><th>DBS passage</th><th>Facilitator</th></tr></thead><tbody>' + rows + '</tbody></table></div>' };
   };
+
+  function shiftModal() {
+    var a = am(S.data);
+    openModal('Move sessions', '<form data-form="shift"><p class="muted small">Move a session and every session after it by a number of weeks, for example to make room for an extra week or to close a gap.</p>' +
+      '<div class="field"><label for="sh-from">Starting from</label><select class="input" id="sh-from" name="fromDate">' + a.sessions.map(function (s) { return '<option value="' + esc(s.date) + '">' + esc(fmt(s.date) + (s.week ? ' · Week ' + s.week : '') + ' · ' + s.title) + '</option>'; }).join('') + '</select></div>' +
+      '<div class="row2"><div class="field"><label for="sh-w">Move by</label><select class="input" id="sh-w" name="weeks">' + [4, 3, 2, 1, -1, -2, -3, -4].map(function (w) { return '<option value="' + w + '"' + (w === 1 ? ' selected' : '') + '>' + Math.abs(w) + ' week' + (Math.abs(w) > 1 ? 's' : '') + (w > 0 ? ' later' : ' earlier') + '</option>'; }).join('') + '</select></div>' +
+      '<div class="field" style="align-self:end"><label class="check"><input type="checkbox" name="renumber" checked> Renumber the weeks too</label></div></div>' +
+      '<div class="form-actions"><button class="btn" type="submit">' + icon('calendar') + 'Move them</button></div></form>');
+  }
 
   function sessionModal(id) {
     var s = S.data.sessions.filter(function (x) { return x.id === id; })[0] || { kind: 'session', date: todayISO() };
@@ -1242,7 +1455,8 @@
   ACT['login-resend'] = function (el) { run(el, api('requestCode', { email: S.loginEmail }), 'A new code is on its way'); };
   ACT['more-menu'] = function () {
     var admin = isAdmin() && !S.viewAs;
-    var items = admin ? ADMIN_NAV.slice(4) : FELLOW_NAV.slice(4);
+    var onBar = admin ? ['', 'attendance', 'reflections', 'fellows'] : ['home', 'journey', 'bible', 'disciples'];
+    var items = (admin ? ADMIN_NAV : FELLOW_NAV).filter(function (n) { return onBar.indexOf(n[0]) < 0; });
     openModal('More', '<div class="more-grid">' + items.map(function (n) { return '<a href="' + (admin ? '#/admin/' + n[0] : '#/' + n[0]) + '">' + icon(n[2]) + esc(n[1]) + '</a>'; }).join('') + '<a href="#" data-act="sign-out">' + icon('logout') + 'Sign out</a></div>');
   };
   ACT['view-as'] = function (el) {
@@ -1275,7 +1489,12 @@
   ACT['edit-mentee'] = function (el) { menteeModal(el.getAttribute('data-id')); };
   ACT['log-meeting'] = function (el) {
     var id = el.getAttribute('data-id');
-    openModal('Log a meeting', '<form data-form="meeting" data-id="' + esc(id) + '"><div class="field"><label for="mt-d">Date</label><input class="input" type="date" id="mt-d" name="date" value="' + todayISO() + '" required></div><div class="field"><label for="mt-n">What did you do together?</label><textarea class="input" id="mt-n" name="note" rows="3" placeholder="e.g. Read John 4 together, prayed for exams"></textarea></div><div class="form-actions"><button class="btn" type="submit">Save</button></div></form>');
+    var x = F().mentees.filter(function (y) { return y.id === id; })[0] || {};
+    openModal('Update on ' + (x.name || 'your disciple'), '<form data-form="meeting" data-id="' + esc(id) + '"><div class="row2"><div class="field"><label for="mt-d">Date</label><input class="input" type="date" id="mt-d" name="date" value="' + todayISO() + '" required></div>' +
+      '<div class="field"><label for="mt-k">What you did</label><select class="input" id="mt-k" name="kind">' + opts(MEET_KINDS, 'met') + '</select></div></div>' +
+      '<div class="field"><label for="mt-n">What happened and how they are growing</label><textarea class="input" id="mt-n" name="note" rows="4" required placeholder="e.g. Read John 4 together. She asked about baptism."></textarea></div>' +
+      '<div class="field"><label for="mt-s">Where they are now</label><select class="input" id="mt-s" name="stage">' + STAGES.map(function (st) { return '<option value="' + st[0] + '"' + ((x.stage || 'praying') === st[0] ? ' selected' : '') + '>' + st[1] + '</option>'; }).join('') + '</select></div>' +
+      '<div class="form-actions"><button class="btn" type="submit">Save update</button></div></form>');
   };
   ACT['delete-mentee'] = function (el) {
     var id = el.getAttribute('data-id');
@@ -1285,6 +1504,50 @@
     });
   };
   ACT['edit-hi5'] = hi5Modal;
+  ACT['hi5-update'] = function () {
+    openModal('Hi 5 update', '<form data-form="hi5-update"><div class="field"><label for="hu-d">Date</label><input class="input" type="date" id="hu-d" name="date" value="' + todayISO() + '"></div><div class="field"><label for="hu-n">How is the group going?</label><textarea class="input" id="hu-n" name="note" rows="4" required placeholder="Who joined, what you prayed for, answers you have seen"></textarea></div><div class="form-actions"><button class="btn" type="submit">Save update</button></div></form>');
+  };
+  ACT['prayer-day'] = function (el) { prayerDayModal(+el.getAttribute('data-day')); };
+  ACT['edit-prayer'] = function (el) { prayerModal(el.getAttribute('data-id'), +el.getAttribute('data-day') || 0); };
+  ACT['delete-prayer'] = function (el) {
+    var id = el.getAttribute('data-id');
+    confirmBox('Remove this person from your prayer calendar?', 'Remove', true).then(function (ok) {
+      if (!ok) return;
+      api('deletePrayer', { id: id }).then(function () { F().prayers = F().prayers.filter(function (x) { return x.id !== id; }); bump(); toast('Removed'); render(); }, function (e) { toast(e.message, true); });
+    });
+  };
+  ACT['pray-cal-today'] = function (el) {
+    var f = F().formation || {}, today = todayISO();
+    var undo = (f.prayerLog || []).indexOf(today) >= 0;
+    run(el, api('prayCalendar', { date: today, undo: undo }), undo ? 'Removed' : 'Thank you for praying. Keep standing in the gap.').then(function (r) { F().formation = r.formation; bump(); render(); });
+  };
+  ACT['add-value'] = function () {
+    openModal('Add a value', '<form data-form="value"><div class="field"><label for="v-v">Value</label><input class="input" id="v-v" name="value" required placeholder="e.g. Integrity"></div><div class="field"><label for="v-m">What it means to you</label><textarea class="input" id="v-m" name="meaning" rows="3"></textarea></div><div class="form-actions"><button class="btn" type="submit">Add</button></div></form>');
+  };
+  ACT['remove-value'] = function (el) {
+    var f = F().formation || {}, i = +el.getAttribute('data-i');
+    var values = (f.values || []).filter(function (v, k) { return k !== i; });
+    saveFormation({ values: values }, el, 'Value removed');
+  };
+  ACT['edit-goal'] = function (el) { goalModal(el.getAttribute('data-id')); };
+  ACT['goal-update'] = function (el) {
+    var g = F().goals.filter(function (x) { return x.id === el.getAttribute('data-id'); })[0];
+    openModal('Update: ' + g.title, '<form data-form="goal-update" data-id="' + esc(g.id) + '"><div class="field"><label for="gu-d">Date</label><input class="input" type="date" id="gu-d" name="date" value="' + todayISO() + '"></div><div class="field"><label for="gu-n">What progress have you made?</label><textarea class="input" id="gu-n" name="note" rows="4" required></textarea></div><div class="field"><label for="gu-p">Progress now <b id="gu-p-v">' + (g.progress || 0) + '%</b></label><input type="range" id="gu-p" name="progress" min="0" max="100" step="5" value="' + (g.progress || 0) + '" style="width:100%;accent-color:var(--purple)"></div><div class="form-actions"><button class="btn" type="submit">Save update</button></div></form>');
+    rangeLabel('gu-p');
+  };
+  ACT['delete-goal'] = function (el) {
+    var id = el.getAttribute('data-id');
+    confirmBox('Delete this goal and its updates?', 'Delete', true).then(function (ok) {
+      if (!ok) return;
+      api('deleteGoal', { id: id }).then(function () { F().goals = F().goals.filter(function (x) { return x.id !== id; }); bump(); toast('Goal deleted'); render(); }, function (e) { toast(e.message, true); });
+    });
+  };
+  ACT['shift-sessions'] = shiftModal;
+  function saveFormation(changes, btn, msg) {
+    var f = F().formation || {};
+    var payload = Object.assign({ purpose: f.purpose || '', mission: f.mission || '', familyMission: f.familyMission || '', values: f.values || [] }, changes);
+    return run(btn, api('saveFormation', payload), msg || 'Saved').then(function (r) { F().formation = r.formation; bump(); closeModal(); render(); });
+  }
   ACT['open-task'] = function (el) { taskModal(el.getAttribute('data-id')); };
   ACT['get-file'] = function (el) {
     run(el, api('getFile', { fileId: el.getAttribute('data-id') })).then(function (r) { saveBlob(b64ToBlob(r.data, r.type), r.name); });
@@ -1339,6 +1602,10 @@
 
   // admin clicks
   ACT['edit-person'] = function (el) { personModal(el.getAttribute('data-id')); };
+  ACT['remove-photo'] = function (el) {
+    confirmBox('Remove your profile photo?', 'Remove').then(function (ok) { if (ok) run(el, api('saveProfile', { photo: '' }), 'Photo removed').then(function (r) { S.data.me = r.me; bump(); render(); }); });
+  };
+  ACT['clear-admin-photo'] = function () { document.getElementById('pp-photo').value = ''; document.getElementById('pp-photo-preview').innerHTML = '<div class="avatar xl">?</div>'; };
   ACT['remove-person'] = function (el) {
     var id = el.getAttribute('data-id');
     var p = S.data.people.filter(function (x) { return x.id === id; })[0];
@@ -1439,6 +1706,20 @@
     fn(el, e);
   });
   document.addEventListener('change', function (e) {
+    if (e.target.matches && e.target.matches('[data-photo-input]') && e.target.files[0]) {
+      var input = e.target;
+      makePhoto(input.files[0]).then(function (photo) {
+        if (input.hasAttribute('data-admin')) {
+          var prev = document.getElementById('pp-photo-preview'); var hidden = document.getElementById('pp-photo');
+          hidden.value = photo; prev.innerHTML = '<img class="avatar photo xl" src="' + photo + '" alt="">';
+          return;
+        }
+        toast('Uploading your photo');
+        return api('saveProfile', { photo: photo }).then(function (r) { S.data.me = r.me; bump(); toast('Your photo is updated'); render(); });
+      }).catch(function (err) { toast(err.message, true); });
+      input.value = '';
+      return;
+    }
     var el = e.target.closest('[data-change]');
     if (el && el.getAttribute('data-change') === 'go-session') location.hash = el.getAttribute('data-base') + encodeURIComponent(el.value);
   });
@@ -1498,8 +1779,34 @@
     var v = vals(form), id = form.getAttribute('data-id');
     var ex = F().mentees.filter(function (x) { return x.id === id; })[0];
     if (!ex) return;
-    var payload = Object.assign({}, ex, { meetings: (ex.meetings || []).concat([{ date: v.date, note: v.note }]) });
-    run(btn, api('saveMentee', payload), 'Meeting logged').then(function (r) { upsert(F().mentees, r.mentee); bump(); closeModal(); render(); });
+    if (!v.note) return toast('Please write what happened.', true);
+    var payload = Object.assign({}, ex, { stage: v.stage || ex.stage, meetings: (ex.meetings || []).concat([{ date: v.date, kind: v.kind, note: v.note }]) });
+    run(btn, api('saveMentee', payload), 'Update saved').then(function (r) { upsert(F().mentees, r.mentee); bump(); closeModal(); render(); });
+  };
+  FORM['hi5-update'] = function (form, btn) {
+    var v = vals(form);
+    run(btn, api('hi5Update', v), 'Update saved').then(function (r) { F().hi5 = r.hi5; bump(); closeModal(); render(); });
+  };
+  FORM.prayer = function (form, btn) {
+    var v = vals(form); v.id = form.getAttribute('data-id') || undefined;
+    run(btn, api('savePrayer', v), 'Saved to your prayer calendar').then(function (r) { F().prayers = F().prayers || []; upsert(F().prayers, r.prayer); bump(); closeModal(); render(); });
+  };
+  FORM.formation = function (form, btn) { var v = vals(form); saveFormation({ purpose: v.purpose, mission: v.mission, familyMission: v.familyMission }, btn, 'Your statements are saved'); };
+  FORM.value = function (form, btn) {
+    var v = vals(form), f = F().formation || {};
+    saveFormation({ values: (f.values || []).concat([{ value: v.value, meaning: v.meaning }]) }, btn, 'Value added');
+  };
+  FORM.goal = function (form, btn) {
+    var v = vals(form); v.id = form.getAttribute('data-id') || undefined;
+    run(btn, api('saveGoal', v), 'Goal saved').then(function (r) { F().goals = F().goals || []; upsert(F().goals, r.goal); bump(); closeModal(); render(); });
+  };
+  FORM['goal-update'] = function (form, btn) {
+    var v = vals(form); v.id = form.getAttribute('data-id');
+    run(btn, api('goalUpdate', v), 'Progress saved').then(function (r) { upsert(F().goals, r.goal); bump(); closeModal(); render(); });
+  };
+  FORM.shift = function (form, btn) {
+    var v = vals(form);
+    run(btn, api('shiftSessions', { fromDate: v.fromDate, weeks: Number(v.weeks), renumber: v.renumber }), 'Sessions moved').then(function (r) { S.data.sessions = r.sessions; bump(); closeModal(); render(); });
   };
   FORM.hi5 = function (form, btn) {
     var v = vals(form), members = [];
