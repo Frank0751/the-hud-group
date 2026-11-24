@@ -23,6 +23,8 @@ var CONFIG = {
   // Leave empty to have the script create FOLDER_NAME in My Drive.
   FOLDER_ID: '',
   REF_PREFIX: 'TSF27-',
+  // No application is accepted after this moment, whatever the website shows.
+  CLOSES_AT: '2026-11-20T23:59:59Z',
   MAX_FILE_BYTES: 5 * 1024 * 1024,
   MAX_WORDS: 200,
   WORD_TOLERANCE: 10,
@@ -111,6 +113,9 @@ function doPost(e) {
   var lock = LockService.getScriptLock();
   var locked = false;
   try {
+    if (CONFIG.CLOSES_AT && new Date() > new Date(CONFIG.CLOSES_AT)) {
+      return json_({ ok: false, closed: true, error: 'Applications for The Shadrach Fellowship 2026/2027 closed on 20 November 2026. Thank you for your interest.' });
+    }
     var app = parse_(e);
 
     // Honeypot: bots fill the hidden field. Pretend success, save nothing.

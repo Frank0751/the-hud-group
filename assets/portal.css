@@ -680,3 +680,16 @@ img.avatar { object-fit: cover; padding: 0; background: var(--surface-2); }
   .report-photo { float: none; display: block; margin: 0 auto 12px; }
   .photo-field { justify-content: center; text-align: center; }
 }
+
+/* ------------------------------------------------------------ photo editor */
+.crop-back { z-index: 150; }
+.crop-modal { max-width: 400px; }
+.crop-stage { position: relative; width: 100%; max-width: 280px; aspect-ratio: 1; margin: 6px auto 16px; border-radius: 16px; overflow: hidden; background: #1a1420; touch-action: none; }
+.crop-stage canvas { display: block; cursor: grab; touch-action: none; border-radius: 16px; }
+.crop-stage canvas:active { cursor: grabbing; }
+.crop-stage canvas:focus-visible { outline: 3px solid var(--orange); outline-offset: -3px; }
+.crop-ring { position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 999px rgba(20, 6, 20, .55); border: 2px solid rgba(255, 255, 255, .85); pointer-events: none; }
+.crop-zoom { display: flex; align-items: center; gap: 10px; max-width: 280px; margin: 0 auto 18px; color: var(--text-light); }
+.crop-zoom svg { width: 18px; height: 18px; }
+.crop-zoom input { flex: 1; accent-color: var(--purple); }
+@media (max-width: 900px) { .crop-modal { max-width: none; } }

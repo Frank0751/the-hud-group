@@ -393,6 +393,7 @@
     .footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.62);padding:5px 0;transition:var(--transition)}
     .footer-col a:hover{color:var(--white);transform:translateX(3px)}
     .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding:22px 0;font-size:13px;color:rgba(255,255,255,0.6)}
+    .site-credit{white-space:nowrap}.site-credit a{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,184,102,.7)}.site-credit a:hover{color:#ffb866}
     .footer-cta{background:var(--peach);color:var(--purple-dark);font-size:14px;font-weight:700;padding:10px 22px;border-radius:999px;transition:var(--transition)}
     .footer-cta:hover{background:var(--orange)}
 
@@ -1067,7 +1068,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Copyright 2025 The HuD Group Global. All rights reserved. Registered Charity, Canada</span>
+        <span>Copyright 2025 The HuD Group Global. All rights reserved. Registered Charity, Canada. <span class="site-credit">Website built by <a href="https://koombei.com" target="_blank" rel="noopener">KoomBei</a></span></span>
         <a href="#top" class="footer-cta">Back to top</a>
       </div>
     </div>
@@ -1085,6 +1086,8 @@
     var CONFIG = {
       endpoint: 'https://script.google.com/macros/s/AKfycbz4JHhppGCi42YgWIQKojnSeobD0cSsQQZRe_mvCoDHicJX_mFLBVSbExJfwOBqQaS-/exec',
       deadline: '2026-11-20T23:59:59Z',
+      // Applications for 2026/2027 are closed. Set to false (and move the deadline) to open the next round.
+      closed: true,
       deadlineLabel: '20 November 2026',
       contactEmail: 'engage@thehudgroupglobal.org',
       maxFileBytes: 5 * 1024 * 1024,
@@ -1113,7 +1116,7 @@
     /* ---------- deadline ---------- */
     var deadline = new Date(CONFIG.deadline).getTime();
     window.__tsfDeadline = deadline; // read by the countdown in the page-polish script
-    var closed = Date.now() > deadline;
+    var closed = CONFIG.closed === true || Date.now() > deadline;
     (function () {
       var badge = $('#heroBadge');
       if (closed) { badge.textContent = 'Applications have closed'; return; }

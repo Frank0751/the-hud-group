@@ -354,25 +354,119 @@
     return new Blob([lines.join('\r\n')], { type: 'text/calendar' });
   }
 
-  function makePhoto(file) {
+  /* ---------------------------------------------------------------- photo editor
+     Opens over everything (even another dialog). Drag to position, zoom with the slider, the mouse wheel
+     or a pinch, rotate in quarter turns. Saves a square JPEG under 58 KB. Resolves null if cancelled. */
+  function loadImage(source) {
     return new Promise(function (resolve, reject) {
-      if (!/^image\//.test(file.type)) return reject(new Error('Please choose a photo (JPG or PNG).'));
-      if (file.size > 15 * 1024 * 1024) return reject(new Error('That photo is too large. Please choose one under 15 MB.'));
-      var url = URL.createObjectURL(file), img = new Image();
+      var isFile = typeof source !== 'string';
+      if (isFile && !/^image\//.test(source.type)) return reject(new Error('Please choose a photo (JPG or PNG).'));
+      if (isFile && source.size > 15 * 1024 * 1024) return reject(new Error('That photo is too large. Please choose one under 15 MB.'));
+      var url = isFile ? URL.createObjectURL(source) : source, img = new Image();
       img.onload = function () {
-        var side = Math.min(img.naturalWidth, img.naturalHeight), size = Math.min(320, side);
-        var c = document.createElement('canvas'); c.width = size; c.height = size;
-        var ctx = c.getContext('2d');
-        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, size, size);
-        ctx.drawImage(img, (img.naturalWidth - side) / 2, (img.naturalHeight - side) / 2, side, side, 0, 0, size, size);
-        URL.revokeObjectURL(url);
-        var q = 0.86, out = c.toDataURL('image/jpeg', q);
-        while (out.length > 58000 && q > 0.4) { q -= 0.08; out = c.toDataURL('image/jpeg', q); }
-        if (out.length > 58000) return reject(new Error('That photo could not be made small enough. Please try another.'));
-        resolve(out);
+        // work from a copy no larger than 1600px so dragging stays smooth on phones
+        var k = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+        var c = document.createElement('canvas');
+        c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        if (isFile) URL.revokeObjectURL(url);
+        resolve(c);
       };
-      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('That photo could not be opened. Please try a JPG or PNG.')); };
+      img.onerror = function () { if (isFile) URL.revokeObjectURL(url); reject(new Error('That photo could not be opened. Please try a JPG or PNG.')); };
       img.src = url;
+    });
+  }
+
+  function rotate90(src) {
+    var c = document.createElement('canvas'); c.width = src.height; c.height = src.width;
+    var ctx = c.getContext('2d'); ctx.translate(c.width, 0); ctx.rotate(Math.PI / 2); ctx.drawImage(src, 0, 0);
+    return c;
+  }
+
+  function cropPhoto(source) {
+    return loadImage(source).then(function (original) {
+      return new Promise(function (resolve) {
+        var src = original, zoom = 1, ox = 0, oy = 0, V = 280;
+        var back = document.createElement('div');
+        back.className = 'modal-back crop-back';
+        back.innerHTML = '<div class="modal crop-modal" role="dialog" aria-modal="true" aria-labelledby="crop-title">' +
+          '<div class="modal-head"><h2 id="crop-title">Adjust the photo</h2><button class="icon-btn" type="button" data-crop="cancel" aria-label="Cancel">' + icon('x') + '</button></div>' +
+          '<p class="small muted" style="margin-top:-8px">Drag the photo to move it. Zoom with the slider' + ('ontouchstart' in window ? ' or pinch' : ' or your mouse wheel') + '.</p>' +
+          '<div class="crop-stage"><canvas tabindex="0" aria-label="Photo. Use the arrow keys to move it and plus or minus to zoom."></canvas><div class="crop-ring" aria-hidden="true"></div></div>' +
+          '<div class="crop-zoom"><span aria-hidden="true">' + icon('x').replace(ICONS.x, '<path d="M5 12h14"/>') + '</span><input type="range" min="1" max="4" step="0.01" value="1" aria-label="Zoom"><span aria-hidden="true">' + icon('plus') + '</span></div>' +
+          '<div class="form-actions" style="justify-content:space-between"><div style="display:flex;gap:8px"><button type="button" class="btn btn-ghost btn-sm" data-crop="rotate">' + icon('refresh') + 'Rotate</button><button type="button" class="btn btn-ghost btn-sm" data-crop="reset">Reset</button></div>' +
+          '<div style="display:flex;gap:8px"><button type="button" class="btn btn-ghost" data-crop="cancel">Cancel</button><button type="button" class="btn" data-crop="save">' + icon('check') + 'Use this photo</button></div></div></div>';
+        document.body.appendChild(back);
+        S.cropOpen = true;
+        var canvas = back.querySelector('canvas'), ctx = canvas.getContext('2d'), range = back.querySelector('input[type=range]');
+        var dpr = Math.min(window.devicePixelRatio || 1, 3);
+        function size() { V = Math.min(280, back.querySelector('.crop-stage').clientWidth || 280); canvas.style.width = V + 'px'; canvas.style.height = V + 'px'; canvas.width = Math.round(V * dpr); canvas.height = Math.round(V * dpr); }
+        function scale() { return V / Math.min(src.width, src.height) * zoom; }
+        function clamp() {
+          var sc = scale(), mx = Math.max(0, (src.width * sc - V) / 2), my = Math.max(0, (src.height * sc - V) / 2);
+          ox = Math.max(-mx, Math.min(mx, ox)); oy = Math.max(-my, Math.min(my, oy));
+        }
+        function paint(target, T) {
+          var sc = scale() * T / V, w = src.width * sc, h = src.height * sc;
+          var g = target.getContext('2d');
+          g.fillStyle = '#ffffff'; g.fillRect(0, 0, T, T);
+          g.imageSmoothingQuality = 'high';
+          g.drawImage(src, T / 2 + ox * T / V - w / 2, T / 2 + oy * T / V - h / 2, w, h);
+        }
+        function draw() { clamp(); paint(canvas, canvas.width); }
+        function setZoom(z, cx, cy) {
+          var old = zoom; zoom = Math.max(1, Math.min(4, z));
+          // keep the point under the finger or cursor still while zooming
+          if (cx !== undefined) { var f = zoom / old; ox = cx - (cx - ox) * f; oy = cy - (cy - oy) * f; } else { ox *= zoom / old; oy *= zoom / old; }
+          range.value = zoom; draw();
+        }
+        size(); draw();
+        var pts = {}, last = null, pinch = null;
+        function local(e) { var r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left - V / 2, y: e.clientY - r.top - V / 2 }; }
+        canvas.addEventListener('pointerdown', function (e) { canvas.setPointerCapture(e.pointerId); pts[e.pointerId] = { x: e.clientX, y: e.clientY }; last = { x: e.clientX, y: e.clientY }; pinch = null; e.preventDefault(); });
+        canvas.addEventListener('pointermove', function (e) {
+          if (!pts[e.pointerId]) return;
+          pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+          var ids = Object.keys(pts);
+          if (ids.length >= 2) {
+            var a = pts[ids[0]], b = pts[ids[1]], d = Math.hypot(a.x - b.x, a.y - b.y);
+            var r = canvas.getBoundingClientRect(), cx = (a.x + b.x) / 2 - r.left - V / 2, cy = (a.y + b.y) / 2 - r.top - V / 2;
+            if (pinch) setZoom(pinch.zoom * d / pinch.d, cx, cy); else pinch = { d: d, zoom: zoom };
+            return;
+          }
+          ox += e.clientX - last.x; oy += e.clientY - last.y; last = { x: e.clientX, y: e.clientY }; draw();
+        });
+        function up(e) { delete pts[e.pointerId]; pinch = null; var ids = Object.keys(pts); if (ids.length) last = pts[ids[0]]; }
+        canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
+        canvas.addEventListener('wheel', function (e) { e.preventDefault(); var p = local(e); setZoom(zoom * (e.deltaY < 0 ? 1.08 : 1 / 1.08), p.x, p.y); }, { passive: false });
+        canvas.addEventListener('keydown', function (e) {
+          var step = e.shiftKey ? 20 : 6, k = e.key;
+          if (k === 'ArrowLeft') ox -= step; else if (k === 'ArrowRight') ox += step; else if (k === 'ArrowUp') oy -= step; else if (k === 'ArrowDown') oy += step;
+          else if (k === '+' || k === '=') return setZoom(zoom * 1.1); else if (k === '-') return setZoom(zoom / 1.1); else return;
+          e.preventDefault(); draw();
+        });
+        range.addEventListener('input', function () { setZoom(Number(range.value)); });
+        function finish(result) { S.cropOpen = false; window.removeEventListener('resize', onResize); back.remove(); resolve(result); }
+        function onResize() { size(); draw(); }
+        window.addEventListener('resize', onResize);
+        back.addEventListener('mousedown', function (e) { if (e.target === back) finish(null); });
+        back.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); finish(null); } });
+        back.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-crop]'); if (!b) return;
+          var act = b.getAttribute('data-crop');
+          if (act === 'cancel') return finish(null);
+          if (act === 'reset') { src = original; zoom = 1; ox = 0; oy = 0; range.value = 1; return draw(); }
+          if (act === 'rotate') { src = rotate90(src); var t = ox; ox = -oy; oy = t; return draw(); }
+          if (act === 'save') {
+            var out = document.createElement('canvas'); out.width = 320; out.height = 320; paint(out, 320);
+            var q = 0.88, data = out.toDataURL('image/jpeg', q);
+            while (data.length > 58000 && q > 0.4) { q -= 0.08; data = out.toDataURL('image/jpeg', q); }
+            if (data.length > 58000) { toast('That photo could not be made small enough. Please try another.', true); return; }
+            finish(data);
+          }
+        });
+        setTimeout(function () { canvas.focus(); }, 30);
+      });
     });
   }
 
@@ -1066,7 +1160,7 @@
       '<div class="profile-photo">' + av(me, 'xl') + (ro ? '' : '<label class="photo-btn" title="Change photo">' + icon('upload') + '<span class="sr">Change photo</span><input type="file" accept="image/*" data-photo-input hidden></label>') + '</div>' +
       '<div class="profile-id"><h1>' + esc(me.name) + '</h1>' + (headline ? '<div class="profile-headline">' + esc(headline) + '</div>' : '') +
       '<div class="chips" style="margin-top:10px">' + (place ? '<span class="chip">' + icon('pin').replace('<svg', '<svg style="width:13px;height:13px"') + esc(place) + '</span>' : '') + '<span class="chip purple">' + esc(me.cohort || d.settings.cohortName || 'Shadrach Fellow') + '</span>' + '<span class="chip amber">' + (me.role === 'admin' ? 'Facilitator' : 'Fellow') + '</span></div></div>' +
-      (ro ? '' : '<div class="profile-actions"><a class="btn btn-ghost btn-sm" href="#profile-edit">' + icon('edit') + 'Edit profile</a>' + (me.photo ? '<button class="btn btn-ghost btn-sm" data-act="remove-photo">Remove photo</button>' : '') + '</div>') + '</div>' +
+      (ro ? '' : '<div class="profile-actions"><a class="btn btn-ghost btn-sm" href="#profile-edit">' + icon('edit') + 'Edit profile</a>' + (me.photo ? '<button class="btn btn-ghost btn-sm" data-act="adjust-photo">' + icon('edit') + 'Adjust photo</button><button class="btn btn-ghost btn-sm" data-act="remove-photo">Remove photo</button>' : '') + '</div>') + '</div>' +
       '<div class="profile-body"><div><h3>About</h3><p class="profile-bio">' + (me.bio ? nl(me.bio) : '<span class="muted">' + (ro ? 'No bio yet.' : 'Add a short bio: where you serve, what you do and what God is doing in your life.') + '</span>') + '</p></div>' +
       '<div><h3>Contact</h3><ul class="contact-list">' + contact.map(function (c) { return '<li>' + icon(c[0]) + '<span class="small muted">' + c[1] + '</span>' + (c[3] ? '<a href="' + esc(c[3]) + '" target="_blank" rel="noopener">' + esc(c[2]) + '</a>' : '<span>' + esc(c[2]) + '</span>') + '</li>'; }).join('') + '</ul></div></div></section>';
     var form = '<div class="card" id="profile-edit"><div class="card-head"><h2>Edit my profile</h2></div>' +
@@ -1602,6 +1696,13 @@
 
   // admin clicks
   ACT['edit-person'] = function (el) { personModal(el.getAttribute('data-id')); };
+  ACT['adjust-photo'] = function () {
+    cropPhoto(S.data.me.photo).then(function (photo) {
+      if (!photo) return;
+      toast('Saving your photo');
+      return api('saveProfile', { photo: photo }).then(function (r) { S.data.me = r.me; bump(); toast('Your photo is updated'); render(); });
+    }).catch(function (err) { toast(err.message, true); });
+  };
   ACT['remove-photo'] = function (el) {
     confirmBox('Remove your profile photo?', 'Remove').then(function (ok) { if (ok) run(el, api('saveProfile', { photo: '' }), 'Photo removed').then(function (r) { S.data.me = r.me; bump(); render(); }); });
   };
@@ -1708,7 +1809,8 @@
   document.addEventListener('change', function (e) {
     if (e.target.matches && e.target.matches('[data-photo-input]') && e.target.files[0]) {
       var input = e.target;
-      makePhoto(input.files[0]).then(function (photo) {
+      cropPhoto(input.files[0]).then(function (photo) {
+        if (!photo) return;
         if (input.hasAttribute('data-admin')) {
           var prev = document.getElementById('pp-photo-preview'); var hidden = document.getElementById('pp-photo');
           hidden.value = photo; prev.innerHTML = '<img class="avatar photo xl" src="' + photo + '" alt="">';
@@ -1724,7 +1826,7 @@
     if (el && el.getAttribute('data-change') === 'go-session') location.hash = el.getAttribute('data-base') + encodeURIComponent(el.value);
   });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && S.modal) closeModal();
+    if (e.key === 'Escape' && S.modal && !S.cropOpen) closeModal();
     if (e.key === 'Enter' && e.target.matches && e.target.matches('tr.click')) e.target.click();
   });
 

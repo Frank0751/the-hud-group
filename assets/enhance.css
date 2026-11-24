@@ -107,3 +107,8 @@ picture { display: contents; }
 .footer-logo-wrap img { width: auto; }
 /* Small contact lines inside tables read better in the body face */
 table td span { font-family: var(--font-body); }
+
+/* Site credit in the footer */
+.site-credit { white-space: nowrap; }
+.footer-bottom .site-credit a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(255, 184, 102, 0.7); }
+.footer-bottom .site-credit a:hover { color: var(--peach); }

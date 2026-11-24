@@ -241,6 +241,11 @@
     .retreat-photos-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .retreat-photo-slot{background:linear-gradient(135deg,var(--purple-pale),#d4cee8);border-radius:var(--radius);border:2px dashed rgba(84,24,84,0.2);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-family:var(--font-body);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple-light);text-align:center;padding:16px}
     .retreat-photo-slot::before{content:'📷';font-size:24px}
+    .retreat-photo{margin:0;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/4;background:var(--purple-pale);box-shadow:0 10px 30px rgba(50,12,50,0.12)}
+    .retreat-photo.wide{grid-column:1/-1;aspect-ratio:16/9}
+    .retreat-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+    .retreat-photo:hover img{transform:scale(1.03)}
+    @media(prefers-reduced-motion:reduce){.retreat-photo img{transition:none}.retreat-photo:hover img{transform:none}}
 
     .apply-section{background:linear-gradient(135deg,var(--peach-dark) 0%,var(--orange) 100%);position:relative;overflow:hidden}
     .apply-section::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.06) 1px,transparent 1px);background-size:40px 40px}
@@ -343,13 +348,13 @@
     <div class="hero-pattern"></div><div class="hero-shape-1"></div><div class="hero-shape-2"></div>
     <div class="hero-inner">
       <div class="hero-left">
-        <div class="hero-badge"><div class="hero-badge-dot"></div><span class="hero-badge-text">Applications Open Until 20 November 2026</span></div>
+        <div class="hero-badge"><div class="hero-badge-dot"></div><span class="hero-badge-text">2026/2027 Applications Have Closed</span></div>
         <h1>The Shadrach<span class="accent">Fellowship</span></h1>
         <p class="hero-subtitle">A Missional Discipleship Journey with Dr. Yaw Perbi</p>
         <p class="hero-desc">Become a personal disciple of Dr. Yaw Perbi as he follows Jesus Christ, equipping you to become a mature disciple of Christ and to multiply your life through others, leading well and sustainably.</p>
         <div class="hero-ctas">
-          <a href="apply.html" class="btn btn-peach">Apply Now</a>
-          <a href="#about" class="btn btn-outline-white">Learn More</a>
+          <a href="#about" class="btn btn-peach">Learn More</a>
+          <a href="#fellows" class="btn btn-outline-white">Meet the Fellows</a>
         </div>
         <p style="margin:18px 0 26px;font-size:14px;line-height:1.6;color:rgba(255,255,255,0.8)">Already a fellow? <a href="portal.html" style="color:var(--peach);font-weight:700;text-decoration:underline;text-underline-offset:3px">Sign in to the Fellows Portal</a></p>
         <div class="hero-facts">
@@ -682,12 +687,10 @@
         </div>
         <div>
           <div class="retreat-photos-grid">
-            <!-- DEVELOPER: Replace each slot below with an img tag when retreat photos are available -->
-            <!-- Example: <img src="images/retreat-group.jpg" alt="Mamfe Retreat 2025" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" loading="lazy" decoding="async"> -->
-            <div class="retreat-photo-slot">Add retreat group photo<br><small style="opacity:0.6;">Group or session photo from P3 Mamfe Retreat 2025</small></div>
-            <div class="retreat-photo-slot">Add teaching session photo<br><small style="opacity:0.6;">Teaching session at Mamfe Retreat Centre</small></div>
-            <div class="retreat-photo-slot">Add baptism photo<br><small style="opacity:0.6;">The baptism of four female fellows at the retreat pool</small></div>
-            <div class="retreat-photo-slot">Add fellowship photo<br><small style="opacity:0.6;">Fellows at the HuD 20th Anniversary banner, Mamfe</small></div>
+            <figure class="retreat-photo wide"><picture><source type="image/webp" srcset="images/community/tsf-retreat-group-640.webp 640w, images/community/tsf-retreat-group-1200.webp 1200w" sizes="(max-width: 1100px) 92vw, 600px"><img src="images/community/tsf-retreat-group.jpg" alt="Shadrach fellows together in their fellowship shirts beside the pool" width="1200" height="900" style="object-position:50% 58%" loading="lazy" decoding="async"></picture></figure>
+            <figure class="retreat-photo"><picture><source type="image/webp" srcset="images/community/tsf-life-story-session-640.webp 640w, images/community/tsf-life-story-session-1200.webp 1200w" sizes="(max-width: 1100px) 92vw, 600px"><img src="images/community/tsf-life-story-session.jpg" alt="A fellow shares the timeline of her life story while another listens" width="960" height="1280" style="object-position:50% 35%" loading="lazy" decoding="async"></picture></figure>
+            <figure class="retreat-photo"><picture><source type="image/webp" srcset="images/community/tsf-fellows-lawn-640.webp 640w, images/community/tsf-fellows-lawn-1200.webp 1200w" sizes="(max-width: 1100px) 92vw, 600px"><img src="images/community/tsf-fellows-lawn.jpg" alt="Two fellows smiling on a lawn above a green valley" width="1008" height="1792" style="object-position:50% 62%" loading="lazy" decoding="async"></picture></figure>
+            <figure class="retreat-photo wide"><picture><source type="image/webp" srcset="images/community/tsf-worship-together-640.webp 640w, images/community/tsf-worship-together-1200.webp 1200w" sizes="(max-width: 1100px) 92vw, 600px"><img src="images/community/tsf-worship-together.jpg" alt="Fellows worshipping and dancing together in a bright hall" width="1200" height="900" style="object-position:50% 60%" loading="lazy" decoding="async"></picture></figure>
           </div>
         </div>
       </div>
@@ -697,12 +700,12 @@
     <div class="container">
       <div class="apply-inner">
         <div class="overline" style="justify-content:center;color:rgba(50,12,50,0.85);">2026/2027 Cohort</div>
-        <h2>Ready to Join<br>the Fellowship?</h2>
+        <h2>Thank You<br>for Applying</h2>
         <div class="apply-next">
-          <h3>Applications for the 2026/2027 Cohort are now open</h3>
-          <p>The Shadrach Fellowship welcomes deeply committed, Christ-centred young leaders between the ages of 17 and 39. The fellowship is completely free of charge. Fellows are expected to commit their time and full engagement to every session. <strong>Applications close on 20 November 2026.</strong></p>
+          <h3>Applications for the 2026/2027 Cohort have closed</h3>
+          <p>Applications closed on 20 November 2026. Thank you to everyone who applied: every applicant will hear from us by email once screening is complete. The Shadrach Fellowship is free and welcomes deeply committed, Christ-centred young leaders between the ages of 17 and 39. <strong>Write to us to hear when the next cohort opens.</strong></p>
         </div>
-        <h3 style="font-family:var(--font-h);font-size:20px;font-weight:800;color:var(--heading);margin-bottom:20px;text-align:left;">Who Should Apply?</h3>
+        <h3 style="font-family:var(--font-h);font-size:20px;font-weight:800;color:var(--heading);margin-bottom:20px;text-align:left;">Who We Look For</h3>
         <div class="apply-criteria-grid">
           <div class="criteria-item"><div class="criteria-title">Faithful</div><div class="criteria-desc">Demonstrated commitment to follow Christ (Luke 5:4-5)</div></div>
           <div class="criteria-item"><div class="criteria-title">Available</div><div class="criteria-desc">Willingness to prioritise this journey every Friday evening</div></div>
@@ -714,10 +717,10 @@
           <div class="criteria-item"><div class="criteria-title">Obedient</div><div class="criteria-desc">Committed to obeying God's call to make disciples (Matthew 28:19-20)</div></div>
         </div>
         <div class="apply-ctas">
-          <a href="apply.html" class="btn btn-white">Apply Now</a>
-          <a href="mailto:engage@thehudgroupglobal.org?subject=TSF Enquiry" class="btn btn-outline-purple" style="border-color:rgba(50,12,50,0.4);">Send an Enquiry</a>
+          <a href="mailto:engage@thehudgroupglobal.org?subject=TSF%20next%20cohort" class="btn btn-white">Hear When the Next Cohort Opens</a>
+          <a href="portal.html" class="btn btn-outline-purple" style="border-color:rgba(50,12,50,0.4);">Fellows Portal</a>
         </div>
-        <p style="font-size:13px;color:rgba(50,12,50,0.85);">Applications close on 20 November 2026. Questions? Contact +233 206 634 459 or engage@thehudgroupglobal.org</p>
+        <p style="font-size:13px;color:rgba(50,12,50,0.85);">Applications for 2026/2027 closed on 20 November 2026. Questions? Contact +233 206 634 459 or engage@thehudgroupglobal.org</p>
       </div>
     </div>
   </section>
@@ -736,7 +739,7 @@
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What does the fellowship cost?<div class="faq-icon">+</div></div><div class="faq-answer">The fellowship is completely free of charge. Participants are expected to commit their time and full effort to engage in all sessions and assignments. For the in-person retreat, travel and accommodation support may be available for international fellows based on need.</div></div>
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What will I gain from the fellowship?<div class="faq-icon">+</div></div><div class="faq-answer">Participants gain personalised mentorship from Dr. Yaw Perbi, deeper spiritual growth, emotional maturity through EHS, practical life skills including on marriage and finances, leadership development, a heart for global missions, and lifelong community with a network of kingdom-minded leaders across Africa and beyond.</div></div>
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Can I participate while working or studying full time?<div class="faq-icon">+</div></div><div class="faq-answer">Yes. The fellowship is designed to be flexible and accommodate participants' schedules. Weekly sessions are on Friday evenings (6 to 8 PM UTC), making it accessible for working professionals and students. Full commitment and consistent attendance are expected.</div></div>
-        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">When do applications close?<div class="faq-icon">+</div></div><div class="faq-answer">Applications for the 2026/2027 cohort close on 20 November 2026. You can complete the online application at any time before then, and save a draft to finish later. <a href="apply.html" style="color:var(--accent-ink);font-weight:700;text-decoration:underline">Start your application</a>.</div></div>
+        <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">When do applications open again?<div class="faq-icon">+</div></div><div class="faq-answer">Applications for the 2026/2027 cohort closed on 20 November 2026, and every applicant will hear from us by email. Dates for the next cohort will be announced here; write to engage@thehudgroupglobal.org to hear first.</div></div>
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What does the application process involve?<div class="faq-icon">+</div></div><div class="faq-answer">The process involves four steps: (1) Eligibility check against the criteria listed above, (2) Submitting an online application form, (3) Initial screening and shortlisting, and (4) Final interviews with Dr. Yaw Perbi and Frank Koomson before final selections are made.</div></div>
         <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">How can I prepare for the fellowship?<div class="faq-icon">+</div></div><div class="faq-answer">Engage in daily prayer and Bible reading, reflect on your personal vision and mission, and maintain an openness to growth in all areas of life. Familiarise yourself with discipleship concepts and begin reading books on leadership and spiritual formation.</div></div>
       </div>
@@ -765,7 +768,6 @@
           <a href="#fellows">Fellows 2026</a>
           <a href="#tsfx">TSFx Annex</a>
           <a href="#awards">2025 Awards</a>
-          <a href="apply.html">Apply for 2027</a>
           <a href="portal.html">Fellows Portal</a>
           <a href="#faq">FAQs</a>
         </div>
@@ -778,7 +780,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>Copyright 2025 The HuD Group Global. All rights reserved. Registered Charity, Canada</span>
+        <span>Copyright 2025 The HuD Group Global. All rights reserved. Registered Charity, Canada. <span class="site-credit">Website built by <a href="https://koombei.com" target="_blank" rel="noopener">KoomBei</a></span></span>
         <a href="contribute.html" class="footer-cta">Give Now</a>
       </div>
     </div>

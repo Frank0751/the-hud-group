@@ -179,10 +179,11 @@ Three book cards: A2R, Disciple Ship, Other Publications
 - The section reflects the Kwiverr brand which uses green (matching the K diagram)
 - The diagram itself is the original graphic `images/kwiverr-formation-konstant.png`
   (© 2022 Yaw Perbi) displayed as-is, not a CSS recreation, keep it original
-- **Applications are OPEN until 20 November 2026** (2026/2027 cohort, ages 17 to 39, free).
-  The badge, hero button and Apply section all point to `apply.html`. After the deadline the
-  form on `apply.html` closes itself automatically (`CONFIG.deadline`), but the community page
-  copy must then be updated by hand to say applications are closed
+- **Applications for the 2026/2027 cohort CLOSED on 20 November 2026.** The community page badge,
+  Apply section and FAQ say so, no page links to `apply.html` any more, `apply.html` has
+  `CONFIG.closed: true` (it shows the closed message whatever the visitor's clock says), and
+  `backend/tsf-applications/Code.gs` refuses any submission after `CONFIG.CLOSES_AT`. To open the
+  next round: set `closed: false` and new dates in both files, and restore the Apply buttons
 - TSF 2026 has exactly 12 core fellows
 - TSF 2025 has exactly 9 graduates (Cohort 1)
 - TSFx 2026 has exactly 4 mentees
@@ -253,7 +254,8 @@ All sections marked with `<!-- DEVELOPER: -->` in the HTML need real content:
 - Board member names and photos (15 placeholders on contact.html)
 - Street addresses for Montreal and Accra offices
 - Social media handles (update all social links with real URLs)
-- Mamfe retreat photos (4 placeholder slots in community.html retreat section)
+- Retreat photos: the 4 slots in the community.html retreat section now hold photos from
+  `images/community/`. Confirm they are from the Mamfe retreat, or swap them for ones that are
 
 ---
 
@@ -316,7 +318,8 @@ When converting to WordPress:
 3. The `<script>` blocks go into `functions.js` (enqueued in `functions.php`)
 4. The `images/` folder contents go into `/wp-content/uploads/`
 5. All `images/` paths become `<?php echo get_template_directory_uri(); ?>/images/`
-6. The nav and footer HTML become `header.php` and `footer.php` partials
+6. The nav and footer HTML become `header.php` and `footer.php` partials. Keep the footer credit
+   "Website built by KoomBei" (links to https://koombei.com, styled by `.site-credit`) on every page
 7. Replace the contact form with WPForms or Contact Form 7
 8. The training library accordion becomes an ACF repeater field
 
