@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>TSF Certificates</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=gambetta@500,501,600&display=swap">
+<style>
+  /* Certificate maker for The Shadrach Fellowship. Open in Chrome, fill in the left panel, then Save as PDF.
+     Names and signatures stay in this browser. Nothing is uploaded anywhere. Not part of the public website. */
+  :root{--purple:#541854;--purple-dark:#320c32;--purple-mid:#7a297a;--purple-pale:#fbf4fb;--peach:#ffb866;--peach-dark:#df6e0c;--orange:#fc9018;--text:#1a1420;--muted:#6b5a68;--paper:#fffdf9}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Satoshi',system-ui,sans-serif;color:var(--text);background:#ece6ec}
+  @page{size:297mm 210mm;margin:0}
+  .app{display:grid;grid-template-columns:360px 1fr;min-height:100vh}
+  .panel{background:#fff;border-right:1px solid #e2d6e2;padding:22px 22px 40px;position:sticky;top:0;height:100vh;overflow:auto}
+  .panel h1{font-family:'Gambetta',Georgia,serif;font-weight:600;color:var(--purple);font-size:24px;line-height:1.15}
+  .panel p.lead{color:var(--muted);font-size:13.5px;margin:6px 0 14px;line-height:1.5}
+  label{display:block;font-weight:700;font-size:13px;margin:12px 0 5px}
+  input[type=text],select,textarea{width:100%;font:inherit;font-size:14px;padding:8px 10px;border:1px solid #d9c8d9;border-radius:8px;background:#fff;color:var(--text)}
+  textarea{min-height:150px;resize:vertical;line-height:1.5}
+  .hint{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  fieldset{border:1px solid #eadfea;border-radius:10px;padding:4px 12px 12px;margin-top:14px}
+  legend{font-weight:700;font-size:13px;color:var(--purple);padding:0 6px}
+  .btn{display:block;width:100%;margin-top:18px;padding:12px;border:0;border-radius:999px;background:var(--purple);color:#fff;font:700 15px 'Satoshi',sans-serif;cursor:pointer}
+  .btn:hover{background:var(--purple-mid)}
+  .count{margin-top:10px;font-size:13px;color:var(--muted);text-align:center}
+  .preview{padding:26px;display:flex;flex-direction:column;align-items:center;gap:22px}
+  .empty{margin-top:80px;color:var(--muted);text-align:center}
+
+  /* ---------- the certificate ---------- */
+  .cert{width:297mm;height:210mm;position:relative;overflow:hidden;background:var(--paper);box-shadow:0 18px 40px rgba(50,12,50,.18);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;page-break-after:always;break-after:page}
+  .cert::before{content:'';position:absolute;inset:0;background:
+    radial-gradient(120mm 90mm at 0% 0%,rgba(122,41,122,.09),transparent 70%),
+    radial-gradient(120mm 90mm at 100% 100%,rgba(252,144,24,.10),transparent 70%)}
+  .frame{position:absolute;inset:9mm;border:2.2mm solid var(--purple);border-radius:3mm}
+  .frame::before{content:'';position:absolute;inset:2.4mm;border:.5mm solid var(--orange);border-radius:1.5mm}
+  .wm{position:absolute;left:50%;top:56%;width:110mm;transform:translate(-50%,-50%);opacity:.03;pointer-events:none}
+  .inner{position:absolute;inset:20mm 24mm 18mm;display:flex;flex-direction:column;align-items:center;text-align:center}
+  .logo{height:17mm;width:auto}
+  .eyebrow{margin-top:4mm;font-size:3.4mm;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--peach-dark)}
+  .title{font-family:'Gambetta',Georgia,serif;font-weight:600;color:var(--purple);font-size:14mm;line-height:1.02;margin-top:2mm;letter-spacing:-.01em}
+  .award{font-family:'Gambetta',Georgia,serif;font-weight:600;font-style:italic;color:var(--peach-dark);font-size:9.5mm;line-height:1.1;margin-top:1.5mm}
+  .lead{margin-top:6mm;font-size:4.6mm;color:var(--muted);font-style:italic}
+  .name{font-family:'Gambetta',Georgia,serif;font-weight:500;font-style:italic;color:var(--purple-dark);font-size:15mm;line-height:1.1;margin-top:1mm;padding:0 8mm 1.5mm;border-bottom:.6mm solid var(--orange);max-width:220mm;white-space:nowrap}
+  .body{margin-top:5mm;font-size:4.9mm;line-height:1.55;color:var(--text);max-width:205mm}
+  .verse{margin-top:3mm;font-size:3.5mm;font-style:italic;color:var(--muted);max-width:190mm}
+  .foot{margin-top:auto;width:100%;display:grid;grid-template-columns:1fr 56mm 1fr;align-items:end;gap:8mm}
+  .foot > div:nth-child(2){display:flex;flex-direction:column;align-items:center}
+  .sig{text-align:center}
+  .sig .ink{height:15mm;display:flex;align-items:flex-end;justify-content:center}
+  .sig .ink img{max-height:15mm;max-width:62mm}
+  .sig .line{border-top:.35mm solid var(--purple-dark);margin:1mm 6mm 0;padding-top:1.6mm}
+  .sig b{display:block;font-size:4.2mm;color:var(--purple-dark)}
+  .sig span{display:block;font-size:3.3mm;color:var(--muted);margin-top:.4mm}
+  .seal{width:34mm;height:34mm;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 35% 30%,#ffd29a,var(--orange) 55%,var(--peach-dark));box-shadow:0 1.5mm 4mm rgba(223,110,12,.35)}
+  .seal::before{content:'';position:absolute;inset:2mm;border-radius:50%;border:.5mm dashed rgba(50,12,50,.45)}
+  .seal div{text-align:center;color:var(--purple-dark);line-height:1}
+  .seal b{display:block;font-family:'Gambetta',Georgia,serif;font-size:8mm;font-weight:600}
+  .seal span{display:block;font-size:2.6mm;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-top:1mm}
+  .date{margin-top:3mm;font-size:3.6mm;color:var(--purple-dark);font-weight:500;letter-spacing:.03em;white-space:nowrap}
+
+  @media screen{.cert{zoom:var(--z,1)}}
+  @media print{
+    body{background:none}
+    .panel,.empty{display:none!important}
+    .app{display:block}
+    .preview{padding:0;gap:0;display:block}
+    .cert{box-shadow:none;zoom:1}
+  }
+  @media (max-width:900px){.app{grid-template-columns:1fr}.panel{position:static;height:auto;border-right:0;border-bottom:1px solid #e2d6e2}}
+</style>
+</head>
+<body>
+<div class="app">
+  <form class="panel" id="f" autocomplete="off">
+    <h1>Certificate maker</h1>
+    <p class="lead">Fill this in and every name becomes its own certificate on the right. Then press <b>Save as PDF</b>. Everything stays in this browser.</p>
+
+    <label for="type">Certificate</label>
+    <select id="type" name="type">
+      <option value="completion">Certificate of Completion (graduates)</option>
+      <option value="award">Award certificate</option>
+      <option value="induction">Certificate of Induction (new fellows)</option>
+      <option value="appreciation">Certificate of Appreciation (facilitators, mentors, volunteers)</option>
+    </select>
+
+    <label for="programme">Programme</label>
+    <input type="text" id="programme" name="programme">
+    <div class="hint">For example: The Shadrach Fellowship 2026, or TSFx 2026.</div>
+
+    <div id="awardBox" hidden>
+      <label for="award">Award</label>
+      <select id="award" name="award"></select>
+      <div class="hint">To give different awards in one go, type <b>Name | Award</b> on each line below.</div>
+    </div>
+    <div id="roleBox" hidden>
+      <label for="role">Served as</label>
+      <input type="text" id="role" name="role" value="a facilitator">
+    </div>
+
+    <label for="names">Names, one per line</label>
+    <textarea id="names" name="names" placeholder="Ama Mensah&#10;Kwame Boateng"></textarea>
+    <div class="hint">Spell each name exactly as the person wants it on the certificate.</div>
+
+    <div class="row2">
+      <div><label for="date">Date</label><input type="text" id="date" name="date" value="26 December 2026"></div>
+      <div><label for="seal">Seal text</label><input type="text" id="seal" name="seal"></div>
+    </div>
+
+    <fieldset><legend>Left signature</legend>
+      <label for="s1n">Name</label><input type="text" id="s1n" name="s1n" value="Dr. Yaw Perbi">
+      <label for="s1t">Title</label><input type="text" id="s1t" name="s1t" value="Global CEO, The HuD Group">
+      <label for="s1i">Signature image (optional)</label><input type="file" id="s1i" accept="image/png,image/jpeg,image/webp">
+    </fieldset>
+    <fieldset><legend>Right signature</legend>
+      <label for="s2n">Name</label><input type="text" id="s2n" name="s2n" value="Frank Koomson">
+      <label for="s2t">Title</label><input type="text" id="s2t" name="s2t" value="Coordinator, The Shadrach Fellowship">
+      <label for="s2i">Signature image (optional)</label><input type="file" id="s2i" accept="image/png,image/jpeg,image/webp">
+    </fieldset>
+    <div class="hint">A signature photographed on white paper works; a PNG with a clear background looks best.</div>
+
+    <label class="chk" style="display:flex;gap:8px;align-items:center;font-weight:500"><input type="checkbox" id="verseOn" name="verseOn" checked> Include the verse</label>
+
+    <button type="button" class="btn" id="print">Save as PDF</button>
+    <div class="count" id="count"></div>
+    <div class="hint" style="margin-top:12px">In the print window choose <b>Save as PDF</b>, Margins <b>None</b>, and tick <b>Background graphics</b>.</div>
+  </form>
+  <main class="preview" id="pages" aria-live="polite"></main>
+</div>
+
+<template id="tpl">
+  <section class="cert">
+    <img class="wm" src="../images/the-hud-group-hi-res-logo.png" alt="">
+    <div class="frame"></div>
+    <div class="inner">
+      <img class="logo" src="../images/the-hud-group-hi-res-logo.png" alt="The HuD Group">
+      <div class="eyebrow" data-k="eyebrow"></div>
+      <div class="title" data-k="title"></div>
+      <div class="award" data-k="award"></div>
+      <div class="lead" data-k="lead"></div>
+      <div class="name" data-k="name"></div>
+      <p class="body" data-k="body"></p>
+      <p class="verse" data-k="verse"></p>
+      <div class="foot">
+        <div class="sig"><div class="ink" data-k="s1i"></div><div class="line"><b data-k="s1n"></b><span data-k="s1t"></span></div></div>
+        <div><div class="seal"><div><b data-k="sealTop"></b><span data-k="sealSub"></span></div></div><div class="date" data-k="date"></div></div>
+        <div class="sig"><div class="ink" data-k="s2i"></div><div class="line"><b data-k="s2n"></b><span data-k="s2t"></span></div></div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+(function () {
+  var CORNER = '<svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><path d="M4 76V20C4 11 11 4 20 4h56" stroke="#541854" stroke-width="3"/><path d="M14 76V28c0-8 6-14 14-14h48" stroke="#fc9018" stroke-width="1.6"/><circle cx="20" cy="20" r="5" fill="#fc9018"/><path d="M30 30c10-2 16 4 14 14" stroke="#7a297a" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  var AWARDS = {
+    'Most Consistent Fellow': 'in recognition of faithful, consistent attendance',
+    'Bible in One Year Completion': 'in recognition of reading through the whole Bible in one year',
+    'Disciple-Maker Award': 'in recognition of faithfully making disciples and leading a Hi 5 prayer group',
+    'Most Improved Fellow': 'in recognition of remarkable growth in character, discipline and leadership',
+    'Most Inspiring Fellow': 'in recognition of inspiring the cohort by example, encouragement and faith'
+  };
+  var TYPES = {
+    completion: { programme: 'The Shadrach Fellowship 2026', seal: 'TSF|2026', eyebrow: 'The Shadrach Fellowship', title: 'Certificate of Completion', lead: 'This certifies that',
+      body: function (v) { return 'has faithfully completed ' + v.programme + ', a year-long journey of missional discipleship through spiritual, missional, leadership and communal formation.'; },
+      verse: '"Those who are wise will shine like the brightness of the heavens, and those who lead many to righteousness, like the stars for ever and ever." Daniel 12:3', datePrefix: 'Graduated ' },
+    award: { programme: 'The Shadrach Fellowship 2026', seal: 'TSF|2026 Awards', eyebrow: 'The Shadrach Fellowship', title: 'Award Certificate', lead: 'presented to',
+      body: function (v) { return (AWARDS[v.award] || 'in recognition of an outstanding contribution') + ' during ' + v.programme + '.'; },
+      verse: '"Whatever you do, work at it with all your heart, as working for the Lord." Colossians 3:23', datePrefix: 'Presented ' },
+    induction: { programme: 'The Shadrach Fellowship 2027', seal: 'TSF|2027', eyebrow: 'The Shadrach Fellowship', title: 'Certificate of Induction', lead: 'This certifies that',
+      body: function (v) { return 'has been welcomed and inducted as a fellow of ' + v.programme + ', and commits to a year of becoming a disciple who makes disciples.'; },
+      verse: '"Therefore go and make disciples of all nations." Matthew 28:19', datePrefix: 'Inducted ' },
+    appreciation: { programme: 'The Shadrach Fellowship 2026', seal: 'TSF|Thank you', eyebrow: 'The Shadrach Fellowship', title: 'Certificate of Appreciation', lead: 'With heartfelt thanks to',
+      body: function (v) { return 'for faithfully serving as ' + (v.role || 'a facilitator') + ' of ' + v.programme + '. Your service has helped raise disciples who make disciples.'; },
+      verse: '"Let us not become weary in doing good, for at the proper time we will reap a harvest if we do not give up." Galatians 6:9', datePrefix: '' }
+  };
+  var $ = function (id) { return document.getElementById(id); };
+  var f = $('f'), pages = $('pages'), tpl = $('tpl');
+  var sigs = { s1i: '', s2i: '' };
+  var KEY = 'tsf-certificates-v1';
+
+  Object.keys(AWARDS).concat(['Other (type it after a | on each line)']).forEach(function (a) {
+    var o = document.createElement('option'); o.textContent = a; o.value = AWARDS[a] ? a : ''; $('award').appendChild(o);
+  });
+
+  function load() {
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (!s) { return applyType(true); }
+      ['type', 'programme', 'award', 'role', 'names', 'date', 'seal', 's1n', 's1t', 's2n', 's2t'].forEach(function (k) { if (s[k] !== undefined) { f.elements[k].value = s[k]; } });
+      f.elements.verseOn.checked = s.verseOn !== false;
+      applyType(false);
+    } catch (e) { applyType(true); }
+  }
+  function save() {
+    try {
+      var s = {};
+      ['type', 'programme', 'award', 'role', 'names', 'date', 'seal', 's1n', 's1t', 's2n', 's2t'].forEach(function (k) { s[k] = f.elements[k].value; });
+      s.verseOn = f.elements.verseOn.checked;
+      localStorage.setItem(KEY, JSON.stringify(s));
+    } catch (e) { }
+  }
+  function applyType(reset) {
+    var t = TYPES[f.elements.type.value];
+    if (reset) { f.elements.programme.value = t.programme; f.elements.seal.value = t.seal; }
+    $('awardBox').hidden = f.elements.type.value !== 'award';
+    $('roleBox').hidden = f.elements.type.value !== 'appreciation';
+  }
+  function fit(el, maxMm) {
+    // Shrink long names so they stay on one line inside the frame.
+    var size = parseFloat(getComputedStyle(el).fontSize);
+    var limit = maxMm * 3.7795;
+    var guard = 0;
+    while (el.scrollWidth > limit && size > 20 && guard++ < 60) { size -= 1.5; el.style.fontSize = size + 'px'; }
+  }
+  function render() {
+    var type = f.elements.type.value, t = TYPES[type];
+    var lines = f.elements.names.value.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+    pages.innerHTML = '';
+    $('count').textContent = lines.length ? lines.length + ' certificate' + (lines.length === 1 ? '' : 's') : '';
+    if (!lines.length) { var e = document.createElement('p'); e.className = 'empty'; e.textContent = 'Type at least one name to see the certificates here.'; pages.appendChild(e); return; }
+    var sealParts = f.elements.seal.value.split('|');
+    lines.forEach(function (line) {
+      var parts = line.split('|').map(function (s) { return s.trim(); });
+      var v = { name: parts[0], award: type === 'award' ? (parts[1] || f.elements.award.value) : '', programme: f.elements.programme.value.trim(), role: f.elements.role.value.trim() };
+      var node = tpl.content.cloneNode(true);
+      var set = function (k, text) { var el = node.querySelector('[data-k="' + k + '"]'); if (el) { el.textContent = text || ''; el.hidden = !text; } return el; };
+      set('eyebrow', t.eyebrow);
+      set('title', type === 'award' ? v.programme.replace(/^The Shadrach Fellowship\s*/, 'TSF ') + ' Award' : t.title);
+      set('award', v.award);
+      set('lead', t.lead);
+      set('name', v.name);
+      set('body', t.body(v));
+      set('verse', f.elements.verseOn.checked ? t.verse : '');
+      set('s1n', f.elements.s1n.value); set('s1t', f.elements.s1t.value);
+      set('s2n', f.elements.s2n.value); set('s2t', f.elements.s2t.value);
+      set('sealTop', sealParts[0] || ''); set('sealSub', sealParts.slice(1).join(' '));
+      set('date', f.elements.date.value ? t.datePrefix + f.elements.date.value : '');
+      ['s1i', 's2i'].forEach(function (k) {
+        var box = node.querySelector('[data-k="' + k + '"]');
+        if (sigs[k]) { var img = document.createElement('img'); img.src = sigs[k]; img.alt = ''; box.appendChild(img); }
+      });
+      pages.appendChild(node);
+    });
+    Array.prototype.forEach.call(pages.querySelectorAll('.name'), function (n) { fit(n, 220); });
+    scale();
+  }
+  function scale() {
+    var avail = pages.clientWidth - 52;
+    var z = Math.min(1, avail / (297 * 3.7795));
+    document.documentElement.style.setProperty('--z', z.toFixed(3));
+  }
+  ['s1i', 's2i'].forEach(function (k) {
+    $(k).addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      if (!file) { sigs[k] = ''; render(); return; }
+      var r = new FileReader();
+      r.onload = function () { sigs[k] = r.result; render(); };
+      r.readAsDataURL(file);
+    });
+  });
+  f.addEventListener('input', function (e) {
+    if (e.target.id === 'type') { applyType(true); }
+    if (e.target.type !== 'file') { save(); render(); }
+  });
+  f.addEventListener('change', function (e) { if (e.target.id === 'type') { applyType(true); save(); render(); } });
+  $('print').addEventListener('click', function () {
+    if (!f.elements.names.value.trim()) { f.elements.names.focus(); return; }
+    // Wait for fonts so the PDF never falls back to a plain font.
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { window.print(); });
+  });
+  window.addEventListener('resize', scale);
+  window.addEventListener('beforeprint', function () { document.documentElement.style.setProperty('--z', '1'); });
+  window.addEventListener('afterprint', scale);
+  load();
+  render();
+  window.__tsfCert = { render: render, form: f };
+})();
+</script>
+</body>
+</html>

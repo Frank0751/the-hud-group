@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>TSF Ceremony Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&display=swap" rel="stylesheet">
+<script src="event-details.js"></script>
+<style>
+  /* Invitation for WhatsApp, email and social posts: 1080 x 1350. Rendered to PNG and PDF in events/output/. */
+  :root{--purple:#541854;--purple-dark:#320c32;--orange:#fc9018;--peach:#ffb866;--white:#fff}
+  @page{size:1080px 1350px;margin:0}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{background:#ddd}
+  body{font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}
+  #card{width:1080px;height:1350px;position:relative;overflow:hidden;color:var(--white);display:flex;flex-direction:column;align-items:center;
+    background:radial-gradient(800px 600px at 100% 0%,rgba(252,144,24,.22),transparent 60%),radial-gradient(900px 800px at 0% 60%,rgba(122,41,122,.5),transparent 60%),var(--purple-dark)}
+  #card::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1.4px,transparent 1.4px);background-size:28px 28px}
+  .top{position:relative;margin-top:52px;display:flex;flex-direction:column;align-items:center}
+  .logo{height:74px;width:auto}
+  .pill{margin-top:22px;display:inline-flex;align-items:center;gap:10px;border:1.5px solid rgba(252,144,24,.6);background:rgba(252,144,24,.14);color:var(--peach);border-radius:999px;padding:8px 22px;font-size:17px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+  .pill i{width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 5px rgba(252,144,24,.25)}
+  .invited{position:relative;margin-top:22px;font-size:34px;font-style:italic;font-weight:500;color:var(--peach)}
+  h1{position:relative;margin-top:2px;text-align:center;font-size:76px;line-height:1.02;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+  h1 span{color:var(--orange)}
+  .sub{position:relative;margin-top:16px;font-size:25px;font-weight:500;text-align:center;max-width:860px;line-height:1.4}
+  .sub b{color:var(--peach);font-weight:700}
+  .photo{position:relative;margin-top:28px;width:940px;height:330px;border-radius:28px;overflow:hidden;box-shadow:0 24px 50px rgba(0,0,0,.4)}
+  .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block}
+  .photo::after{content:'';position:absolute;inset:0;border-radius:28px;box-shadow:inset 0 0 0 2px rgba(252,144,24,.45)}
+  .when{position:relative;margin-top:-58px;display:flex;align-items:stretch;background:#fff;color:var(--purple-dark);border-radius:24px;box-shadow:0 20px 44px rgba(0,0,0,.35);overflow:hidden}
+  .date{background:var(--orange);padding:18px 30px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+  .date b{display:block;font-size:66px;line-height:1;font-weight:800}
+  .date span{display:block;font-size:19px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+  .detail{padding:18px 32px;display:flex;flex-direction:column;justify-content:center}
+  .detail .d{font-size:30px;font-weight:800;line-height:1.15}
+  .detail .t{font-size:26px;font-weight:600;color:var(--purple);margin-top:4px}
+  .detail .p{font-size:20px;font-weight:600;color:#7a5a76;margin-top:4px}
+  .tz{position:relative;margin-top:22px;font-size:18px;font-weight:500;color:#fff;opacity:.92;text-align:center;max-width:920px}
+  .theme{position:relative;margin-top:20px;font-size:26px;font-style:italic;font-weight:600;color:var(--peach);text-align:center}
+  .foot{position:absolute;left:0;right:0;bottom:0;background:var(--orange);color:var(--purple-dark);padding:22px 60px;text-align:center;font-size:23px;font-weight:700}
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="top">
+    <img class="logo" src="../images/the-hud-group-logo-dark.png" alt="The HuD Group">
+    <div class="pill"><i></i>The Shadrach Fellowship</div>
+  </div>
+  <div class="invited">You are invited to the</div>
+  <h1>Graduation <span>and</span><br>Induction Ceremony</h1>
+  <p class="sub">Celebrating the <b><span data-ev="graduatingCohort"></span> graduates</b> and welcoming the <b><span data-ev="newCohort"></span> fellows</b></p>
+  <div class="photo"><img src="../flyers/img/group.jpg" alt=""></div>
+  <div class="when">
+    <div class="date"><b data-ev="dateShort"></b><span>Dec 2026</span></div>
+    <div class="detail"><div class="d" data-ev="ceremonyDate"></div><div class="t" data-ev="ceremonyTime"></div><div class="p" data-ev="platform"></div></div>
+  </div>
+  <p class="tz" data-ev="timezones"></p>
+  <p class="theme" data-ev="theme"></p>
+  <div class="foot" data-ev="joinNote"></div>
+</div>
+</body>
+</html>

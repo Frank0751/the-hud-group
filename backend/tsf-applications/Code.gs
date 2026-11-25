@@ -113,10 +113,16 @@ function doPost(e) {
   var lock = LockService.getScriptLock();
   var locked = false;
   try {
+    var app = parse_(e);
+
+    // Messages from the contact page (Contact.gs). They are accepted whether or not applications are open.
+    if (app.kind === 'contact') {
+      return json_(handleContact_(app));
+    }
+
     if (CONFIG.CLOSES_AT && new Date() > new Date(CONFIG.CLOSES_AT)) {
       return json_({ ok: false, closed: true, error: 'Applications for The Shadrach Fellowship 2026/2027 closed on 20 November 2026. Thank you for your interest.' });
     }
-    var app = parse_(e);
 
     // Honeypot: bots fill the hidden field. Pretend success, save nothing.
     if (app.website) {
@@ -343,8 +349,14 @@ function writeRow_(sheet, ctx) {
   range.setNumberFormats([cols.map(function (c) {
     return c.kind === 'text' ? '@' : (c.kind === 'date' ? 'yyyy-mm-dd hh:mm' : '0');
   })]);
-  range.setValues([cols.map(function (c) { return c.get(ctx); })]);
+  range.setValues([cols.map(function (c) { var v = c.get(ctx); return c.kind === 'text' ? safeText_(v) : v; })]);
   range.setVerticalAlignment('top');
+}
+
+/** Text that starts with = + - @ gets a leading apostrophe, so Sheets always keeps it as text, never a formula. */
+function safeText_(v) {
+  var s = v === undefined || v === null ? '' : String(v);
+  return /^[=+\-@]/.test(s) ? "'" + s : s;
 }
 
 /* ------------------------------------------------------------------ */

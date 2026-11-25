@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>TSF Ceremony Programme</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=gambetta@500,501,600&display=swap">
+<script src="event-details.js"></script>
+<style>
+  /* Programme (order of the evening) for the online ceremony. A4 portrait. Share as a PDF before the event and put it on screen. */
+  :root{--purple:#541854;--purple-dark:#320c32;--purple-mid:#7a297a;--purple-pale:#fbf4fb;--peach:#ffb866;--peach-dark:#df6e0c;--peach-pale:#fff3e5;--orange:#fc9018;--text:#1a1420;--muted:#6b5a68}
+  @page{size:210mm 297mm;margin:0}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{background:#ddd}
+  body{font-family:'Satoshi',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased}
+  .page{width:210mm;height:297mm;position:relative;overflow:hidden;background:#fffdf9;margin:0 auto 10mm;page-break-after:always;break-after:page}
+  @media print{html,body{background:none}.page{margin:0}}
+  h1,h2,h3{font-family:'Gambetta',Georgia,serif;font-weight:600}
+
+  /* cover */
+  .cover{background:var(--purple-dark);color:#fff;display:flex;flex-direction:column}
+  .cover::before{content:'';position:absolute;inset:0;background:radial-gradient(140mm 110mm at 100% 0%,rgba(252,144,24,.22),transparent 65%),radial-gradient(150mm 140mm at 0% 70%,rgba(122,41,122,.5),transparent 65%)}
+  .cover .ph{position:relative;height:118mm;overflow:hidden}
+  .cover .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block}
+  .cover .ph::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(50,12,50,0) 40%,rgba(50,12,50,1) 100%)}
+  .cover .logo{position:absolute;top:10mm;left:12mm;height:15mm;z-index:2}
+  .cover .body{position:relative;padding:4mm 16mm 0;text-align:center;flex:1;display:flex;flex-direction:column;align-items:center}
+  .eyebrow{font-size:3.6mm;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--peach)}
+  .cover h1{margin-top:4mm;font-size:17mm;line-height:1;letter-spacing:-.01em}
+  .cover h1 em{font-style:italic;color:var(--peach);font-weight:500}
+  .cover .sub{margin-top:5mm;font-size:5mm;line-height:1.5;max-width:160mm;color:#fff}
+  .cover .sub b{color:var(--peach)}
+  .when{margin-top:8mm;display:flex;gap:0;background:#fff;color:var(--purple-dark);border-radius:5mm;overflow:hidden;box-shadow:0 4mm 10mm rgba(0,0,0,.3)}
+  .when .d{background:var(--orange);padding:4mm 7mm;text-align:center}
+  .when .d b{display:block;font-family:'Gambetta',Georgia,serif;font-size:14mm;line-height:1}
+  .when .d span{display:block;font-size:3.4mm;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:1mm}
+  .when .x{padding:4mm 7mm;text-align:left;display:flex;flex-direction:column;justify-content:center}
+  .when .x b{font-size:5.4mm}
+  .when .x span{font-size:4.4mm;color:var(--purple-mid);font-weight:700;margin-top:1mm}
+  .when .x small{font-size:3.6mm;color:var(--muted);margin-top:1mm}
+  .theme{margin-top:9mm;font-family:'Gambetta',Georgia,serif;font-style:italic;font-size:7mm;color:var(--peach)}
+  .verse{margin-top:3mm;font-size:3.8mm;line-height:1.55;color:rgba(255,255,255,.88);max-width:150mm;font-style:italic}
+  .cover .tz{position:absolute;left:0;right:0;bottom:0;background:var(--orange);color:var(--purple-dark);text-align:center;font-weight:700;font-size:3.7mm;padding:4mm 10mm}
+
+  /* order of the evening */
+  .inner{padding:14mm 15mm 12mm}
+  .head{display:flex;align-items:center;justify-content:space-between;border-bottom:.5mm solid var(--orange);padding-bottom:4mm}
+  .head h2{font-size:10mm;color:var(--purple)}
+  .head .meta{text-align:right;font-size:3.4mm;color:var(--muted);line-height:1.45}
+  .head .meta b{color:var(--purple-dark)}
+  .part{margin-top:5mm;font-size:3.3mm;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--peach-dark)}
+  table{width:100%;border-collapse:collapse;margin-top:1.5mm}
+  td{padding:2.05mm 0;border-bottom:.25mm solid #eee3ee;vertical-align:top;font-size:3.75mm;line-height:1.35}
+  td.t{width:15mm;font-weight:700;color:var(--purple);font-variant-numeric:tabular-nums}
+  td.s b{display:block;color:var(--purple-dark);font-size:4mm}
+  td.s span{display:block;color:var(--muted);font-size:3.4mm;margin-top:.4mm}
+  td.w{width:52mm;text-align:right;color:var(--purple-mid);font-weight:500;font-size:3.5mm}
+  .awards{margin-top:6mm;display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+  .box{background:var(--purple-pale);border-radius:3mm;padding:4mm 5mm}
+  .box h3{font-size:5mm;color:var(--purple)}
+  .box ul{list-style:none;margin-top:2mm}
+  .box li{font-size:3.6mm;padding:.8mm 0 .8mm 5mm;position:relative}
+  .box li::before{content:'';position:absolute;left:0;top:2.3mm;width:2mm;height:2mm;border-radius:50%;background:var(--orange)}
+  .box p{font-size:3.6mm;line-height:1.5;margin-top:2mm}
+  .pfoot{position:absolute;left:15mm;right:15mm;bottom:9mm;display:flex;justify-content:space-between;align-items:center;font-size:3.2mm;color:var(--muted)}
+  .pfoot img{height:8mm}
+
+  /* names */
+  .names{columns:2;column-gap:10mm;margin-top:3mm}
+  .names li{list-style:none;break-inside:avoid;font-family:'Gambetta',Georgia,serif;font-size:5.2mm;color:var(--purple-dark);padding:1.6mm 0;border-bottom:.25mm solid #eee3ee}
+</style>
+</head>
+<body>
+<section class="page cover">
+  <div class="ph"><img src="../flyers/img/group.jpg" alt=""></div>
+  <img class="logo" src="../images/the-hud-group-logo-dark.png" alt="The HuD Group">
+  <div class="body">
+    <div class="eyebrow">The Shadrach Fellowship</div>
+    <h1>Graduation <em>and</em><br>Induction Ceremony</h1>
+    <p class="sub">Celebrating the <b><span data-ev="graduatingCohort"></span> graduates</b> and welcoming the <b><span data-ev="newCohort"></span> fellows</b> into a year of becoming disciples who make disciples.</p>
+    <div class="when">
+      <div class="d"><b data-ev="dateShort"></b><span>Dec 2026</span></div>
+      <div class="x"><b data-ev="ceremonyDate"></b><span data-ev="ceremonyTime"></span><small data-ev="platform"></small></div>
+    </div>
+    <div class="theme" data-ev="theme"></div>
+    <p class="verse">"If we are thrown into the blazing furnace, the God we serve is able to deliver us from it... But even if he does not, we want you to know, Your Majesty, that we will not serve your gods." Daniel 3:17 to 18</p>
+  </div>
+  <div class="tz" data-ev="timezones"></div>
+</section>
+
+<section class="page">
+  <div class="inner">
+    <div class="head">
+      <h2>Order of the Evening</h2>
+      <div class="meta"><b data-ev="ceremonyDate"></b><br><span data-ev="ceremonyTime"></span> &middot; <span data-ev="platform"></span></div>
+    </div>
+    <div id="run"></div>
+    <div class="awards">
+      <div class="box"><h3>TSF 2026 Awards</h3><ul id="awards"></ul></div>
+      <div class="box"><h3>What comes next for TSF 2027</h3>
+        <p><b>Orientation:</b> <span data-ev="orientation"></span><br><b>Week 1:</b> <span data-ev="week1"></span><br><b>Sessions:</b> <span data-ev="sessionTime"></span><br><b>Fellows Portal:</b> <span data-ev="portal"></span></p>
+      </div>
+    </div>
+  </div>
+  <div class="pfoot"><img src="../images/the-hud-group-hi-res-logo.png" alt="The HuD Group"><span>The Shadrach Fellowship &middot; <span data-ev="email"></span></span></div>
+</section>
+
+<section class="page" id="namesPage" hidden>
+  <div class="inner">
+    <div class="head"><h2>With Joy and Thanksgiving</h2><div class="meta"><b data-ev="ceremonyDate"></b></div></div>
+    <div id="nameLists"></div>
+  </div>
+  <div class="pfoot"><img src="../images/the-hud-group-hi-res-logo.png" alt="The HuD Group"><span>The Shadrach Fellowship &middot; <span data-ev="email"></span></span></div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var E = window.TSF_EVENT;
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) { e.className = cls; } if (text) { e.textContent = text; } return e; }
+  var run = document.getElementById('run');
+  var parts = [['Part one: Graduation of ' + E.graduatingCohort, '5:45'], ['Part two: Induction of ' + E.newCohort, '7:15'], ['Sending', '7:41']];
+  var table = null;
+  E.runOfShow.forEach(function (r) {
+    parts.forEach(function (p) {
+      if (p[1] === r[0]) { run.appendChild(el('div', 'part', p[0])); table = el('table'); run.appendChild(table); }
+    });
+    var tr = el('tr');
+    tr.appendChild(el('td', 't', r[0]));
+    var s = el('td', 's'); s.appendChild(el('b', null, r[1])); if (r[2]) { s.appendChild(el('span', null, r[2])); } tr.appendChild(s);
+    tr.appendChild(el('td', 'w', r[3]));
+    table.appendChild(tr);
+  });
+  var aw = document.getElementById('awards');
+  E.awards.forEach(function (a) { aw.appendChild(el('li', null, a)); });
+  var lists = [['Graduates of ' + E.graduatingCohort, E.graduates], ['TSFx graduates', E.tsfxGraduates], ['Welcome, ' + E.newCohort, E.inductees]].filter(function (l) { return l[1] && l[1].length; });
+  if (lists.length) {
+    document.getElementById('namesPage').hidden = false;
+    var box = document.getElementById('nameLists');
+    lists.forEach(function (l) {
+      box.appendChild(el('div', 'part', l[0]));
+      var ul = el('ul', 'names');
+      l[1].forEach(function (n) { ul.appendChild(el('li', null, n)); });
+      box.appendChild(ul);
+    });
+  }
+});
+</script>
+</body>
+</html>
